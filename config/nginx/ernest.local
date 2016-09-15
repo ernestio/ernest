@@ -1,0 +1,35 @@
+upstream gw {
+    server api-gateway:8080       weight=5;
+}
+
+upstream backendmonitor {
+    server monit:22000      weight=5;
+}
+
+server {
+    listen 80;
+    server_name ernest.local;
+
+    location /  {
+        proxy_pass http://gw/;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /events {
+        proxy_pass  http://backendmonitor;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Connection '';
+            proxy_http_version 1.1;
+            proxy_read_timeout 3600s;
+            chunked_transfer_encoding off;
+            proxy_buffering off;
+            proxy_cache off;
+            error_page 504 =200 @eventsource-close-graceful;
+    }
+
+    location @eventsource-close-graceful {
+        add_header Content-Type text/event-stream;
+        return 200;
+    }
+
+}
