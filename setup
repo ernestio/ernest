@@ -45,11 +45,11 @@ docker-compose up -d
 
 # Download the natsc tool
 wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc
-chmod +x natsc
+chmod +x ./natsc
 
 # setup admin accounts
-natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'group.set' '{"id":"1","name": "admin"}'
-natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' '{"group_id": 1, "username": "admin", "password": "w4rmR3d", "admin":true}'
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'group.set' '{"id":"1","name": "admin"}'
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' '{"group_id": 1, "username": "admin", "password": "w4rmR3d", "admin":true}'
 
 echo
 echo "Setup complete. Please target ernest using https://127.0.0.1:443, or https://$ERNESTHOST"
