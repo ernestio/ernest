@@ -2,7 +2,7 @@
 repos:
   - name: config-store
     path: git@github.com:ernestio/config-store.git
-    branch: develop
+    branch: master
     volumes:
       - ./config/config-store/:/etc/ernest/
     links:
@@ -13,7 +13,7 @@ repos:
 
   - name: api-gateway
     path: git@github.com:ernestio/api-gateway.git
-    branch: develop
+    branch: master
     links:
       - nats
     ports:
@@ -26,7 +26,7 @@ repos:
 
   - name: monit
     path: git@github.com:ernestio/monit.git
-    branch: develop
+    branch: master
     links:
       - nats
     ports:
@@ -39,7 +39,7 @@ repos:
 
   - name: user-store
     path: git@github.com:ernestio/user-store.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -49,7 +49,7 @@ repos:
 
   - name: group-store
     path: git@github.com:ernestio/group-store.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -59,7 +59,7 @@ repos:
 
   - name: datacenter-store
     path: git@github.com:ernestio/datacenter-store.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -69,7 +69,7 @@ repos:
 
   - name: service-store
     path: git@github.com:ernestio/service-store.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -79,7 +79,7 @@ repos:
 
   - name: workflow-manager
     path: git@github.com:ernestio/workflow-manager.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -91,7 +91,7 @@ repos:
 
   - name: definition-mapper
     path: git@github.com:ernestio/definition-mapper.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -103,7 +103,7 @@ repos:
 
   - name: vcloud-definition-mapper
     path: git@github.com:ernestio/vcloud-definition-mapper.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -115,7 +115,7 @@ repos:
 
   - name: aws-definition-mapper
     path: git@github.com:ernestio/aws-definition-mapper.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -128,7 +128,7 @@ repos:
 
   - name: router-adapter
     path: git@github.com:ernestio/router-adapter.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -138,7 +138,7 @@ repos:
 
   - name: network-adapter
     path: git@github.com:ernestio/network-adapter.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -148,7 +148,7 @@ repos:
 
   - name: instance-adapter
     path: git@github.com:ernestio/instance-adapter.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -158,7 +158,7 @@ repos:
 
   - name: firewall-adapter
     path: git@github.com:ernestio/firewall-adapter.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -168,7 +168,7 @@ repos:
 
   - name: nat-adapter
     path: git@github.com:ernestio/nat-adapter.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -178,7 +178,7 @@ repos:
 
   - name: execution-adapter
     path: git@github.com:ernestio/execution-adapter.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -188,7 +188,7 @@ repos:
 
   - name: router-builder
     path: git@github.com:ernestio/router-builder.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -199,7 +199,7 @@ repos:
 
   - name: network-builder
     path: git@github.com:ernestio/network-builder.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -210,7 +210,7 @@ repos:
 
   - name: instance-builder
     path: git@github.com:ernestio/instance-builder.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -221,7 +221,7 @@ repos:
 
   - name: firewall-builder
     path: git@github.com:ernestio/firewall-builder.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -232,7 +232,7 @@ repos:
 
   - name: nat-builder
     path: git@github.com:ernestio/nat-builder.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -243,7 +243,7 @@ repos:
 
   - name: execution-builder
     path: git@github.com:ernestio/execution-builder.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -254,7 +254,7 @@ repos:
 
   - name: all-all-fake-connector
     path: git@github.com:ernestio/all-all-fake-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
       - redis
@@ -265,7 +265,7 @@ repos:
 
   - name: firewall-creator-vcloud-connector
     path: git@github.com:ernestio/firewall-creator-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -275,7 +275,7 @@ repos:
 
   - name: firewall-updater-vcloud-connector
     path: git@github.com:ernestio/firewall-updater-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -285,7 +285,7 @@ repos:
 
   - name: instance-creator-vcloud-connector
     path: git@github.com:ernestio/instance-creator-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -295,7 +295,7 @@ repos:
 
   - name: instance-deleter-vcloud-connector
     path: git@github.com:ernestio/instance-deleter-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -305,7 +305,7 @@ repos:
 
   - name: instance-updater-vcloud-connector
     path: git@github.com:ernestio/instance-updater-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -315,7 +315,7 @@ repos:
 
   - name: nat-creator-vcloud-connector
     path: git@github.com:ernestio/nat-creator-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -325,7 +325,7 @@ repos:
 
   - name: nat-updater-vcloud-connector
     path: git@github.com:ernestio/nat-updater-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -335,7 +335,7 @@ repos:
 
   - name: network-creator-vcloud-connector
     path: git@github.com:ernestio/network-creator-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -345,7 +345,7 @@ repos:
 
   - name: network-deleter-vcloud-connector
     path: git@github.com:ernestio/network-deleter-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -355,7 +355,7 @@ repos:
 
   - name: router-creator-vcloud-connector
     path: git@github.com:ernestio/router-creator-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -365,7 +365,7 @@ repos:
 
   - name: router-deleter-vcloud-connector
     path: git@github.com:ernestio/router-deleter-vcloud-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -375,7 +375,7 @@ repos:
 
   - name: firewall-creator-aws-connector
     path: git@github.com:ernestio/firewall-creator-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -385,7 +385,7 @@ repos:
 
   - name: firewall-deleter-aws-connector
     path: git@github.com:ernestio/firewall-deleter-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -395,7 +395,7 @@ repos:
 
   - name: firewall-updater-aws-connector
     path: git@github.com:ernestio/firewall-updater-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -405,7 +405,7 @@ repos:
 
   - name: instance-creator-aws-connector
     path: git@github.com:ernestio/instance-creator-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -415,7 +415,7 @@ repos:
 
   - name: instance-deleter-aws-connector
     path: git@github.com:ernestio/instance-deleter-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -425,7 +425,7 @@ repos:
 
   - name: instance-updater-aws-connector
     path: git@github.com:ernestio/instance-updater-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -435,7 +435,7 @@ repos:
 
   - name: nat-creator-aws-connector
     path: git@github.com:ernestio/nat-creator-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -445,7 +445,7 @@ repos:
 
   - name: nat-deleter-aws-connector
     path: git@github.com:ernestio/nat-deleter-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -455,7 +455,7 @@ repos:
 
   - name: nat-updater-aws-connector
     path: git@github.com:ernestio/nat-updater-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -465,7 +465,7 @@ repos:
 
   - name: network-creator-aws-connector
     path: git@github.com:ernestio/network-creator-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
@@ -475,7 +475,7 @@ repos:
 
   - name: network-deleter-aws-connector
     path: git@github.com:ernestio/network-deleter-aws-connector.git
-    branch: develop
+    branch: master
     links:
       - nats
     depends:
