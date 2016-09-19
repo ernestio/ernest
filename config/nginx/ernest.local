@@ -7,8 +7,10 @@ upstream backendmonitor {
 }
 
 server {
-    listen 80;
-    server_name ernest.local;
+    listen 443 ssl;
+    server_name ernest.localNAME;
+    ssl_certificate /etc/nginx/conf.d/ernest.crt;
+    ssl_certificate_key /etc/nginx/conf.d/ernest.key;
 
     location /  {
         proxy_pass http://gw/;
