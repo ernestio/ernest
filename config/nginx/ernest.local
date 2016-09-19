@@ -8,7 +8,7 @@ upstream backendmonitor {
 
 server {
     listen 443 ssl;
-    server_name ernest.localNAME;
+    server_name ERNESTHOST;
     ssl_certificate /etc/nginx/conf.d/ernest.crt;
     ssl_certificate_key /etc/nginx/conf.d/ernest.key;
 
