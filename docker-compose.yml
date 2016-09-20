@@ -1,7 +1,8 @@
 version: "2"
 services:
   all-all-fake-connector:
-    image: purehyperbole/all-all-fake-connector:0.0.1
+    image: ernestio/all-all-fake-connector:1.4.0
+    build: /tmp/composable/all-all-fake-connector
     links:
     - nats
     - redis
@@ -10,7 +11,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   api-gateway:
-    image: purehyperbole/api-gateway:0.0.1
+    image: ernestio/api-gateway:1.4.0
+    build: /tmp/composable/api-gateway
     ports:
     - 8080:8080
     links:
@@ -21,7 +23,8 @@ services:
       JWT_SECRET: test
       NATS_URI: nats://nats:4222
   aws-definition-mapper:
-    image: purehyperbole/aws-definition-mapper:0.0.1
+    image: ernestio/aws-definition-mapper:1.4.0
+    build: /tmp/composable/aws-definition-mapper
     links:
     - nats
     - redis
@@ -31,7 +34,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   config-store:
-    image: purehyperbole/config-store:0.0.1
+    image: ernestio/config-store:1.4.0
+    build: /tmp/composable/config-store
     entrypoint: /go/bin/config-store -config /etc/ernest/config.json
     volumes:
     - ./config/config-store/:/etc/ernest/
@@ -40,7 +44,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   datacenter-store:
-    image: purehyperbole/datacenter-store:0.0.1
+    image: ernestio/datacenter-store:1.4.0
+    build: /tmp/composable/datacenter-store
     links:
     - nats
     depends_on:
@@ -48,7 +53,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   definition-mapper:
-    image: purehyperbole/definition-mapper:0.0.1
+    image: ernestio/definition-mapper:1.4.0
+    build: /tmp/composable/definition-mapper
     links:
     - nats
     - redis
@@ -58,7 +64,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   execution-adapter:
-    image: purehyperbole/execution-adapter:0.0.1
+    image: ernestio/execution-adapter:1.4.0
+    build: /tmp/composable/execution-adapter
     links:
     - nats
     depends_on:
@@ -66,7 +73,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   execution-builder:
-    image: purehyperbole/execution-builder:0.0.1
+    image: ernestio/execution-builder:1.4.0
+    build: /tmp/composable/execution-builder
     links:
     - nats
     - redis
@@ -75,7 +83,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-adapter:
-    image: purehyperbole/firewall-adapter:0.0.1
+    image: ernestio/firewall-adapter:1.4.0
+    build: /tmp/composable/firewall-adapter
     links:
     - nats
     depends_on:
@@ -83,7 +92,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-builder:
-    image: purehyperbole/firewall-builder:0.0.1
+    image: ernestio/firewall-builder:1.4.0
+    build: /tmp/composable/firewall-builder
     links:
     - nats
     - redis
@@ -92,7 +102,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-creator-aws-connector:
-    image: purehyperbole/firewall-creator-aws-connector:0.0.1
+    image: ernestio/firewall-creator-aws-connector:1.4.0
+    build: /tmp/composable/firewall-creator-aws-connector
     links:
     - nats
     depends_on:
@@ -100,7 +111,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-creator-vcloud-connector:
-    image: purehyperbole/firewall-creator-vcloud-connector:0.0.1
+    image: ernestio/firewall-creator-vcloud-connector:1.4.0
+    build: /tmp/composable/firewall-creator-vcloud-connector
     links:
     - nats
     depends_on:
@@ -108,7 +120,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-deleter-aws-connector:
-    image: purehyperbole/firewall-deleter-aws-connector:0.0.1
+    image: ernestio/firewall-deleter-aws-connector:1.4.0
+    build: /tmp/composable/firewall-deleter-aws-connector
     links:
     - nats
     depends_on:
@@ -116,7 +129,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-updater-aws-connector:
-    image: purehyperbole/firewall-updater-aws-connector:0.0.1
+    image: ernestio/firewall-updater-aws-connector:1.4.0
+    build: /tmp/composable/firewall-updater-aws-connector
     links:
     - nats
     depends_on:
@@ -124,7 +138,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-updater-vcloud-connector:
-    image: purehyperbole/firewall-updater-vcloud-connector:0.0.1
+    image: ernestio/firewall-updater-vcloud-connector:1.4.0
+    build: /tmp/composable/firewall-updater-vcloud-connector
     links:
     - nats
     depends_on:
@@ -132,7 +147,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   group-store:
-    image: purehyperbole/group-store:0.0.1
+    image: ernestio/group-store:1.4.0
+    build: /tmp/composable/group-store
     links:
     - nats
     depends_on:
@@ -140,7 +156,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-adapter:
-    image: purehyperbole/instance-adapter:0.0.1
+    image: ernestio/instance-adapter:1.4.0
+    build: /tmp/composable/instance-adapter
     links:
     - nats
     depends_on:
@@ -148,7 +165,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-builder:
-    image: purehyperbole/instance-builder:0.0.1
+    image: ernestio/instance-builder:1.4.0
+    build: /tmp/composable/instance-builder
     links:
     - nats
     - redis
@@ -157,7 +175,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-creator-aws-connector:
-    image: purehyperbole/instance-creator-aws-connector:0.0.1
+    image: ernestio/instance-creator-aws-connector:1.4.0
+    build: /tmp/composable/instance-creator-aws-connector
     links:
     - nats
     depends_on:
@@ -165,7 +184,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-creator-vcloud-connector:
-    image: purehyperbole/instance-creator-vcloud-connector:0.0.1
+    image: ernestio/instance-creator-vcloud-connector:1.4.0
+    build: /tmp/composable/instance-creator-vcloud-connector
     links:
     - nats
     depends_on:
@@ -173,7 +193,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-deleter-aws-connector:
-    image: purehyperbole/instance-deleter-aws-connector:0.0.1
+    image: ernestio/instance-deleter-aws-connector:1.4.0
+    build: /tmp/composable/instance-deleter-aws-connector
     links:
     - nats
     depends_on:
@@ -181,7 +202,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-deleter-vcloud-connector:
-    image: purehyperbole/instance-deleter-vcloud-connector:0.0.1
+    image: ernestio/instance-deleter-vcloud-connector:1.4.0
+    build: /tmp/composable/instance-deleter-vcloud-connector
     links:
     - nats
     depends_on:
@@ -189,7 +211,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-updater-aws-connector:
-    image: purehyperbole/instance-updater-aws-connector:0.0.1
+    image: ernestio/instance-updater-aws-connector:1.4.0
+    build: /tmp/composable/instance-updater-aws-connector
     links:
     - nats
     depends_on:
@@ -197,7 +220,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-updater-vcloud-connector:
-    image: purehyperbole/instance-updater-vcloud-connector:0.0.1
+    image: ernestio/instance-updater-vcloud-connector:1.4.0
+    build: /tmp/composable/instance-updater-vcloud-connector
     links:
     - nats
     depends_on:
@@ -205,7 +229,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   monit:
-    image: purehyperbole/monit:0.0.1
+    image: ernestio/monit:1.4.0
+    build: /tmp/composable/monit
     ports:
     - 22000:22000
     links:
@@ -216,7 +241,8 @@ services:
       JWT_SECRET: test
       NATS_URI: nats://nats:4222
   nat-adapter:
-    image: purehyperbole/nat-adapter:0.0.1
+    image: ernestio/nat-adapter:1.4.0
+    build: /tmp/composable/nat-adapter
     links:
     - nats
     depends_on:
@@ -224,7 +250,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-builder:
-    image: purehyperbole/nat-builder:0.0.1
+    image: ernestio/nat-builder:1.4.0
+    build: /tmp/composable/nat-builder
     links:
     - nats
     - redis
@@ -233,7 +260,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-creator-aws-connector:
-    image: purehyperbole/nat-creator-aws-connector:0.0.1
+    image: ernestio/nat-creator-aws-connector:1.4.0
+    build: /tmp/composable/nat-creator-aws-connector
     links:
     - nats
     depends_on:
@@ -241,7 +269,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-creator-vcloud-connector:
-    image: purehyperbole/nat-creator-vcloud-connector:0.0.1
+    image: ernestio/nat-creator-vcloud-connector:1.4.0
+    build: /tmp/composable/nat-creator-vcloud-connector
     links:
     - nats
     depends_on:
@@ -249,7 +278,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-deleter-aws-connector:
-    image: purehyperbole/nat-deleter-aws-connector:0.0.1
+    image: ernestio/nat-deleter-aws-connector:1.4.0
+    build: /tmp/composable/nat-deleter-aws-connector
     links:
     - nats
     depends_on:
@@ -257,7 +287,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-updater-aws-connector:
-    image: purehyperbole/nat-updater-aws-connector:0.0.1
+    image: ernestio/nat-updater-aws-connector:1.4.0
+    build: /tmp/composable/nat-updater-aws-connector
     links:
     - nats
     depends_on:
@@ -265,7 +296,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-updater-vcloud-connector:
-    image: purehyperbole/nat-updater-vcloud-connector:0.0.1
+    image: ernestio/nat-updater-vcloud-connector:1.4.0
+    build: /tmp/composable/nat-updater-vcloud-connector
     links:
     - nats
     depends_on:
@@ -277,7 +309,8 @@ services:
     ports:
     - 4222:4222
   network-adapter:
-    image: purehyperbole/network-adapter:0.0.1
+    image: ernestio/network-adapter:1.4.0
+    build: /tmp/composable/network-adapter
     links:
     - nats
     depends_on:
@@ -285,7 +318,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-builder:
-    image: purehyperbole/network-builder:0.0.1
+    image: ernestio/network-builder:1.4.0
+    build: /tmp/composable/network-builder
     links:
     - nats
     - redis
@@ -294,7 +328,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-creator-aws-connector:
-    image: purehyperbole/network-creator-aws-connector:0.0.1
+    image: ernestio/network-creator-aws-connector:1.4.0
+    build: /tmp/composable/network-creator-aws-connector
     links:
     - nats
     depends_on:
@@ -302,7 +337,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-creator-vcloud-connector:
-    image: purehyperbole/network-creator-vcloud-connector:0.0.1
+    image: ernestio/network-creator-vcloud-connector:1.4.0
+    build: /tmp/composable/network-creator-vcloud-connector
     links:
     - nats
     depends_on:
@@ -310,7 +346,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-deleter-aws-connector:
-    image: purehyperbole/network-deleter-aws-connector:0.0.1
+    image: ernestio/network-deleter-aws-connector:1.4.0
+    build: /tmp/composable/network-deleter-aws-connector
     links:
     - nats
     depends_on:
@@ -318,7 +355,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-deleter-vcloud-connector:
-    image: purehyperbole/network-deleter-vcloud-connector:0.0.1
+    image: ernestio/network-deleter-vcloud-connector:1.4.0
+    build: /tmp/composable/network-deleter-vcloud-connector
     links:
     - nats
     depends_on:
@@ -343,7 +381,8 @@ services:
   redis:
     image: redis
   router-adapter:
-    image: purehyperbole/router-adapter:0.0.1
+    image: ernestio/router-adapter:1.4.0
+    build: /tmp/composable/router-adapter
     links:
     - nats
     depends_on:
@@ -351,7 +390,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   router-builder:
-    image: purehyperbole/router-builder:0.0.1
+    image: ernestio/router-builder:1.4.0
+    build: /tmp/composable/router-builder
     links:
     - nats
     - redis
@@ -360,7 +400,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   router-creator-vcloud-connector:
-    image: purehyperbole/router-creator-vcloud-connector:0.0.1
+    image: ernestio/router-creator-vcloud-connector:1.4.0
+    build: /tmp/composable/router-creator-vcloud-connector
     links:
     - nats
     depends_on:
@@ -368,7 +409,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   router-deleter-vcloud-connector:
-    image: purehyperbole/router-deleter-vcloud-connector:0.0.1
+    image: ernestio/router-deleter-vcloud-connector:1.4.0
+    build: /tmp/composable/router-deleter-vcloud-connector
     links:
     - nats
     depends_on:
@@ -376,7 +418,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   service-store:
-    image: purehyperbole/service-store:0.0.1
+    image: ernestio/service-store:1.4.0
+    build: /tmp/composable/service-store
     links:
     - nats
     depends_on:
@@ -384,7 +427,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   user-store:
-    image: purehyperbole/user-store:0.0.1
+    image: ernestio/user-store:1.4.0
+    build: /tmp/composable/user-store
     links:
     - nats
     depends_on:
@@ -392,7 +436,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   vcloud-definition-mapper:
-    image: purehyperbole/vcloud-definition-mapper:0.0.1
+    image: ernestio/vcloud-definition-mapper:1.4.0
+    build: /tmp/composable/vcloud-definition-mapper
     links:
     - nats
     - redis
@@ -402,7 +447,8 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   workflow-manager:
-    image: purehyperbole/workflow-manager:0.0.1
+    image: ernestio/workflow-manager:1.4.0
+    build: /tmp/composable/workflow-manager
     links:
     - nats
     - redis
