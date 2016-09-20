@@ -1,0 +1,72 @@
+{
+  "redis": {
+    "addr": "redis:6379",
+    "password": "",
+    "DB": 0
+  },
+  "postgres": {
+    "names": [
+      "users",
+      "clients",
+      "datacenters",
+      "services"
+    ],
+    "user": "",
+    "password": "",
+    "url": "postgres://postgres@postgres"
+  },
+  "logstash": {
+    "hostname": "ernest.local",
+    "port": 5000,
+    "timeout": 50000
+  },
+  "monitor": {
+    "host": "",
+    "port": "22000"
+  },
+  "connectors": {
+    "routers": [
+      "fake",
+      "vcloud",
+      "vcloud-fake",
+      "aws",
+      "aws-fake"
+    ],
+    "networks": [
+      "fake",
+      "vcloud",
+      "vcloud-fake",
+      "aws",
+      "aws-fake"
+    ],
+    "instances": [
+      "fake",
+      "vcloud",
+      "vcloud-fake",
+      "aws",
+      "aws-fake"
+    ],
+    "firewalls": [
+      "fake",
+      "vcloud",
+      "vcloud-fake",
+      "aws",
+      "aws-fake"
+    ],
+    "nats": [
+      "fake",
+      "vcloud",
+      "vcloud-fake",
+      "aws",
+      "aws-fake"
+    ],
+    "executions": [
+      "fake",
+      "salt"
+    ]
+  },
+  "salt": {
+    "user": "foo",
+    "password": "bar"
+  }
+}

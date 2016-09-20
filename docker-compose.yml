@@ -1,0 +1,414 @@
+version: "2"
+services:
+  all-all-fake-connector:
+    image: purehyperbole/all-all-fake-connector:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  api-gateway:
+    image: purehyperbole/api-gateway:0.0.1
+    ports:
+    - 8080:8080
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      JWT_SECRET: test
+      NATS_URI: nats://nats:4222
+  aws-definition-mapper:
+    image: purehyperbole/aws-definition-mapper:0.0.1
+    links:
+    - nats
+    - redis
+    - postgres
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  config-store:
+    image: purehyperbole/config-store:0.0.1
+    entrypoint: /go/bin/config-store -config /etc/ernest/config.json
+    volumes:
+    - ./config/config-store/:/etc/ernest/
+    links:
+    - nats
+    environment:
+      NATS_URI: nats://nats:4222
+  datacenter-store:
+    image: purehyperbole/datacenter-store:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  definition-mapper:
+    image: purehyperbole/definition-mapper:0.0.1
+    links:
+    - nats
+    - redis
+    - postgres
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  execution-adapter:
+    image: purehyperbole/execution-adapter:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  execution-builder:
+    image: purehyperbole/execution-builder:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-adapter:
+    image: purehyperbole/firewall-adapter:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-builder:
+    image: purehyperbole/firewall-builder:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-creator-aws-connector:
+    image: purehyperbole/firewall-creator-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-creator-vcloud-connector:
+    image: purehyperbole/firewall-creator-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-deleter-aws-connector:
+    image: purehyperbole/firewall-deleter-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-updater-aws-connector:
+    image: purehyperbole/firewall-updater-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  firewall-updater-vcloud-connector:
+    image: purehyperbole/firewall-updater-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  group-store:
+    image: purehyperbole/group-store:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-adapter:
+    image: purehyperbole/instance-adapter:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-builder:
+    image: purehyperbole/instance-builder:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-creator-aws-connector:
+    image: purehyperbole/instance-creator-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-creator-vcloud-connector:
+    image: purehyperbole/instance-creator-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-deleter-aws-connector:
+    image: purehyperbole/instance-deleter-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-deleter-vcloud-connector:
+    image: purehyperbole/instance-deleter-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-updater-aws-connector:
+    image: purehyperbole/instance-updater-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  instance-updater-vcloud-connector:
+    image: purehyperbole/instance-updater-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  monit:
+    image: purehyperbole/monit:0.0.1
+    ports:
+    - 22000:22000
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      JWT_SECRET: test
+      NATS_URI: nats://nats:4222
+  nat-adapter:
+    image: purehyperbole/nat-adapter:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nat-builder:
+    image: purehyperbole/nat-builder:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nat-creator-aws-connector:
+    image: purehyperbole/nat-creator-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nat-creator-vcloud-connector:
+    image: purehyperbole/nat-creator-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nat-deleter-aws-connector:
+    image: purehyperbole/nat-deleter-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nat-updater-aws-connector:
+    image: purehyperbole/nat-updater-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nat-updater-vcloud-connector:
+    image: purehyperbole/nat-updater-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nats:
+    image: nats
+    ports:
+    - 4222:4222
+  network-adapter:
+    image: purehyperbole/network-adapter:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  network-builder:
+    image: purehyperbole/network-builder:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  network-creator-aws-connector:
+    image: purehyperbole/network-creator-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  network-creator-vcloud-connector:
+    image: purehyperbole/network-creator-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  network-deleter-aws-connector:
+    image: purehyperbole/network-deleter-aws-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  network-deleter-vcloud-connector:
+    image: purehyperbole/network-deleter-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  nginx:
+    image: nginx
+    ports:
+    - 443:443
+    volumes:
+    - ./config/nginx/ernest.local:/etc/nginx/conf.d/default.conf
+    - ./config/nginx/ernest.key:/etc/nginx/conf.d/ernest.key
+    - ./config/nginx/ernest.crt:/etc/nginx/conf.d/ernest.crt
+    links:
+    - api-gateway:api-gateway
+    - monit:monit
+  postgres:
+    image: r3labs/postgres
+    environment:
+      DB_NAME: users,groups,datacenters,services
+  redis:
+    image: redis
+  router-adapter:
+    image: purehyperbole/router-adapter:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  router-builder:
+    image: purehyperbole/router-builder:0.0.1
+    links:
+    - nats
+    - redis
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  router-creator-vcloud-connector:
+    image: purehyperbole/router-creator-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  router-deleter-vcloud-connector:
+    image: purehyperbole/router-deleter-vcloud-connector:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  service-store:
+    image: purehyperbole/service-store:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  user-store:
+    image: purehyperbole/user-store:0.0.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  vcloud-definition-mapper:
+    image: purehyperbole/vcloud-definition-mapper:0.0.1
+    links:
+    - nats
+    - redis
+    - postgres
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+  workflow-manager:
+    image: purehyperbole/workflow-manager:0.0.1
+    links:
+    - nats
+    - redis
+    - postgres
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+networks: {}

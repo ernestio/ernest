@@ -1,1 +1,4 @@
 .vagrant/*
+config/nginx/ernest.key
+config/nginx/ernest.crt
+natsc
