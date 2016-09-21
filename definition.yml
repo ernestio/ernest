@@ -35,7 +35,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-      JWT_SECRET: 'test'
+      JWT_SECRET: 'GENERATEDJWTSECRET'
 
   - name: user-store
     path: git@github.com:ernestio/user-store.git
