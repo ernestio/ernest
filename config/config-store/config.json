@@ -66,7 +66,7 @@
     ]
   },
   "salt": {
-    "user": "foo",
-    "password": "bar"
+    "user": "salt",
+    "password": "33Arma33"
   }
 }

@@ -22,7 +22,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-      JWT_SECRET: 'test'
+      JWT_SECRET: 'GENERATEDJWTSECRET'
 
   - name: monit
     path: git@github.com:ernestio/monit.git

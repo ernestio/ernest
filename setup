@@ -38,6 +38,10 @@ openssl req \
 
 sed -i "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local
 
+# Setup a random JWT Token for api-gateway
+TOKEN=`openssl rand -base64 32`
+sed -i s/GENERATEDJWTSECRET/$TOKEN/g docker-compose.yml
+
 # Make volume for postgres data
 mkdir -p postgres/data
 
