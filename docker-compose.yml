@@ -1,7 +1,7 @@
 version: "2"
 services:
   all-all-fake-connector:
-    image: ernestio/all-all-fake-connector:1.4.0
+    image: ernestio/all-all-fake-connector:1.4.1
     links:
     - nats
     - redis
@@ -10,7 +10,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   api-gateway:
-    image: ernestio/api-gateway:1.4.0
+    image: ernestio/api-gateway:1.4.1
     ports:
     - 8080:8080
     links:
@@ -18,10 +18,10 @@ services:
     depends_on:
     - config-store
     environment:
-      JWT_SECRET: test
+      JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
   aws-definition-mapper:
-    image: ernestio/aws-definition-mapper:1.4.0
+    image: ernestio/aws-definition-mapper:1.4.1
     links:
     - nats
     - redis
@@ -31,7 +31,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   config-store:
-    image: ernestio/config-store:1.4.0
+    image: ernestio/config-store:1.4.1
     entrypoint: /go/bin/config-store -config /etc/ernest/config.json
     volumes:
     - ./config/config-store/:/etc/ernest/
@@ -40,7 +40,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   datacenter-store:
-    image: ernestio/datacenter-store:1.4.0
+    image: ernestio/datacenter-store:1.4.1
     links:
     - nats
     depends_on:
@@ -48,7 +48,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   definition-mapper:
-    image: ernestio/definition-mapper:1.4.0
+    image: ernestio/definition-mapper:1.4.1
     links:
     - nats
     - redis
@@ -58,7 +58,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   execution-adapter:
-    image: ernestio/execution-adapter:1.4.0
+    image: ernestio/execution-adapter:1.4.1
     links:
     - nats
     depends_on:
@@ -66,7 +66,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   execution-builder:
-    image: ernestio/execution-builder:1.4.0
+    image: ernestio/execution-builder:1.4.1
     links:
     - nats
     - redis
@@ -74,8 +74,16 @@ services:
     - config-store
     environment:
       NATS_URI: nats://nats:4222
+  execution-run-salt-connector:
+    image: ernestio/execution-run-salt-connector:1.4.1
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
   firewall-adapter:
-    image: ernestio/firewall-adapter:1.4.0
+    image: ernestio/firewall-adapter:1.4.1
     links:
     - nats
     depends_on:
@@ -83,7 +91,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-builder:
-    image: ernestio/firewall-builder:1.4.0
+    image: ernestio/firewall-builder:1.4.1
     links:
     - nats
     - redis
@@ -92,7 +100,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-creator-aws-connector:
-    image: ernestio/firewall-creator-aws-connector:1.4.0
+    image: ernestio/firewall-creator-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -100,7 +108,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-creator-vcloud-connector:
-    image: ernestio/firewall-creator-vcloud-connector:1.4.0
+    image: ernestio/firewall-creator-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -108,7 +116,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-deleter-aws-connector:
-    image: ernestio/firewall-deleter-aws-connector:1.4.0
+    image: ernestio/firewall-deleter-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -116,7 +124,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-updater-aws-connector:
-    image: ernestio/firewall-updater-aws-connector:1.4.0
+    image: ernestio/firewall-updater-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -124,7 +132,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   firewall-updater-vcloud-connector:
-    image: ernestio/firewall-updater-vcloud-connector:1.4.0
+    image: ernestio/firewall-updater-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -132,7 +140,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   group-store:
-    image: ernestio/group-store:1.4.0
+    image: ernestio/group-store:1.4.1
     links:
     - nats
     depends_on:
@@ -140,7 +148,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-adapter:
-    image: ernestio/instance-adapter:1.4.0
+    image: ernestio/instance-adapter:1.4.1
     links:
     - nats
     depends_on:
@@ -148,7 +156,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-builder:
-    image: ernestio/instance-builder:1.4.0
+    image: ernestio/instance-builder:1.4.1
     links:
     - nats
     - redis
@@ -157,7 +165,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-creator-aws-connector:
-    image: ernestio/instance-creator-aws-connector:1.4.0
+    image: ernestio/instance-creator-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -165,7 +173,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-creator-vcloud-connector:
-    image: ernestio/instance-creator-vcloud-connector:1.4.0
+    image: ernestio/instance-creator-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -173,7 +181,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-deleter-aws-connector:
-    image: ernestio/instance-deleter-aws-connector:1.4.0
+    image: ernestio/instance-deleter-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -181,7 +189,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-deleter-vcloud-connector:
-    image: ernestio/instance-deleter-vcloud-connector:1.4.0
+    image: ernestio/instance-deleter-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -189,7 +197,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-updater-aws-connector:
-    image: ernestio/instance-updater-aws-connector:1.4.0
+    image: ernestio/instance-updater-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -197,7 +205,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   instance-updater-vcloud-connector:
-    image: ernestio/instance-updater-vcloud-connector:1.4.0
+    image: ernestio/instance-updater-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -205,7 +213,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   monit:
-    image: ernestio/monit:1.4.0
+    image: ernestio/monit:1.4.1
     ports:
     - 22000:22000
     links:
@@ -213,10 +221,10 @@ services:
     depends_on:
     - config-store
     environment:
-      JWT_SECRET: test
+      JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
   nat-adapter:
-    image: ernestio/nat-adapter:1.4.0
+    image: ernestio/nat-adapter:1.4.1
     links:
     - nats
     depends_on:
@@ -224,7 +232,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-builder:
-    image: ernestio/nat-builder:1.4.0
+    image: ernestio/nat-builder:1.4.1
     links:
     - nats
     - redis
@@ -233,7 +241,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-creator-aws-connector:
-    image: ernestio/nat-creator-aws-connector:1.4.0
+    image: ernestio/nat-creator-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -241,7 +249,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-creator-vcloud-connector:
-    image: ernestio/nat-creator-vcloud-connector:1.4.0
+    image: ernestio/nat-creator-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -249,7 +257,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-deleter-aws-connector:
-    image: ernestio/nat-deleter-aws-connector:1.4.0
+    image: ernestio/nat-deleter-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -257,7 +265,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-updater-aws-connector:
-    image: ernestio/nat-updater-aws-connector:1.4.0
+    image: ernestio/nat-updater-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -265,7 +273,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   nat-updater-vcloud-connector:
-    image: ernestio/nat-updater-vcloud-connector:1.4.0
+    image: ernestio/nat-updater-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -277,7 +285,7 @@ services:
     ports:
     - 4222:4222
   network-adapter:
-    image: ernestio/network-adapter:1.4.0
+    image: ernestio/network-adapter:1.4.1
     links:
     - nats
     depends_on:
@@ -285,7 +293,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-builder:
-    image: ernestio/network-builder:1.4.0
+    image: ernestio/network-builder:1.4.1
     links:
     - nats
     - redis
@@ -294,7 +302,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-creator-aws-connector:
-    image: ernestio/network-creator-aws-connector:1.4.0
+    image: ernestio/network-creator-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -302,7 +310,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-creator-vcloud-connector:
-    image: ernestio/network-creator-vcloud-connector:1.4.0
+    image: ernestio/network-creator-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -310,7 +318,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-deleter-aws-connector:
-    image: ernestio/network-deleter-aws-connector:1.4.0
+    image: ernestio/network-deleter-aws-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -318,7 +326,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   network-deleter-vcloud-connector:
-    image: ernestio/network-deleter-vcloud-connector:1.4.0
+    image: ernestio/network-deleter-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -338,12 +346,14 @@ services:
     - monit:monit
   postgres:
     image: r3labs/postgres
+    volumes:
+    - ./postgres/data:/var/lib/postgresql/data
     environment:
       DB_NAME: users,groups,datacenters,services
   redis:
     image: redis
   router-adapter:
-    image: ernestio/router-adapter:1.4.0
+    image: ernestio/router-adapter:1.4.1
     links:
     - nats
     depends_on:
@@ -351,7 +361,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   router-builder:
-    image: ernestio/router-builder:1.4.0
+    image: ernestio/router-builder:1.4.1
     links:
     - nats
     - redis
@@ -360,7 +370,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   router-creator-vcloud-connector:
-    image: ernestio/router-creator-vcloud-connector:1.4.0
+    image: ernestio/router-creator-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -368,7 +378,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   router-deleter-vcloud-connector:
-    image: ernestio/router-deleter-vcloud-connector:1.4.0
+    image: ernestio/router-deleter-vcloud-connector:1.4.1
     links:
     - nats
     depends_on:
@@ -376,7 +386,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   service-store:
-    image: ernestio/service-store:1.4.0
+    image: ernestio/service-store:1.4.1
     links:
     - nats
     depends_on:
@@ -384,7 +394,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   user-store:
-    image: ernestio/user-store:1.4.0
+    image: ernestio/user-store:1.4.1
     links:
     - nats
     depends_on:
@@ -392,7 +402,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   vcloud-definition-mapper:
-    image: ernestio/vcloud-definition-mapper:1.4.0
+    image: ernestio/vcloud-definition-mapper:1.4.1
     links:
     - nats
     - redis
@@ -402,7 +412,7 @@ services:
     environment:
       NATS_URI: nats://nats:4222
   workflow-manager:
-    image: ernestio/workflow-manager:1.4.0
+    image: ernestio/workflow-manager:1.4.1
     links:
     - nats
     - redis

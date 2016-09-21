@@ -9,6 +9,8 @@ services:
       - 4222:4222
   postgres:
     image: r3labs/postgres
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
     environment:
       DB_NAME: users,groups,datacenters,services
   nginx:
