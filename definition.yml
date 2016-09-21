@@ -483,3 +483,13 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
+  - name: execution-run-salt-connector
+    path: git@github.com:ernestio/execution-run-salt-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+

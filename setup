@@ -38,6 +38,10 @@ openssl req \
 
 sed -i "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local
 
+# Make volume for postgres data
+mkdir -p postgres/data
+
+
 echo
 echo "Starting Ernest"
 # run docker compose, add a '-d' to run in daemon mode
