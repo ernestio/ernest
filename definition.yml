@@ -493,3 +493,44 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
+  - name: generic-adapter
+    path: git@github.com:ernestio/generic-adapter.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
+  - name: generic-builder
+    path: git@github.com:ernestio/generic-builder.git
+    branch: master
+    links:
+      - nats
+      - redis
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
+  - name: vpc-creator-aws-connector
+    path: git@github.com:ernestio/vpc-creator-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
+  - name: vpc-deleter-aws-connector
+    path: git@github.com:ernestio/vpc-deleter-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
