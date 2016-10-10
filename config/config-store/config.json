@@ -60,6 +60,11 @@
       "aws",
       "aws-fake"
     ],
+    "elbs": [
+      "fake",
+      "aws",
+      "aws-fake"
+    ],
     "executions": [
       "fake",
       "salt"
