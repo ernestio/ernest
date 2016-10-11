@@ -534,3 +534,33 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
+  - name: elb-creator-aws-connector
+    path: git@github.com:ernestio/elb-creator-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
+  - name: elb-deleter-aws-connector
+    path: git@github.com:ernestio/elb-deleter-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
+  - name: elb-updater-aws-connector
+    path: git@github.com:ernestio/elb-updater-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
