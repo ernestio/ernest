@@ -13,18 +13,7 @@ Vagrant: [http://www.vagrantup.com/](http://www.vagrantup.com/)
 
 ## Quickstart
 
-To start an instance of ernest, first please clone this repo
-
-```
-$ git clone https://github.com/ernestio/ernest.git
-$ cd ernest
-```
-
-Now we can simply run vagrant up and access the box via ssh
-
-```
-$ vagrant up
-```
+Follow the instructions on the [download page](http://ernest.io/download/) to install ernest with docker or vagrant
 
 
 ## Contributing
