@@ -136,16 +136,6 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
-  - name: network-adapter
-    path: git@github.com:ernestio/network-adapter.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
   - name: instance-adapter
     path: git@github.com:ernestio/instance-adapter.git
     branch: master
@@ -188,17 +178,6 @@ repos:
 
   - name: router-builder
     path: git@github.com:ernestio/router-builder.git
-    branch: master
-    links:
-      - nats
-      - redis
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: network-builder
-    path: git@github.com:ernestio/network-builder.git
     branch: master
     links:
       - nats
