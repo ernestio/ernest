@@ -543,3 +543,13 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
+  - name: s3-all-aws-connector
+    path: git@github.com:ernestio/s3-all-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+
