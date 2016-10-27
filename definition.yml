@@ -136,16 +136,6 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
-  - name: firewall-adapter
-    path: git@github.com:ernestio/firewall-adapter.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
   - name: nat-adapter
     path: git@github.com:ernestio/nat-adapter.git
     branch: master
@@ -168,17 +158,6 @@ repos:
 
   - name: router-builder
     path: git@github.com:ernestio/router-builder.git
-    branch: master
-    links:
-      - nats
-      - redis
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: firewall-builder
-    path: git@github.com:ernestio/firewall-builder.git
     branch: master
     links:
       - nats
@@ -531,4 +510,3 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-
