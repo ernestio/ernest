@@ -510,3 +510,15 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+
+  - name: logger
+    path: git@github.com:ernestio/logger.git
+    branch: master
+    links:
+      - nats
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_LOG_FILE: '/var/logs/ernest.log'
+    volumes:
+      - ./logs/:/var/logs/
+
