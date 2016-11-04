@@ -81,14 +81,6 @@ services:
     - config-store
     environment:
       NATS_URI: nats://nats:4222
-  s3-all-aws-connector:
-    image: ernestio/s3-all-aws-connector:1.6.0
-    links:
-    - nats
-    depends_on:
-    - config-store
-    environment:
-      NATS_URI: nats://nats:4222
   execution-adapter:
     image: ernestio/execution-adapter:1.6.0
     links:
@@ -486,15 +478,4 @@ services:
     - config-store
     environment:
       NATS_URI: nats://nats:4222
-  logger:
-    image: ernestio/logger:1.6.0
-    links:
-    - nats
-    depends_on:
-    - config-store
-    environment:
-      NATS_URI: nats://nats:4222
-      ERNEST_LOG_FILE: '/var/logs/ernest.log'
-    volumes:
-      - ./logs/:/var/logs/
 networks: {}
