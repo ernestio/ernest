@@ -36,11 +36,11 @@ openssl req \
     -keyout ./config/nginx/ernest.key \
     -out ./config/nginx/ernest.crt
 
-sed -i.bak "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local
+sed -e "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local.tmpl > ./config/nginx/ernest.local
 
 # Setup a random JWT Token for api-gateway
 TOKEN=`openssl rand -base64 32`
-sed -i.bak "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml
+sed -e "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml.tmpl > docker-compose.yml
 
 # Make volume for postgres data
 mkdir -p postgres/data
