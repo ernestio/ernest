@@ -501,3 +501,12 @@ repos:
     volumes:
       - ./logs/:/var/logs/
 
+  - name: route53-all-aws-connector
+    path: git@github.com:ernestio/route53-all-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
