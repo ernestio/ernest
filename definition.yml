@@ -327,8 +327,8 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
 
-  - name: nat-creator-aws-connector
-    path: git@github.com:ernestio/nat-creator-aws-connector.git
+  - name: nat-all-aws-connector
+    path: git@github.com:ernestio/all-all-aws-connector.git
     branch: master
     links:
       - nats
@@ -336,9 +336,10 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      COMPONENTS: 'nat.create.aws,nat.update.aws,nat.delete.aws'
 
-  - name: nat-deleter-aws-connector
-    path: git@github.com:ernestio/nat-deleter-aws-connector.git
+  - name: network-all-aws-connector
+    path: git@github.com:ernestio/all-all-aws-connector.git
     branch: master
     links:
       - nats
@@ -346,36 +347,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-
-  - name: nat-updater-aws-connector
-    path: git@github.com:ernestio/nat-updater-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: network-creator-aws-connector
-    path: git@github.com:ernestio/network-creator-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: network-deleter-aws-connector
-    path: git@github.com:ernestio/network-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
+      COMPONENTS: 'network.create.aws,network.delete.aws'
 
   - name: execution-run-salt-connector
     path: git@github.com:ernestio/execution-run-salt-connector.git
