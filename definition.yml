@@ -488,3 +488,13 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+
+  - name: rds-all-aws-connector
+    path: git@github.com:ernestio/rds-all-aws-connector.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
