@@ -317,6 +317,8 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_LOG_FILE: '/var/logs/ernest.log'
+      ERNEST_LOG_CONFIG: '/etc/ernest/'
     volumes:
       - ./logs/:/var/logs/
+      - ./config/:/etc/ernest/
 
