@@ -57,7 +57,7 @@ chmod +x ./natsc
 
 echo "Please provide your desired admin credentials:"
 read -p "- Username: " USERNAME
-read -p "- Password: " PASSWORD
+read -s -p "- Password: " PASSWORD
 
 
 # setup admin accounts
