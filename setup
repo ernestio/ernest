@@ -42,8 +42,7 @@ sed -i.bak "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local && rm ./conf
 TOKEN=`openssl rand -base64 32`
 sed -i.bak "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml && rm docker-compose.yml.bak
 
-echo "In order to make your ernest instance secure, we need you to provide a random string to secure all components:"
-read -p "- Crypto key: " CRYPTO_KEY
+CRYPTO_KEY=`openssl rand -base64 32`
 sed -i.bak "s:CRYPTO_KEY_TEMPLATE:$CRYPTO_KEY:g" docker-compose.yml && rm docker-compose.yml.bak
 
 # Make volume for postgres data
