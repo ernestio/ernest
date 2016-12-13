@@ -301,7 +301,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs.create.aws,ebs.update.aws,ebs.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws
+      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs_volume.create.aws,ebs_volume.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: execution-run-salt-connector
@@ -351,4 +351,3 @@ repos:
     volumes:
       - ./logs/:/var/logs/
       - ./config/:/etc/ernest/
-
