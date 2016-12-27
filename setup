@@ -36,11 +36,14 @@ openssl req \
     -keyout ./config/nginx/ernest.key \
     -out ./config/nginx/ernest.crt
 
-sed -i "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local
+sed -i.bak "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
 # Setup a random JWT Token for api-gateway
 TOKEN=`openssl rand -base64 32`
-sed -i "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml
+sed -i.bak "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml && rm docker-compose.yml.bak
+
+CRYPTO_KEY=`openssl rand -base64 24`
+sed -i.bak "s:CRYPTO_KEY_TEMPLATE:$CRYPTO_KEY:g" docker-compose.yml && rm docker-compose.yml.bak
 
 # Make volume for postgres data
 mkdir -p postgres/data
@@ -55,9 +58,16 @@ docker-compose up -d
 wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc
 chmod +x ./natsc
 
+echo "Please provide your desired admin credentials:"
+read -p "- Username: " USERNAME
+read -s -p "- Password: " PASSWORD
+
+
 # setup admin accounts
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'group.set' '{"id":"1","name": "admin"}'
-./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' '{"group_id": 1, "username": "admin", "password": "w4rmR3d", "admin":true}'
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"group_id\": 1, \"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"admin\":true}"
 
 echo
-echo "Setup complete. Please target Ernest CLI using https://127.0.0.1:443, or https://$ERNESTHOST"
+echo "Setup complete!" 
+echo "Please download the last version of ernest-cli from https://github.com/ernestio/ernest-cli/releases"
+echo "and run 'ernest-cli setup' providing https://$ERNESTHOST as target"

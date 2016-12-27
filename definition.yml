@@ -9,6 +9,7 @@ repos:
       - nats
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
     entrypoint: /go/bin/config-store -config /etc/ernest/config.json
 
   - name: api-gateway
@@ -23,6 +24,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       JWT_SECRET: 'GENERATEDJWTSECRET'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: monit
     path: git@github.com:ernestio/monit.git
@@ -36,6 +38,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       JWT_SECRET: 'GENERATEDJWTSECRET'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: user-store
     path: git@github.com:ernestio/user-store.git
@@ -46,6 +49,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: group-store
     path: git@github.com:ernestio/group-store.git
@@ -56,6 +60,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: datacenter-store
     path: git@github.com:ernestio/datacenter-store.git
@@ -66,6 +71,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: service-store
     path: git@github.com:ernestio/service-store.git
@@ -76,6 +82,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: workflow-manager
     path: git@github.com:ernestio/workflow-manager.git
@@ -88,6 +95,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: definition-mapper
     path: git@github.com:ernestio/definition-mapper.git
@@ -100,6 +108,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: vcloud-definition-mapper
     path: git@github.com:ernestio/vcloud-definition-mapper.git
@@ -112,6 +121,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: aws-definition-mapper
     path: git@github.com:ernestio/aws-definition-mapper.git
@@ -124,6 +134,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: execution-adapter
     path: git@github.com:ernestio/execution-adapter.git
@@ -134,6 +145,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: execution-builder
     path: git@github.com:ernestio/execution-builder.git
@@ -145,6 +157,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: all-all-fake-connector
     path: git@github.com:ernestio/all-all-fake-connector.git
@@ -156,6 +169,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: firewall-creator-vcloud-connector
     path: git@github.com:ernestio/firewall-creator-vcloud-connector.git
@@ -166,6 +180,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: firewall-updater-vcloud-connector
     path: git@github.com:ernestio/firewall-updater-vcloud-connector.git
@@ -176,6 +191,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: instance-creator-vcloud-connector
     path: git@github.com:ernestio/instance-creator-vcloud-connector.git
@@ -186,6 +202,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: instance-deleter-vcloud-connector
     path: git@github.com:ernestio/instance-deleter-vcloud-connector.git
@@ -196,6 +213,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: instance-updater-vcloud-connector
     path: git@github.com:ernestio/instance-updater-vcloud-connector.git
@@ -206,6 +224,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: nat-creator-vcloud-connector
     path: git@github.com:ernestio/nat-creator-vcloud-connector.git
@@ -216,6 +235,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: nat-updater-vcloud-connector
     path: git@github.com:ernestio/nat-updater-vcloud-connector.git
@@ -226,6 +246,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: network-creator-vcloud-connector
     path: git@github.com:ernestio/network-creator-vcloud-connector.git
@@ -236,6 +257,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: network-deleter-vcloud-connector
     path: git@github.com:ernestio/network-deleter-vcloud-connector.git
@@ -246,6 +268,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: router-creator-vcloud-connector
     path: git@github.com:ernestio/router-creator-vcloud-connector.git
@@ -256,6 +279,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: router-deleter-vcloud-connector
     path: git@github.com:ernestio/router-deleter-vcloud-connector.git
@@ -266,9 +290,10 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
-  - name: firewall-creator-aws-connector
-    path: git@github.com:ernestio/firewall-creator-aws-connector.git
+  - name: all-all-aws-connector
+    path: git@github.com:ernestio/all-all-aws-connector.git
     branch: master
     links:
       - nats
@@ -276,106 +301,8 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-
-  - name: firewall-deleter-aws-connector
-    path: git@github.com:ernestio/firewall-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: firewall-updater-aws-connector
-    path: git@github.com:ernestio/firewall-updater-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: instance-creator-aws-connector
-    path: git@github.com:ernestio/instance-creator-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: instance-deleter-aws-connector
-    path: git@github.com:ernestio/instance-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: instance-updater-aws-connector
-    path: git@github.com:ernestio/instance-updater-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: nat-creator-aws-connector
-    path: git@github.com:ernestio/nat-creator-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: nat-deleter-aws-connector
-    path: git@github.com:ernestio/nat-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: nat-updater-aws-connector
-    path: git@github.com:ernestio/nat-updater-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: network-creator-aws-connector
-    path: git@github.com:ernestio/network-creator-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: network-deleter-aws-connector
-    path: git@github.com:ernestio/network-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
+      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs_volume.create.aws,ebs_volume.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: execution-run-salt-connector
     path: git@github.com:ernestio/execution-run-salt-connector.git
@@ -386,6 +313,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: generic-adapter
     path: git@github.com:ernestio/generic-adapter.git
@@ -396,6 +324,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: generic-builder
     path: git@github.com:ernestio/generic-builder.git
@@ -407,66 +336,7 @@ repos:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
-
-  - name: vpc-creator-aws-connector
-    path: git@github.com:ernestio/vpc-creator-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: vpc-deleter-aws-connector
-    path: git@github.com:ernestio/vpc-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: elb-creator-aws-connector
-    path: git@github.com:ernestio/elb-creator-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: elb-deleter-aws-connector
-    path: git@github.com:ernestio/elb-deleter-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: elb-updater-aws-connector
-    path: git@github.com:ernestio/elb-updater-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-
-  - name: s3-all-aws-connector
-    path: git@github.com:ernestio/s3-all-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: logger
     path: git@github.com:ernestio/logger.git
@@ -476,15 +346,8 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_LOG_FILE: '/var/logs/ernest.log'
+      ERNEST_LOG_CONFIG: '/etc/ernest/'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
     volumes:
       - ./logs/:/var/logs/
-
-  - name: route53-all-aws-connector
-    path: git@github.com:ernestio/route53-all-aws-connector.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
+      - ./config/:/etc/ernest/
