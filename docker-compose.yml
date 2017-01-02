@@ -7,7 +7,8 @@ services:
     depends_on:
     - config-store
     environment:
-      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs.create.aws,ebs.update.aws,ebs.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws
+      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs_volume.create.aws,ebs_volume.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   all-all-fake-connector:
     image: ernestio/all-all-fake-connector:1.11.0
@@ -17,6 +18,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   api-gateway:
     image: ernestio/api-gateway:1.11.0
@@ -27,6 +29,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
   aws-definition-mapper:
@@ -38,6 +41,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   config-store:
     image: ernestio/config-store:1.11.0
@@ -47,6 +51,7 @@ services:
     links:
     - nats
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   datacenter-store:
     image: ernestio/datacenter-store:1.11.0
@@ -55,6 +60,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   definition-mapper:
     image: ernestio/definition-mapper:1.11.0
@@ -65,6 +71,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   execution-adapter:
     image: ernestio/execution-adapter:1.11.0
@@ -73,6 +80,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   execution-builder:
     image: ernestio/execution-builder:1.11.0
@@ -82,6 +90,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   execution-run-salt-connector:
     image: ernestio/execution-run-salt-connector:1.11.0
@@ -90,6 +99,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   firewall-creator-vcloud-connector:
     image: ernestio/firewall-creator-vcloud-connector:1.11.0
@@ -98,6 +108,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   firewall-updater-vcloud-connector:
     image: ernestio/firewall-updater-vcloud-connector:1.11.0
@@ -106,6 +117,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   generic-adapter:
     image: ernestio/generic-adapter:1.11.0
@@ -114,6 +126,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   generic-builder:
     image: ernestio/generic-builder:1.11.0
@@ -123,6 +136,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   group-store:
     image: ernestio/group-store:1.11.0
@@ -131,6 +145,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   instance-creator-vcloud-connector:
     image: ernestio/instance-creator-vcloud-connector:1.11.0
@@ -139,6 +154,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   instance-deleter-vcloud-connector:
     image: ernestio/instance-deleter-vcloud-connector:1.11.0
@@ -147,6 +163,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   instance-updater-vcloud-connector:
     image: ernestio/instance-updater-vcloud-connector:1.11.0
@@ -155,6 +172,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   logger:
     image: ernestio/logger:1.11.0
@@ -164,6 +182,7 @@ services:
     links:
     - nats
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_LOG_CONFIG: /etc/ernest/
       ERNEST_LOG_FILE: /var/logs/ernest.log
       NATS_URI: nats://nats:4222
@@ -176,6 +195,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
   nat-creator-vcloud-connector:
@@ -185,6 +205,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   nat-updater-vcloud-connector:
     image: ernestio/nat-updater-vcloud-connector:1.11.0
@@ -193,6 +214,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   nats:
     image: nats
@@ -205,6 +227,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   network-deleter-vcloud-connector:
     image: ernestio/network-deleter-vcloud-connector:1.11.0
@@ -213,6 +236,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   nginx:
     image: nginx
@@ -240,6 +264,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   router-deleter-vcloud-connector:
     image: ernestio/router-deleter-vcloud-connector:1.11.0
@@ -248,6 +273,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   service-store:
     image: ernestio/service-store:1.11.0
@@ -256,6 +282,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   user-store:
     image: ernestio/user-store:1.11.0
@@ -264,6 +291,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   vcloud-definition-mapper:
     image: ernestio/vcloud-definition-mapper:1.11.0
@@ -274,6 +302,7 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   workflow-manager:
     image: ernestio/workflow-manager:1.11.0
@@ -284,5 +313,6 @@ services:
     depends_on:
     - config-store
     environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
 networks: {}
