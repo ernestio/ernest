@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+# Check if there is a preiously existing version of ernest
+EXISTING=$(docker ps -q -f name=api-gateway)
+if [[ $EXISTING = *[!\ ]* ]]; then
+  echo "You already have an existing ernest instance running"
+  echo "ernest will be upgraded to last version."
+  TOKEN=$(docker exec $EXISTING sh -c 'echo "$JWT_SECRET"')
+  CRYPTO_KEY=`docker exec $EXISTING sh -c 'echo "$ERNEST_CRYPTO_KEY"'`
+
+  docker-compose down
+  git checkout docker-compose.yml
+  git checkout config/nginx/ernest.local
+  git checkout master
+  git pull
+
+  TOKEN=$TOKEN CRYPTO_KEY=$CRYPTO_KEY ./setup
+else
+  ./setup
+fi

@@ -2,3 +2,6 @@
 config/nginx/ernest.key
 config/nginx/ernest.crt
 natsc
+posgres/
+logs/
+config/.logger
