@@ -84,12 +84,11 @@ repos:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
-  - name: workflow-manager
-    path: git@github.com:ernestio/workflow-manager.git
+  - name: scheduler
+    path: git@github.com:ernestio/scheduler.git
     branch: master
     links:
       - nats
-      - redis
       - postgres
     depends:
       - config-store
@@ -102,57 +101,7 @@ repos:
     branch: master
     links:
       - nats
-      - redis
       - postgres
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: vcloud-definition-mapper
-    path: git@github.com:ernestio/vcloud-definition-mapper.git
-    branch: master
-    links:
-      - nats
-      - redis
-      - postgres
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: aws-definition-mapper
-    path: git@github.com:ernestio/aws-definition-mapper.git
-    branch: master
-    links:
-      - nats
-      - redis
-      - postgres
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: execution-adapter
-    path: git@github.com:ernestio/execution-adapter.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: execution-builder
-    path: git@github.com:ernestio/execution-builder.git
-    branch: master
-    links:
-      - nats
-      - redis
     depends:
       - config-store
     environment:
@@ -164,7 +113,6 @@ repos:
     branch: master
     links:
       - nats
-      - redis
     depends:
       - config-store
     environment:
@@ -309,29 +257,6 @@ repos:
     branch: master
     links:
       - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: generic-adapter
-    path: git@github.com:ernestio/generic-adapter.git
-    branch: master
-    links:
-      - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: generic-builder
-    path: git@github.com:ernestio/generic-builder.git
-    branch: master
-    links:
-      - nats
-      - redis
     depends:
       - config-store
     environment:
