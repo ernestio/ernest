@@ -24,6 +24,10 @@
     "host": "",
     "port": "22000"
   },
+  "logger": {
+    "host": "",
+    "port": "22001"
+  },
   "connectors": {
     "routers": [
       "fake",
