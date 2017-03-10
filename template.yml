@@ -20,5 +20,6 @@ services:
     links:
       - api-gateway:api-gateway
       - monit:monit
+      - logger:logger
     ports:
       - 443:443

@@ -2,18 +2,9 @@
 Full Stack Application Orchestration
 
 
-## Prerequisites
-
-Please get setup with vagrant and virtualbox.
-
-Virtual Box: [https://www.virtualbox.org/](https://www.virtualbox.org/)
-
-Vagrant: [http://www.vagrantup.com/](http://www.vagrantup.com/)
-
-
 ## Quickstart
 
-Follow the instructions on the [download page](http://ernest.io/download/) to install ernest with docker or vagrant
+Follow the instructions on the [download page](http://docs.ernest.io/downloads/) to install ernest, then take a look at our [getting started page](http://docs.ernest.io/getting-started/) to see how to work with ernest.
 
 
 ## Contributing
