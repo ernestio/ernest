@@ -66,8 +66,16 @@ wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc
 chmod +x ./natsc
 
 echo "Please provide your desired admin credentials:"
-read -p "- Username: " USERNAME
-read -s -p "- Password: " PASSWORD
+USERNAME=
+PASSWORD=
+while [[ $USERNAME = "" ]]; do
+  read -p "- Username: " USERNAME
+done
+while [[ $PASSWORD = "" ]]; do
+  read -s -p "- Password: " PASSWORD
+  echo
+done
+
 
 
 # setup admin accounts
