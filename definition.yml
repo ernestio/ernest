@@ -84,6 +84,18 @@ repos:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
+
+  - name: usage-store
+    path: git@github.com:ernestio/usage-store.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+
   - name: scheduler
     path: git@github.com:ernestio/scheduler.git
     branch: master
