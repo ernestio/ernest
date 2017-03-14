@@ -1,8 +1,6 @@
 ---
 version: '2'
 services:
-  redis:
-    image: redis
   nats:
     image: nats
     ports:
@@ -12,7 +10,7 @@ services:
     volumes:
       - ./postgres/data:/var/lib/postgresql/data
     environment:
-      DB_NAME: users,groups,datacenters,services
+      DB_NAME: users,groups,datacenters,services,usage
   nginx:
     image: nginx
     volumes:
@@ -22,5 +20,6 @@ services:
     links:
       - api-gateway:api-gateway
       - monit:monit
+      - logger:logger
     ports:
       - 443:443
