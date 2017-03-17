@@ -132,7 +132,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: all-all-vcloud-connector
-    path: git@github.com:ernestio/firewall-creator-vcloud-connector.git
+    path: git@github.com:ernestio/all-all-vcloud-connector.git
     branch: master
     links:
       - nats
