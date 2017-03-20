@@ -1,0 +1,23 @@
+---
+version: '2'
+services:
+  redis:
+    image: redis
+  nats:
+    image: nats
+    ports:
+      - 4222:4222
+  postgres:
+    image: r3labs/postgres
+    environment:
+      DB_NAME: users,groups,datacenters,services
+  nginx:
+    image: nginx
+    volumes:
+      - ./config/nginx/ernest.local:/etc/nginx/conf.d/default.conf
+    links:
+      - api-gateway:api-gateway
+      - monit:monit
+    ports:
+      - 80:80
+      - 443:443
