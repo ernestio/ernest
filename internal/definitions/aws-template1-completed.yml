@@ -1,0 +1,20 @@
+name: aws-test-4
+datacenter: tom-aws
+bootstrapping: none
+vpc_id: vpc-a921accd
+networks:
+- name: web
+  public: true
+  subnet: 10.0.3.0/24
+instances:
+- name: web
+  type: t2.micro
+  image: ami-ed82e39e
+  network: web
+  start_ip: 10.0.3.11
+  count: 1
+  key_pair: tom
+  user_data: |
+    #cloud-config
+  security_groups:
+  - web-sg-1

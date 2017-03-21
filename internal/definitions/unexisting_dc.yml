@@ -1,0 +1,36 @@
+# Basic aws example
+---
+name: aws_test_service
+datacenter: non_existing_dc
+bootstrapping: none
+service_ip: 172.16.186.44
+vpc_subnet: 1.1.1.1/24
+
+networks:
+  - name: web
+    public: true
+    subnet: 10.1.0.0/24
+
+instances:
+  - name: web
+    type: e1.micro
+    image: ami-6666f915
+    network: web
+    start_ip: 10.1.0.11
+    count: 1
+    key_pair: some-keypair
+    security_groups:
+      - web-sg-1
+
+security_groups:
+  - name: web-sg-1
+    egress:
+      - from_port: '80'
+        ip: 10.1.1.11/32
+        protocol: any
+        to_port: '80'
+    ingress:
+      - from_port: '80'
+        ip: 10.1.1.11/32
+        protocol: any
+        to_port: '80'
