@@ -5,8 +5,7 @@ build:
 lint:
 
 test:
-	gucumber internal/features/aws/
-	gucumber internal/features/cli/
+	gucumber
 
 cover:
 

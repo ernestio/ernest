@@ -20,10 +20,8 @@ Feature: Service import
   Scenario: Logged service non existing import
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "pwd"
-    And the datacenter "test_dc" does not exist
-    And I run ernest with "datacenter create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region --fake test_dc"
     And The service "imported" does not exist
-    When I run ernest with "service import test_dc imported"
+    When I run ernest with "service import fakeaws imported"
     Then The output line number "3" should contain "Importing rds instances:"
     And The output line number "4" should contain "- found"
     And The output line number "5" should contain "Engine    : engine"

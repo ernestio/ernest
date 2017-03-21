@@ -1,7 +1,9 @@
 package aws
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"math/rand"
@@ -281,39 +283,6 @@ func init() {
 		// runs before every feature or scenario tagged with @login
 	})
 
-	Given(`^I setup ernest with target "(.+?)"$`, func(target string) {
-		if os.Getenv("CURRENT_INSTANCE") != "" {
-			target = os.Getenv("CURRENT_INSTANCE")
-		}
-
-		ernest("target", target)
-	})
-
-	Given(`^I'm logged in as "(.+?)" / "(.+?)"$`, func(u, p string) {
-		ernest("login", "--user", u, "--password", p)
-	})
-
-	When(`^I run ernest with "(.+?)"$`, func(args string) {
-		cmdArgs := strings.Split(args, " ")
-		ernest(cmdArgs...)
-	})
-
-	Then(`^The output should contain "(.+?)"$`, func(needle string) {
-		if strings.Contains(lastOutput, needle) == false {
-			T.Errorf(`Last output string does not contain "` + needle + `": ` + "\n" + lastOutput)
-		}
-	})
-
-	Then(`^The output should not contain "(.+?)"$`, func(needle string) {
-		if strings.Contains(lastOutput, needle) == true {
-			T.Errorf(`Last output string does contains "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
-		}
-	})
-
-	When(`^I logout$`, func() {
-		ernest("logout")
-	})
-
 	When(`^I enter text "(.+?)"$`, func(input string) {
 		cmd := exec.Command("ernest-cli", input)
 		o, err := cmd.CombinedOutput()
@@ -480,8 +449,53 @@ func getDefinitionPathAWS(def string, service string) string {
 }
 
 func ernest(cmdArgs ...string) {
-	cmd := exec.Command("ernest-cli", cmdArgs...)
-	o, err := cmd.CombinedOutput()
-	lastOutput = string(o)
-	lastError = err
+	lastOutput, lastError = run(20, "ernest-cli", cmdArgs...)
+}
+
+func run(timeout int, command string, args ...string) (string, error) {
+	// instantiate new command
+	cmd := exec.Command(command, args...)
+
+	// get pipe to standard output
+	stdout, err := cmd.StdoutPipe()
+	if err != nil {
+		log.Println("cmd.StdoutPipe() error: " + err.Error())
+		return "cmd.StdoutPipe() error: " + err.Error(), err
+	}
+
+	// start process via command
+	if err := cmd.Start(); err != nil {
+		log.Println("cmd.Start() error: " + err.Error())
+		return "cmd.Start() error: " + err.Error(), err
+	}
+
+	// setup a buffer to capture standard output
+	var buf bytes.Buffer
+
+	// create a channel to capture any errors from wait
+	done := make(chan error)
+	go func() {
+		if _, err := buf.ReadFrom(stdout); err != nil {
+			panic("buf.Read(stdout) error: " + err.Error())
+		}
+		done <- cmd.Wait()
+	}()
+
+	// block on select, and switch based on actions received
+	select {
+	case <-time.After(time.Duration(timeout) * time.Second):
+		if err := cmd.Process.Kill(); err != nil {
+			log.Println("failed to kill: " + err.Error())
+			return "failed to kill: " + err.Error(), err
+		}
+		return "timeout reached, process killed", errors.New("Timeout reached, process killed")
+	case err := <-done:
+		if err != nil {
+			close(done)
+			log.Println("process done, with error : " + err.Error())
+			return buf.String(), nil
+		}
+		log.Println("process completed : " + buf.String())
+		return "process completed: " + buf.String(), nil
+	}
 }

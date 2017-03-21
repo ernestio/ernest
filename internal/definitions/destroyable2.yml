@@ -1,16 +1,20 @@
 # Basic aws example
 ---
 name: destroyable
-datacenter: test_dc
+datacenter: r3-dc2
 bootstrapping: none
 service_ip: 172.16.186.44
-vpc_subnet: 1.1.1.1/24
+vpcs:
+  - name: test-vpc
+    subnet: 1.1.1.1/24
 
 networks:
   - name: web
+    vpc: test-vpc
     public: true
     subnet: 10.1.0.0/24
 
   - name: other
+    vpc: test-vpc
     public: true
     subnet: 10.2.0.0/24
