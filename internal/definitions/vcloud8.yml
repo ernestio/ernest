@@ -1,0 +1,12 @@
+---
+name: my_service
+datacenter: fakevcloud
+
+instances:
+  - name: web
+    image: r3/ubuntu-1404
+    cpus: 1
+    memory: 1GB
+    count: 1
+    network: web
+    start_ip: 10.1.0.11

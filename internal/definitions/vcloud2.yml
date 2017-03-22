@@ -37,21 +37,8 @@ routers:
       protocol: tcp
       action: allow
 
-    networks:
-      - name: web
-        subnet: 10.1.0.0/24
-
     port_forwarding:
       - source: 172.16.186.44
         from_port: '22'
         to_port: '22'
         destination: 10.1.0.11
-
-instances:
-  - name: web
-    image: r3/ubuntu-1404
-    cpus: 1
-    memory: 1GB
-    count: 1
-    network: web
-    start_ip: 10.1.0.11

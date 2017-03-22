@@ -496,6 +496,6 @@ func run(timeout int, command string, args ...string) (string, error) {
 			return buf.String(), nil
 		}
 		log.Println("process completed : " + buf.String())
-		return "process completed: " + buf.String(), nil
+		return buf.String(), nil
 	}
 }

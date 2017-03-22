@@ -39,7 +39,7 @@ dependencies:
     - sed -i "s:ERNESTHOST:ernest.local:g" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "/ssl_certificate/d" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "s:443:80:g" $ROOTPATH/ernest/template.yml
-    - cd $ROOTPATH/ernest && composable gen -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION definition.yml template.yml --
+    - cd $ROOTPATH/ernest && composable gen -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION $SPECIFIC_SERVICES definition.yml template.yml --
     - cd $ROOTPATH/ernest && docker-compose -f docker-compose.yml up -d
     - cd $ROOTPATH/ernest && docker-compose logs > /tmp/compose.log:
           background: true

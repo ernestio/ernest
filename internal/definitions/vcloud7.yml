@@ -33,7 +33,7 @@ routers:
       source: 172.19.186.30
       from_port: any
       destination: internal
-      to_port: '22'
+      to_port: '8080'
       protocol: tcp
       action: allow
 
@@ -50,8 +50,8 @@ routers:
 instances:
   - name: web
     image: r3/ubuntu-1404
-    cpus: 1
-    memory: 1GB
-    count: 1
+    cpus: 4
+    memory: 8GB
+    count: 2
     network: web
     start_ip: 10.1.0.11
