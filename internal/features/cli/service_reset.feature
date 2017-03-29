@@ -13,7 +13,7 @@ Feature: Ernest service reset
     And The service "destroyable" does not exist
     And I apply the definition "destroyable.yml"
     When I run ernest with "service reset destroyable"
-    Then The output should contain "The service 'destroyable' can't be resetted as is on status 'done'"
+    Then The output should contain "The service 'destroyable' cannot be reset as its status is 'done'"
     And I force "destroyable" to be on status "in_progress"
     When I run ernest with "service list"
     And The output line number "3" should contain "destroyable"
@@ -26,5 +26,4 @@ Feature: Ernest service reset
     And The output line number "3" should contain "errored"
     And The output line number "3" should contain "usr"
     When I run ernest with "service reset destroyable"
-    Then The output should contain "The service 'destroyable' can't be resetted as is on status 'errored'"
-
+    Then The output should contain "The service 'destroyable' cannot be reset as its status is 'errored'"

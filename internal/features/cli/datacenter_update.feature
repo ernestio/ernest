@@ -47,4 +47,3 @@ Feature: Ernest datacenter create
     And I'm logged in as "usr" / "pwd"
     When I run ernest with "datacenter update aws tmp_datacenter --secret_access_key very_large_aws_token_string --access_key_id secret"
     Then The output should contain "Datacenter 'tmp_datacenter' does not exist, please specify a different datacenter name"
-

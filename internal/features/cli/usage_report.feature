@@ -4,9 +4,10 @@ Feature: Usage report
   Scenario: Usage report
     Given I setup a new service name
     And I setup ernest with target "https://ernest.local"
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "usr" / "pwd"
     And I apply the definition "aws1.yml"
-    When I run ernest with "usage"
+    And I'm logged in as "ci_admin" / "pwd"
+    When I run ernest with "usage --from 2017-01-01 --to 2099-01-01"
     Then The output line number "0" should contain "id"
     Then The output line number "0" should contain "service"
     Then The output line number "0" should contain "type"
