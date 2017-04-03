@@ -23,8 +23,7 @@ Feature: Ernest project delete
   Scenario: User deletes a project which does not exist
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-		And the project "myapp" does not exist
-    When I run ernest with "project delete myapp"
+    When I run ernest with "project delete fakeProject"
     Then the output should contain "Specified project does not exist, please choose a different one."
 
   Scenario: User deletes a project with no name

@@ -54,8 +54,8 @@ Feature: Ernest environment update
   Scenario: User updates an environment which doesn't exists
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the environment "dev" does not exist in project "myapp"
-    When I run ernest with "environment update myapp dev --provider aws --access-key foo --secret-key bar"
+		And the project "myapp" exists
+    When I run ernest with "environment update myapp fakeEnvironment --provider aws --access-key foo --secret-key bar"
     Then the output should contain "Specified project does not exist, please choose a different one."
 
   Scenario: User updates an environment without providing an environment name

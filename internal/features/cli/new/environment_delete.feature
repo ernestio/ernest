@@ -54,7 +54,7 @@ Feature: Ernest environment delete
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
 		And the project "myapp" exists
-    When I run ernest with "environment delete myapp fakeEnv"
+    When I run ernest with "environment delete myapp fakeEnvironment"
     Then the output should contain "Specified environment does not exist, please choose a different one."
 
   Scenario: User deletes an environment with no name

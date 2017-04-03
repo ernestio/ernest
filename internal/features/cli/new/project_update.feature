@@ -23,8 +23,7 @@ Feature: Ernest project update
   Scenario: User updates a project which doesn't exists
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-		And the project "myapp" does not exist
-    When I run ernest with "project update myapp --provider aws --access-key foo --secret-key bar"
+    When I run ernest with "project update fakeProject --provider aws --access-key foo --secret-key bar"
     Then the output should contain "Specified project does not exist, please choose a different one."
 
   Scenario: User updates a project without providing a project name

@@ -26,8 +26,7 @@ Feature: Ernest project info
   Scenario: User lists project information for a non existant project
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-		And the project "myapp" does not exist
-    When I run ernest with "project info myapp"
+    When I run ernest with "project info fakeProject"
     Then the output should contain "Project does not exist"
 
   Scenario: User lists project information without providing a project name

@@ -55,8 +55,8 @@ Feature: Ernest environment info
   Scenario: User lists environment information for a non existant environment
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-		And the environment "dev" does not exist in project "myapp"
-    When I run ernest with "environment info myapp dev"
+		And the project "myapp" exists
+    When I run ernest with "environment info myapp fakeEnvironment"
     Then the output should contain "Environment does not exist"
 
   Scenario: User lists environment information without providing an environment name
