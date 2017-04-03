@@ -10,6 +10,7 @@ Feature: Ernest user update
   Scenario: User updates another users password
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
+		And the user "jane" exists
     When I run ernest with "user update password jane secret"
     Then the output should contain "You're not allowed to perform this action, please contact your administrator."
 

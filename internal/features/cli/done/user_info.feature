@@ -31,7 +31,7 @@ Feature: Ernest user info
   Scenario: Admin lists information about another admin user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    And the admin user "admin2" exists
+		And the user "admin2" exists with admin role
     When I run ernest with "user info --user admin2"
     Then the output should contain "admin2"
     And the output should contain "Admin: True"

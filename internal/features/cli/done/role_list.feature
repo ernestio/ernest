@@ -5,8 +5,7 @@ Feature: Ernest role list
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
     When I run ernest with "role list"
-    Then the output should contain "admin"
-    And the output should contain "owner"
+    Then the output should contain "owner"
     And the output should contain "reader"
 
   Scenario: Unauthenticated user lists roles

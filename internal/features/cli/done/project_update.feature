@@ -4,8 +4,7 @@ Feature: Ernest project update
   Scenario: User updates provider details on a project
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-	And the project "myapp" exists
-	And the user "john" has "<role>" role on project "myapp"
+		And the user "john" has "<role>" role on project "myapp"
     When I run ernest with "project update myapp --provider aws --access-key foo --secret-key bar"
     Then the output should contain "<output>"
 
@@ -17,16 +16,22 @@ Feature: Ernest project update
   Scenario: User updates a project with unknown provider type
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-	And the project "myapp" exists
-	And the user "john" has "owner" role on project "myapp"
+		And the user "john" has "owner" role on project "myapp"
     When I run ernest with "project update myapp --provider fakeProvider"
     Then the output should contain "Specified provider is unknown, please choose a different one."
 
   Scenario: User updates a project which doesn't exists
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
+		And the project "myapp" does not exist
     When I run ernest with "project update myapp --provider aws --access-key foo --secret-key bar"
     Then the output should contain "Specified project does not exist, please choose a different one."
+
+  Scenario: User updates a project without providing a project name
+    Given I setup ernest with target "https://ernest.local"
+    And I'm logged in as "john" / "secret"
+    When I run ernest with "project update"
+    Then the output should contain "help"
 
   Scenario: Unuthenticated user updates a project
     Given I setup ernest with target "https://ernest.local"

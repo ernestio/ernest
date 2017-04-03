@@ -4,6 +4,7 @@ Feature: Ernest user delete
   Scenario: User deletes a user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
+    And the user "jane" exists
     When I run ernest with "user delete jane"
     Then the output should contain "You're not allowed to perform this action, please contact your administrator."
 
@@ -17,14 +18,14 @@ Feature: Ernest user delete
   Scenario: Admin deletes a non existant user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    When I run ernest with "user delete john"
+    When I run ernest with "user delete fakeUser"
     Then the output should contain "User does not exist"
 
   Scenario: Admin deletes themselves
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
     When I run ernest with "user delete admin"
-    Then the output should contain "Currently logged in as admin, you cannot delete yourself."
+    Then the output should contain "Currently logged in as this user, you cannot delete yourself."
 
   Scenario: Unuthenticated user deletes a user
     Given I setup ernest with target "https://ernest.local"

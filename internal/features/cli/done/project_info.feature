@@ -4,7 +4,6 @@ Feature: Ernest project info
   Scenario: User with role lists project information
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the project "myapp" exists
     And the user "john" has "<role>" role on project "myapp"
     When I run ernest with "project info myapp"
     Then the output should contain "Name: myapp"
@@ -20,17 +19,22 @@ Feature: Ernest project info
   Scenario: User without role lists project information
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the project "myapp" exists
-    And the user "jane" exists
-    And the user "jane" has "owner" role on project "myapp"
+		And the user "john" has no role on project "myapp"
     When I run ernest with "project info myapp"
     Then the output should contain "Project does not exist"
     
   Scenario: User lists project information for a non existant project
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    When I run ernest with "project info fakeProject"
+		And the project "myapp" does not exist
+    When I run ernest with "project info myapp"
     Then the output should contain "Project does not exist"
+
+  Scenario: User lists project information without providing a project name
+    Given I setup ernest with target "https://ernest.local"
+    And I'm logged in as "john" / "secret"
+    When I run ernest with "project info"
+    Then the output should contain "help"
 
   Scenario: Unauthenticated user lists project information
     Given I setup ernest with target "https://ernest.local"

@@ -14,31 +14,40 @@ Feature: Ernest role unset
     When I run ernest with "role unset fakeRole john"
     Then the output should contain "Role does not exist"
 
+  Scenario: User revokes a role without providing a type and user
+		Given I setup ernest with target "https://ernest.local"
+		And I'm logged in as "admin" / "secret"
+		When I run ernest with "role unset"
+    Then the output should contain "help"
+
   # admin
   Scenario: User revokes admin role from another user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the user "jane" exists
-    And the user "jane" has admin role
-    When I run ernest with "role unset admin jane"
+    And the user "admin2" exists with admin role
+    When I run ernest with "role unset admin admin2"
     Then the output should contain "You're not allowed to perform this action, please contact your administrator."
+
+  Scenario: Admin revokes admin role without providing a user
+    Given I setup ernest with target "https://ernest.local"
+    And I'm logged in as "admin" / "secret"
+    When I run ernest with "role unset admin"
+    Then the output should contain "Please specify a user."
 
   Scenario: Admin revokes admin role from another user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    And the user "john" exists
-    And the user "john" has admin role
-    When I run ernest with "role unset admin john"
+    And the user "admin2" has admin role
+    When I run ernest with "role unset admin admin2"
     Then the output should contain "Role revoked"
 
   # project-level
   Scenario: User revokes a project level role from another user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the user "jane" exists
-    And the project "myapp" exists
     And the user "john" has "<role>" role on project "myapp"
-    When I run ernest with "role unset "<unset-role>" jane myapp"
+    And the user "jane" has "<unset-role>" role on project "myapp"
+    When I run ernest with "role unset <unset-role> jane myapp"
     Then the output should contain "<output>"
 
     Examples:
@@ -51,10 +60,8 @@ Feature: Ernest role unset
   Scenario: Admin revokes a project level role from another user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    And the user "john" exists
-    And the project "myapp" exists
     And the user "john" has "<role>" role on project "myapp"
-    When I run ernest with "role unset "<role>" john myapp"
+    When I run ernest with "role unset <role> john myapp"
     Then the output should contain "<output>"
 
     Examples:
@@ -66,13 +73,10 @@ Feature: Ernest role unset
   Scenario: User revokes an environment level role from another user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the user "jane" exists
-    And the project "myapp" exists
-    And the environment "dev" in project "myapp" exists
     And the user "john" has "<prj-role>" role on project "myapp"
     And the user "john" has "<env-role>" role on environment "dev" in project "myapp"
-	And the user "jane" has "<set-role>" role on environment "dev" in project "myapp"
-    When I run ernest with "role unset "<unset-role>" jane myapp dev"
+		And the user "jane" has "<unset-role>" role on environment "dev" in project "myapp"
+    When I run ernest with "role unset <unset-role> jane myapp dev"
     Then the output should contain "<output>"
 
     Examples:
@@ -87,11 +91,8 @@ Feature: Ernest role unset
   Scenario: Admin revokes an environment level role from another user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    And the user "john" exists
-    And the project "myapp" exists
-    And the environment "dev" in project "myapp" exists
     And the user "john" has "<role>" role on project "myapp" environment "dev"
-    When I run ernest with "role unset "<role>" john myapp dev"
+    When I run ernest with "role unset <role> john myapp dev"
     Then the output should contain "<output>"
 
     Examples:

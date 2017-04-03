@@ -4,21 +4,16 @@ Feature: Ernest project list
   Scenario: User lists projects
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "john" / "secret"
-    And the project "johnApp" exists
-    And the user "john" has "owner" role on project "johnApp"
-    And the user "jane" exists
-    And the project "janeApp" exists
-    And the user "jane" has "owner" role on project "janeApp"
+    And the user "john" has "owner" role on project "myapp"
+		And the user "john" has no role on project "myapp2"
     When I run ernest with "project list"
-    Then the output should contain "johnApp"
-    But the output should not contain "janeApp"
+    Then the output should contain "myapp"
+    But the output should not contain "myapp2"
 
   Scenario: Admin lists projects
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    And the user "john" exists
-    And the project "myapp" exists
-    And the user "john" has "owner" role on project "myapp"
+    And the user "admin" has no role on project "myapp"
     When I run ernest with "project list"
     Then the output should contain "myapp"
 
