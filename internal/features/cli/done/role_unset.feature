@@ -4,14 +4,14 @@ Feature: Ernest role unset
   Scenario: Role is revoked from a non existant user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
-    When I run ernest with "role unset admin fakeuser"
+    When I run ernest with "role unset admin fakeUser"
     Then the output should contain "User does not exist"
 
   Scenario: Non existant role is revoked from a user
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "admin" / "secret"
     And the user "john" exists
-    When I run ernest with "role unset fakerole john"
+    When I run ernest with "role unset fakeRole john"
     Then the output should contain "Role does not exist"
 
   # admin
@@ -70,8 +70,8 @@ Feature: Ernest role unset
     And the project "myapp" exists
     And the environment "dev" in project "myapp" exists
     And the user "john" has "<prj-role>" role on project "myapp"
-    And the user "john" has "<env-role>" role on project "myapp" environment "dev"
-    And the user "jane" has "<set-role>" role on project "myapp" environment "dev"
+    And the user "john" has "<env-role>" role on environment "dev" in project "myapp"
+	And the user "jane" has "<set-role>" role on environment "dev" in project "myapp"
     When I run ernest with "role unset "<unset-role>" jane myapp dev"
     Then the output should contain "<output>"
 
