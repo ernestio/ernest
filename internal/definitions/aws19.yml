@@ -1,0 +1,73 @@
+# Add a nat gateway and attach a private network to it
+---
+name: my_service
+datacenter: r3-dc2
+
+vpcs:
+  - name: test-vpc
+    subnet: 1.1.1.1/24
+
+nat_gateways:
+  - name: db-nat
+    public_network: web
+
+networks:
+  - name: web
+    vpc: test-vpc
+    subnet: 10.1.0.0/24
+    public: true
+  - name: db-a
+    vpc: test-vpc
+    subnet: 10.2.0.0/24
+    public: false
+    availability_zone: fake-1a
+    nat_gateway: db-nat
+  - name: db-b
+    vpc: test-vpc
+    subnet: 10.3.0.0/24
+    public: false
+    availability_zone: fake-1b
+    nat_gateway: db-nat
+
+instances:
+  - name: web
+    type: e1.micro
+    image: ami-6666f915
+    network: web
+    start_ip: 10.1.0.11
+    count: 1
+    key_pair: some-keypair
+
+security_groups:
+  - name: web-sg-1
+    vpc: test-vpc
+    egress:
+      - from_port: '80'
+        ip: 10.1.1.11/32
+        protocol: any
+        to_port: '80'
+    ingress:
+      - from_port: '80'
+        ip: 10.1.1.11/32
+        protocol: any
+        to_port: '80'
+
+rds_clusters:
+  - name: aurora
+    engine: aurora
+    port: 3306
+    networks:
+      - db-a
+      - db-b
+    security_groups:
+      - web-sg-1
+    backups:
+      retention: 1
+    database_name: test
+    database_username: test
+    database_password: testpass-2
+
+rds_instances:
+  - name: test-1
+    cluster: aurora
+    size: db.r3.xlarge

@@ -1,0 +1,16 @@
+# Basic aws example
+---
+name: referenced
+datacenter: test_dc
+bootstrapping: none
+service_ip: 172.16.186.44
+vpcs:
+  - name: test-vpc
+    subnet: 1.1.1.1/24
+
+networks:
+  - name: web
+    vpc: test-vpc
+    public: true
+    subnet: 10.1.0.0/24
+

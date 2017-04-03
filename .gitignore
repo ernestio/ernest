@@ -5,3 +5,6 @@ natsc
 posgres/
 logs/
 config/.logger
+internal/features/_test/
+*__.go
+*__.go

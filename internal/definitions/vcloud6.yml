@@ -1,0 +1,61 @@
+---
+name: my_service
+datacenter: fakevcloud
+
+routers:
+  - name: vse2
+    rules:
+    - name: in_in_any
+      source: internal
+      from_port: any
+      destination: internal
+      to_port: any
+      protocol: any
+      action: allow
+
+    - name: office2_in_22
+      source: 172.18.143.3
+      from_port: any
+      destination: internal
+      to_port: '22'
+      protocol: tcp
+      action: allow
+
+    - name: office1_in_22
+      source: 172.17.240.0/24
+      from_port: any
+      destination: internal
+      to_port: '22'
+      protocol: tcp
+      action: allow
+
+    - name: home_in_22
+      source: 172.19.186.30
+      from_port: any
+      destination: internal
+      to_port: '22'
+      protocol: tcp
+      action: allow
+
+    networks:
+      - name: web
+        subnet: 10.1.0.0/24
+
+    port_forwarding:
+      - source: 172.16.186.44
+        from_port: '22'
+        to_port: '22'
+        destination: 10.1.0.11
+      - source: 11.11.11.11
+        from_port: '22'
+        to_port: '22'
+        destination: 10.1.0.11
+
+instances:
+  - name: web
+    image: r3/ubuntu-1404
+    cpus: 4
+    memory: 8GB
+    count: 2
+    network: web
+    start_ip: 10.1.0.11
