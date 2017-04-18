@@ -9,14 +9,14 @@ Feature: Ernest user list
 
   Scenario: Logged user listing
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I run ernest with "user list"
     Then The output should contain "usr"
     And The output should not contain "ci_admin"
 
   Scenario: Admin user listing
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "ci_admin" / "pwd"
+    When I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "user list"
     Then The output should contain "usr"
     And The output should contain "ci_admin"

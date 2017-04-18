@@ -3,7 +3,7 @@ Feature: Ernest logout
 
   Scenario: Logout logged in user
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I logout
     Then The output should contain "Bye."
     When I run ernest with "info"

@@ -10,7 +10,7 @@ Feature: Ernest datacenter create
   Scenario: Deleting an existing datacenter
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     And I run ernest with "datacenter create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_datacenter"
     And I run ernest with "datacenter list"
     And The output should contain "tmp_datacenter"
@@ -22,7 +22,7 @@ Feature: Ernest datacenter create
   Scenario: Deleting an unexisting datacenter
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "datacenter delete tmp_datacenter"
     Then The output should contain "Datacenter 'tmp_datacenter' does not exist, please specify a different datacenter name"
 

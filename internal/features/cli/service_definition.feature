@@ -9,7 +9,7 @@ Feature: Ernest service definition
 
   Scenario: Logged user definition
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     And The service "destroyable" does not exist
     And I apply the definition "destroyable.yml"
     When I run ernest with "service definition"
@@ -20,7 +20,7 @@ Feature: Ernest service definition
 
   Scenario: Logged user definition for a specific build
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     And The service "destroyable" does not exist
     And I apply the definition "destroyable.yml"
     When I run ernest with "service definition destroyable"

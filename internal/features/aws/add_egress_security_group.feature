@@ -4,7 +4,7 @@ Feature: Service apply
   Scenario: Add engress security group to a instance
     Given I setup ernest with target "https://ernest.local"
     And I setup a new service name
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws5.yml"
     And I start recording
     And I apply the definition "aws6.yml"

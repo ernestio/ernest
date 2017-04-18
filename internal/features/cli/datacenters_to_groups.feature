@@ -13,7 +13,7 @@ Feature: Ernest datacenters to groups
 
   Scenario: Plain datacenter - datacenter to group
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "group add-datacenter"
     Then The output should contain "You should specify the datacenter name and group name"
     When I run ernest with "group add-datacenter tmp_datacenter"
@@ -25,7 +25,7 @@ Feature: Ernest datacenters to groups
     Given I setup ernest with target "https://ernest.local"
     And the group "tmp_group" exists
     And the datacenter "tmp_datacenter" exists
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     When I run ernest with "group add-datacenter"
     Then The output should contain "You should specify the datacenter name and group name"
     When I run ernest with "group add-datacenter tmp_datacenter"
@@ -39,7 +39,7 @@ Feature: Ernest datacenters to groups
     Given I setup ernest with target "https://ernest.local"
     And the group "tmp_group" exists
     And the datacenter "tmp_datacenter" exists
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "group add-datacenter tmp_datacenter tmp_group"
     When I run ernest with "group add-datacenter tmp_datacenter tmp_group"
     Then The output should contain "Datacenter 'tmp_datacenter' already belongs to 'tmp_group' group"
@@ -48,7 +48,7 @@ Feature: Ernest datacenters to groups
     Given I setup ernest with target "https://ernest.local"
     And the group "tmp_group" does not exist
     And the datacenter "tmp_datacenter" exists
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     When I run ernest with "group add-datacenter tmp_datacenter tmp_group"
     Then The output should contain "Group 'tmp_group' does not exist"
 
@@ -56,7 +56,7 @@ Feature: Ernest datacenters to groups
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
     And the group "tmp_group" exists
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     When I run ernest with "group add-datacenter tmp_datacenter tmp_group"
     Then The output should contain "Datacenter 'tmp_datacenter' does not exist"
 
@@ -64,7 +64,7 @@ Feature: Ernest datacenters to groups
     Given I setup ernest with target "https://ernest.local"
     And the group "tmp_group" exists
     And the datacenter "tmp_datacenter" exists
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "group add-datacenter tmp_datacenter tmp_group"
     When I run ernest with "group remove-datacenter"
     Then The output should contain "You should specify the datacenter name and group name"

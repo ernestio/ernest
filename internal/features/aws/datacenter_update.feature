@@ -3,7 +3,7 @@ Feature: Update service with changed datacenter credentials
 
   Scenario: Non logged user listing
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     And The datacenter "update_datacenter" does not exist
     And The service "aws_test_update_dc" does not exist
     And I run ernest with "datacenter create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region --fake update_datacenter"

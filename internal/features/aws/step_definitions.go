@@ -113,7 +113,7 @@ func init() {
 	And(`^The user "(.+?)" exists$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
-		msg = []byte(`{"username":"` + user + `","password":"pwd"}`)
+		msg = []byte(`{"username":"` + user + `","password":"secret123"}`)
 		_, _ = n.Request("user.set", msg, time.Second*3)
 	})
 
@@ -319,7 +319,7 @@ func init() {
 	And(`^the user "(.+?)" exists$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
-		msg = []byte(`{"username":"` + user + `","password":"pwd"}`)
+		msg = []byte(`{"username":"` + user + `","password":"secret123"}`)
 		_, _ = n.Request("user.set", msg, time.Second*3)
 	})
 
