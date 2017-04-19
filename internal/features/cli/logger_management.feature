@@ -38,7 +38,7 @@ Feature: Ernest preferences management
     And I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "preferences logger add basic --logfile /var/logs/ernest.log"
     When I run ernest with "preferences logger delete basic"
-    Then The output should contain "Specified logger does not exist"
+    Then The output should contain "Basic logger can't be deleted"
 
   Scenario: Logged as admin user listing all loggers
     Given I setup ernest with target "https://ernest.local"
