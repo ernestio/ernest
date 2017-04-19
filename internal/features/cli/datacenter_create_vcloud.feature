@@ -12,7 +12,7 @@ Feature: Ernest datacenter create
   Scenario: Logged user vcloud datacenter creation
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "datacenter create vcloud"
     Then The output should contain "You should specify the datacenter name"
     When I run ernest with "datacenter create vcloud tmp_datacenter"
@@ -35,7 +35,7 @@ Feature: Ernest datacenter create
   Scenario: Adding an already existing vcloud datacenter
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "datacenter create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_datacenter"
     And I run ernest with "datacenter create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_datacenter"
     Then The output should contain "Datacenter 'tmp_datacenter' already exists, please specify a different name"

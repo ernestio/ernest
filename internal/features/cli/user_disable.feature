@@ -11,7 +11,7 @@ Feature: Ernest user disable
 
   Scenario: Plain user disable
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     And The output should contain "Welcome back usr"
     When I run ernest with "user disable"
     Then The output should contain "You should specify an username"
@@ -21,16 +21,16 @@ Feature: Ernest user disable
   Scenario: Admin user disable
     Given I setup ernest with target "https://ernest.local"
     And the user "to_disable" does not exist
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     And The output should contain "Welcome back ci_admin"
-    When I run ernest with "user create to_disable pwd"
+    When I run ernest with "user create to_disable secret123"
     And I run ernest with "group-add to_disable test"
-    And I'm logged in as "to_disable" / "pwd"
+    And I'm logged in as "to_disable" / "secret123"
     Then The output should contain "Welcome back to_disable"
-    When I'm logged in as "ci_admin" / "pwd"
+    When I'm logged in as "ci_admin" / "secret123"
     And The output should contain "Welcome back ci_admin"
     And I run ernest with "user disable to_disable"
     And The output should contain "Account `to_disable` has been disabled"
-    And I'm logged in as "to_disable" / "pwd"
+    And I'm logged in as "to_disable" / "secret123"
     Then The output should contain "The keypair user / password does not match any user on the database, please try again"
 

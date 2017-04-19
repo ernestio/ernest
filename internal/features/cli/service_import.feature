@@ -11,7 +11,7 @@ Feature: Service import
 
   Scenario: Logged service import errors
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "service import"
     Then The output should contain "You should specify an existing datacenter name"
     When I run ernest with "service import unexisting"
@@ -19,7 +19,7 @@ Feature: Service import
 
   Scenario: Logged service non existing import
     Given I setup ernest with target "https://ernest.local"
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     And The service "imported" does not exist
     When I run ernest with "service import fakeaws imported"
     Then The output line number "3" should contain "Found VPC"

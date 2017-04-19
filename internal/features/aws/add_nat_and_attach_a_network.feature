@@ -4,7 +4,7 @@ Feature: Service apply
   Scenario: Add a nat gateway and attach a private network to it
     Given I setup ernest with target "https://ernest.local"
     And I setup a new service name
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws11.yml"
     And I start recording
     And I apply the definition "aws12.yml"

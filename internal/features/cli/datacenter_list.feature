@@ -9,14 +9,14 @@ Feature: Ernest datacenter list
 
   Scenario: Logged user listing
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I run ernest with "datacenter list"
     Then The output should contain "fake"
     And The output should contain "fakeaws"
 
   Scenario: Admin user listing
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "ci_admin" / "pwd"
+    When I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "datacenter list"
     Then The output should contain "fake"
     Then The output should contain "test"
@@ -24,7 +24,7 @@ Feature: Ernest datacenter list
 
   Scenario: Listing fields
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I run ernest with "datacenter list"
     Then The output should contain "VCloud Datacenters"
     Then The output should contain "AWS Datacenters"

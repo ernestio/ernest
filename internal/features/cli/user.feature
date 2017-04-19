@@ -3,7 +3,7 @@ Feature: Ernest user
 
   Scenario: running user command as logged in user
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     And I run ernest with "user"
     Then The output should contain "list"
     And The output should contain "create"

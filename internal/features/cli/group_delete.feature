@@ -11,7 +11,7 @@ Feature: Ernest group delete
 
   Scenario: Plain user group deletion
     Given I setup ernest with target "https://ernest.local"
-    When I'm logged in as "usr" / "pwd"
+    When I'm logged in as "usr" / "secret123"
     When I run ernest with "group delete"
     Then The output should contain "You should specify the group name"
     When I run ernest with "group delete tmp_group"
@@ -20,7 +20,7 @@ Feature: Ernest group delete
   Scenario: Admin user group deletion
     Given I setup ernest with target "https://ernest.local"
     And the group "tmp_group" does not exist
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "group create tmp_group"
     When I run ernest with "group delete tmp_group"
     Then The output should contain "Group 'tmp_group' successfully deleted"
@@ -28,7 +28,7 @@ Feature: Ernest group delete
   Scenario: Deleting a non existing group
     Given I setup ernest with target "https://ernest.local"
     And the group "tmp_group" does not exist
-    And I'm logged in as "ci_admin" / "pwd"
+    And I'm logged in as "ci_admin" / "secret123"
     When I run ernest with "group delete tmp_group"
     Then The output should contain "Group 'tmp_group' does not exist, please specify a different group name"
 
