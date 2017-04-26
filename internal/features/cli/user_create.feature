@@ -23,7 +23,7 @@ Feature: Ernest user list
     And I'm logged in as "ci_admin" / "secret123"
     When I run ernest with "user create test_creation secret123"
     Then The output should contain "User test_creation successfully created"
-  
+
   Scenario: Admin user creation with no username
     Given the user "test_creation" does not exist
     And I'm logged in as "ci_admin" / "secret123"
