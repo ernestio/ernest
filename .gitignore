@@ -8,3 +8,4 @@ config/.logger
 internal/features/_test/
 *__.go
 *__.go
+docker-compose.local.yml
