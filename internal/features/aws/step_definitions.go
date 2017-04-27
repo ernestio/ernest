@@ -1,4 +1,4 @@
-package steps
+package aws
 
 import (
 	"bytes"
@@ -328,58 +328,6 @@ func init() {
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 		msg = []byte(`{"name":"` + d + `"}`)
 		_, _ = n.Request("datacenter.set", msg, time.Second*3)
-	})
-
-	And(`^The azure datacenter "(.+?)" credentials should be "(.+?)", "(.+?)", "(.+?)", "(.+?)" and "(.+?)"$`, func(name, sID, cID, cSecret, tID, env string) {
-		msg := []byte(`{"name":"` + name + `", "type":"azure"}`)
-		res, _ := n.Request("datacenter.get", msg, time.Second*3)
-		var d struct {
-			SubscriptionID string `json:"azure_subscription_id"`
-			ClientID       string `json:"azure_client_id"`
-			ClientSecret   string `json:"azure_client_secret"`
-			TenantID       string `json:"azure_tenant_id"`
-			Environment    string `json:"azure_environment"`
-		}
-
-		key := os.Getenv("ERNEST_CRYPTO_KEY")
-		_ = json.Unmarshal(res.Data, &d)
-		crypto := aes.New()
-		subscriptionID, err := crypto.Decrypt(d.SubscriptionID, key)
-		if err != nil {
-			log.Println(err)
-		}
-		clientID, err := crypto.Decrypt(d.ClientID, key)
-		if err != nil {
-			log.Println(err)
-		}
-		clientSecret, err := crypto.Decrypt(d.ClientSecret, key)
-		if err != nil {
-			log.Println(err)
-		}
-		tenantID, err := crypto.Decrypt(d.TenantID, key)
-		if err != nil {
-			log.Println(err)
-		}
-		environment, err := crypto.Decrypt(d.Environment, key)
-		if err != nil {
-			log.Println(err)
-		}
-
-		if subscriptionID != sID {
-			T.Errorf(`Expected subscription id is "` + sID + `" but found ` + subscriptionID)
-		}
-		if clientID != cID {
-			T.Errorf(`Expected client id is "` + cID + `" but found ` + clientID)
-		}
-		if clientSecret != cSecret {
-			T.Errorf(`Expected client secret is "` + cSecret + `" but found ` + clientSecret)
-		}
-		if tenantID != tID {
-			T.Errorf(`Expected tenant id is "` + tID + `" but found ` + tenantID)
-		}
-		if environment != env {
-			T.Errorf(`Expected client id is "` + cID + `" but found ` + clientID)
-		}
 	})
 
 	And(`^The aws datacenter "(.+?)" credentials should be "(.+?)" and "(.+?)"$`, func(name, token, secret string) {
