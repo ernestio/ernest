@@ -378,7 +378,7 @@ func init() {
 			T.Errorf(`Expected tenant id is "` + tID + `" but found ` + tenantID)
 		}
 		if environment != env {
-			T.Errorf(`Expected client id is "` + cID + `" but found ` + clientID)
+			T.Errorf(`Expected environment id is "` + env + `" but found ` + environment)
 		}
 	})
 

@@ -10,17 +10,17 @@ Feature: Ernest azure datacenter update
   Scenario: Updating an existing azure datacenter
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
-    When I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid --environment public tmp_datacenter"
+    And I'm logged in as "usr" / "secret123"
+    When I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --client_secret secret --region westus --tenant_id tenid --environment public tmp_datacenter"
     And I run ernest with "datacenter list"
     And The output should contain "tmp_datacenter"
-    When I run ernest with "datacenter update azure --subscription_id u_subid --client_id u_cliid --tenant_id u_tenid --environment u_public tmp_datacenter"
+    When I run ernest with "datacenter update azure --subscription_id u_subid --client_id u_cliid --client_secret secret --tenant_id u_tenid --environment u_public tmp_datacenter"
     Then The output should contain "Datacenter tmp_datacenter successfully updated"
-    And The azure datacenter "tmp_datacenter" credentials should be "u_subid", "u_cliid", "westus", "u_tenid" and "u_public"
+    And The azure datacenter "tmp_datacenter" credentials should be "u_subid", "u_cliid", "secret", "u_tenid" and "u_public"
 
   Scenario: Updating an unexisting azure datacenter
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
-    When I run ernest with "datacenter update azure --subscription_id u_subid --client_id u_cliid --tenant_id u_tenid --environment u_public tmp_datacenter"
+    And I'm logged in as "usr" / "secret123"
+    When I run ernest with "datacenter update azure --subscription_id u_subid --client_id u_cliid --client_secret secret --tenant_id u_tenid --environment u_public tmp_datacenter"
     Then The output should contain "Datacenter 'tmp_datacenter' does not exist, please specify a different datacenter name"

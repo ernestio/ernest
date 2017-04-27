@@ -12,7 +12,7 @@ Feature: Ernest datacenter create
   Scenario: Logged user azure datacenter creation
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "datacenter create azure"
     Then The output should contain "You should specify the datacenter name"
     When I run ernest with "datacenter create azure tmp_datacenter"
@@ -40,7 +40,7 @@ Feature: Ernest datacenter create
   Scenario: Adding an already existing azure datacenter
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
-    And I'm logged in as "usr" / "pwd"
+    And I'm logged in as "usr" / "secret123"
     When I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid --environment public tmp_datacenter"
     And I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid --environment public tmp_datacenter"
     Then The output should contain "Datacenter 'tmp_datacenter' already exists, please specify a different name"
