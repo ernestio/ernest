@@ -34,7 +34,9 @@
       "vcloud",
       "vcloud-fake",
       "aws",
-      "aws-fake"
+      "aws-fake",
+      "azure",
+      "azure-fake"
     ],
     "networks": [
       "fake",

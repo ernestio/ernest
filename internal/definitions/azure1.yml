@@ -1,0 +1,51 @@
+#################################################
+# Fully Documented Ernest Azure Minimal Example #
+#################################################
+
+name: my_service
+datacenter: fakeazure
+
+resource_groups:
+  - name: rg_1
+    location: westus
+
+    virtual_networks:
+      - name: vm_test
+        address_spaces:
+          - 10.0.0.0/16
+        subnets:
+          - name: sub_test
+            address_prefix: 10.0.1.0/24
+
+    network_interfaces:
+      - name: ni_test
+        ip_configurations:
+          - name: config_1
+            subnet: vm_test:sub_test
+
+    virtual_machines:
+      - name: vm_test
+        image: UbuntuLTS
+        network_interfaces:
+          - ni_test
+        authentication:
+          admin_username: testadmin
+          admin_password: Password1234!
+          ssh_keys:
+            default: aoudhfoiaudhfalduihf
+
+
+    storage_accounts:
+      - name: sa_test
+        account_type: Standard_LRS
+        containers:
+          - name: sc_test
+            access_type: private
+
+    sql_servers:
+      - name: mysqlserver
+        version: "12.0"
+        administrator_login: mradministrator
+        administrator_login_password: moooon
+        databases:
+          name: mydb
