@@ -58,4 +58,4 @@ Feature: Ernest user list
     When I'm logged in as "ci_admin" / "secret123"
     And I run ernest with "user create duplicated secret123"
     And I run ernest with "user create duplicated secret123"
-    Then The output should contain "Specified username already existis please choose a different one"
+    Then The output should contain "Specified user already exists"
