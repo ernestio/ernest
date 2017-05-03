@@ -6,11 +6,11 @@ name: my_service
 datacenter: fakeazure
 
 resource_groups:
-  - name: rg_1
-    location: westus
+  - name: rg1
+    location: eastus
 
     virtual_networks:
-      - name: vm_test
+      - name: vn_test
         address_spaces:
           - 10.0.0.0/16
         subnets:
@@ -21,31 +21,44 @@ resource_groups:
       - name: ni_test
         ip_configurations:
           - name: config_1
-            subnet: vm_test:sub_test
+            subnet: vn_test:sub_test
+            private_ip_address_allocation: dynamic
 
     virtual_machines:
       - name: vm_test
-        image: UbuntuLTS
+        count: 1
+        size: Standard_A0
+        image: Canonical:UbuntuServer:14.04.2-LTS:latest
         network_interfaces:
           - ni_test
         authentication:
           admin_username: testadmin
           admin_password: Password1234!
-          ssh_keys:
-            default: aoudhfoiaudhfalduihf
-
+        storage_os_disk:
+          name: myosdiskaOne
+          vhd_uri: https://safest12354.blob.core.windows.net/safestla/myosdiskaOne.vhd
+          caching: ReadWrite
+          create_option: FromImage
+        storage_data_disk:
+          name: myosdiskaTwo
+          vhd_uri: https://safest12354.blob.core.windows.net/safestla/myosdiskaTwo.vhd
+          disk_size_gb: 1023
+          create_option: empty
+          lun: 0
+        os_profile:
+          computer_name: test
 
     storage_accounts:
-      - name: sa_test
+      - name: safest12354
         account_type: Standard_LRS
         containers:
-          - name: sc_test
+          - name: scfestla
             access_type: private
 
     sql_servers:
-      - name: mysqlserver
+      - name: ernestserver01
         version: "12.0"
         administrator_login: mradministrator
-        administrator_login_password: moooon
+        administrator_login_password: P4ssw0rd
         databases:
           name: mydb
