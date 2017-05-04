@@ -25,29 +25,14 @@ Feature: Ernest user change-password
     And I'm logged in as "usr" / "secret123"
     Then The output should contain "Welcome back usr"
 
-  Scenario: User updates their password providing no value for username
-    Given I'm logged in as "usr" / "secret123"
-    When I run ernest with "user change-password --user --password secret123"
-    Then The output should contain "Username cannot be empty"
-
-  Scenario: User updates their password providing no value for password
-    Given I'm logged in as "usr" / "secret123"
-    When I run ernest with "user change-password --user usr --password"
-    Then The output should contain "Password cannot be empty"
-
-  Scenario: User updates their password with a username containing invalid characters
-    Given I'm logged in as "usr" / "secret123"
-    When I run ernest with "user change-password --user usr^ --password secret123"
-    Then The output should contain "Password can only contain the following characters: a-z 0-9 @._-"
-
   Scenario: User updates their password with a password containing invalid characters
     Given I'm logged in as "usr" / "secret123"
-    When I run ernest with "user change-password --user usr --password secret^123"
+    When I run ernest with "user change-password --current-password secret123 --password secret^123"
     Then The output should contain "Password can only contain the following characters: a-z 0-9 @._-"
 
   Scenario: User updates their password with a password less than the minimum length
     Given I'm logged in as "usr" / "secret123"
-    When I run ernest with "user change-password --user usr --password secret"
+    When I run ernest with "user change-password --current-password secret123 --password secret"
     Then The output should contain "Minimum password length is 8 characters"
 
   Scenario: Admin self password modification

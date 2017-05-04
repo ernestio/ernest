@@ -9,3 +9,4 @@ internal/features/_test/
 *__.go
 *__.go
 docker-compose.local.yml
+docker-compose.test.yml

@@ -11,6 +11,7 @@ import (
 	"os"
 	"os/exec"
 	"path"
+	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
@@ -61,7 +62,8 @@ func init() {
 	})
 
 	Then(`^The output should contain "(.+?)"$`, func(needle string) {
-		if strings.Contains(lastOutput, needle) == false {
+		r := regexp.MustCompile(needle)
+		if r.MatchString(lastOutput) == false {
 			T.Errorf(`Last output string does not contain "` + needle + `": ` + "\n" + lastOutput)
 		}
 	})
