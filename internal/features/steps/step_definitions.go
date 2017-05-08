@@ -69,8 +69,9 @@ func init() {
 	})
 
 	Then(`^The output should not contain "(.+?)"$`, func(needle string) {
-		if strings.Contains(lastOutput, needle) == true {
-			T.Errorf(`Last output string does contains "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
+		r := regexp.MustCompile(needle)
+		if r.MatchString(lastOutput) == true {
+			T.Errorf(`Last output string does contain "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
 		}
 	})
 
