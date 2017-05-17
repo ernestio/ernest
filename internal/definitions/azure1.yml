@@ -1,47 +1,63 @@
-#################################################
-# Fully Documented Ernest Azure Minimal Example #
-#################################################
-
 name: my_service
 datacenter: fakeazure
 
 resource_groups:
-  - name: rg1
+  - name: rg2
     location: eastus
+    tags:
+      environment: staging
 
     virtual_networks:
-      - name: vn_test
+      - name: vn_test_2
         address_spaces:
           - 10.0.0.0/16
         subnets:
-          - name: sub_test
+          - name: sub_test_2
             address_prefix: 10.0.1.0/24
+            security_group: sg2
 
-    network_interfaces:
-      - name: ni_test
-        ip_configurations:
-          - name: config_1
-            subnet: vn_test:sub_test
-            private_ip_address_allocation: dynamic
+    security_groups:
+      - name: sg2
+        rules:
+          - name: rule1
+            description: "awesome rule II"
+            priority: 101
+            direction: Inbound
+            access: Allow
+            protocol: Tcp
+            source_port_range: 100-4096
+            destination_port_range: 100-4096
+            source_address_prefix: VirtualNetwork
+            destination_address_prefix: VirtualNetwork
+        tags:
+          environment: staging
 
     virtual_machines:
-      - name: vm_test
-        count: 1
+      - name: vm_test_app
+        count: 2
         size: Standard_A0
         image: Canonical:UbuntuServer:14.04.2-LTS:latest
         network_interfaces:
-          - ni_test
+          - name: ni_test_2
+            security_group: sg2
+            ip_configurations:
+              - name: config_2
+                subnet: vn_test_2:sub_test_2
+                private_ip_address_allocation: dynamic
+                public_ip_address_allocation: static
         authentication:
           admin_username: testadmin
           admin_password: Password1234!
         storage_os_disk:
           name: myosdiskaOne
-          vhd_uri: https://safest12354.blob.core.windows.net/safestla/myosdiskaOne.vhd
+          storage_account: safest12354tom2
+          storage_container: scfestlatom2
           caching: ReadWrite
           create_option: FromImage
         storage_data_disk:
           name: myosdiskaTwo
-          vhd_uri: https://safest12354.blob.core.windows.net/safestla/myosdiskaTwo.vhd
+          storage_account: safest12354tom2
+          storage_container: scfestlatom2
           disk_size_gb: 1023
           create_option: empty
           lun: 0
@@ -49,16 +65,27 @@ resource_groups:
           computer_name: test
 
     storage_accounts:
-      - name: safest12354
+      - name: safest12354tom2
         account_type: Standard_LRS
         containers:
-          - name: scfestla
+          - name: scfestlatom2
             access_type: private
 
     sql_servers:
-      - name: ernestserver01
+      - name: ernestserver02tom
         version: "12.0"
         administrator_login: mradministrator
         administrator_login_password: P4ssw0rd
         databases:
-          name: mydb
+          - name: mydb
+            max_size_bytes: "214748364800"
+        rules:
+          - name: rule1
+            start_ip_address: 10.0.17.62
+            end_ip_address: 10.0.17.63
+
+    loadbalancers:
+     - name: lb1
+       frontend_ip_configurations:
+         - name: fic1
+
