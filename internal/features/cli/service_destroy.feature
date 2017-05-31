@@ -15,7 +15,7 @@ Feature: Service destroy
     When I run ernest with "service destroy"
     Then The output should contain "You should specify an existing service name"
     When I run ernest with "service destroy unexisting --yes"
-    Then The output should contain "Specified service not found"
+    Then The output should contain "Specified service name does not exist"
 
   Scenario: Logged service destroy
     Given I setup ernest with target "https://ernest.local"
@@ -25,5 +25,5 @@ Feature: Service destroy
     When I run ernest with "service destroy destroyable --yes"
     Then The output should not contain "Specified service name does not exist"
     When I run ernest with "service destroy destroyable --yes"
-    Then The output should contain "Specified service not found"
+    Then The output should contain "Specified service name does not exist"
 
