@@ -5,7 +5,7 @@ resource_groups:
   - name: rg2
     location: eastus
     tags:
-      environment: staging
+      - environment: staging
 
     virtual_networks:
       - name: vn_test_2
@@ -30,7 +30,7 @@ resource_groups:
             source_address_prefix: VirtualNetwork
             destination_address_prefix: VirtualNetwork
         tags:
-          environment: staging
+          - environment: staging
 
     virtual_machines:
       - name: vm_test_app
