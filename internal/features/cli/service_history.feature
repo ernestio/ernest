@@ -24,10 +24,12 @@ Feature: Service history
     And I apply the definition "destroyable.yml"
     And I wait for "5" seconds
     And I apply the definition "destroyable2.yml"
+    And I wait for "5" seconds
     When I run ernest with "service history destroyable"
     Then The output line number "3" should contain "destroyable"
     And The output line number "3" should contain "done"
     And The output line number "3" should contain "usr"
     And The output line number "5" should contain "destroyable"
     And The output line number "5" should contain "usr"
+    And The output line number "5" should contain "done"
 
