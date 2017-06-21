@@ -1,0 +1,13 @@
+---
+name: myService
+datacenter: r3-dc2
+
+vpcs:
+  - name: myVPC
+    subnet: 10.0.0.0/16
+
+networks:
+  - name: net-1
+    vpc: myVPC
+    public: true
+    subnet: 10.0.1.0/24
