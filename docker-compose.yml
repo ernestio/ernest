@@ -138,7 +138,7 @@ services:
     volumes:
     - ./postgres/data:/var/lib/postgresql/data
     environment:
-      DB_NAME: users,groups,datacenters,services,usage
+      DB_NAME: users,groups,datacenters,services,notification
   scheduler:
     image: ernestio/scheduler:2.1.0
     links:
@@ -158,8 +158,8 @@ services:
     environment:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
-  usage-store:
-    image: ernestio/usage-store:2.1.0
+  notification-store:
+    image: ernestio/notification-store:2.1.0
     links:
     - nats
     depends_on:

@@ -85,8 +85,8 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
 
-  - name: usage-store
-    path: git@github.com:ernestio/usage-store.git
+  - name: notification-store
+    path: git@github.com:ernestio/notification-store.git
     branch: master
     links:
       - nats
