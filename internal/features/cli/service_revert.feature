@@ -25,11 +25,6 @@ Feature: Service revert
     When I run ernest with "service revert myService 99"
     Then The output should contain "Invalid build ID"
 
-  #Scenario: User reverts a service that doesn't exist
-    #Given I'm logged in as "usr" / "secret123"
-    #When I run ernest with "service revert fakeService 1"
-    #Then The output should contain "Service not found"
-
   Scenario: Unauthenticated user reverts a service
     Given I logout
     When I run ernest with "service revert"
