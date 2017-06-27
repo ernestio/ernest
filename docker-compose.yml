@@ -1,5 +1,4 @@
 version: "2"
-networks: {}
 services:
   all-all-aws-connector:
     image: ernestio/all-all-aws-connector:2.1.0
@@ -177,3 +176,4 @@ services:
     environment:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
+networks: {}
