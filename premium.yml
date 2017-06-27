@@ -1,0 +1,11 @@
+
+  - name: notification-store
+    path: git@github.com:r3labs/notification-store.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE

@@ -14,12 +14,22 @@ echo "#################"
 
 echo
 
+LICENSE=$1
+if ! [[ -z "${LICENSE// }" ]]; then
+  if [ ! -f $LICENSE ]; then
+    echo "[ WARNING ] License file not found"
+    echo
+    exit
+  fi
+fi
+
 # Check for prerequisites
 echo "Checking Prerequisites"
 command_exists wget
 command_exists openssl
 command_exists docker
 command_exists docker-compose
+
 
 
 # Setup config (hostname & nginx ssl)
