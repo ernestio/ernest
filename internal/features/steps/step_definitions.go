@@ -260,6 +260,17 @@ func init() {
 		ernest("service", "apply", def)
 	})
 
+	And(`^I apply the definition "(.+?)" with dry option$`, func(def string) {
+		if delay := os.Getenv("ERNEST_APPLY_DELAY"); delay != "" {
+			if t, err := strconv.Atoi(delay); err == nil {
+				println("\nWaiting " + delay + " seconds...")
+				time.Sleep(time.Duration(t) * time.Second)
+			}
+		}
+		def = getDefinitionPathAWS(def, serviceName)
+		ernest("service", "apply", "--dry", def)
+	})
+
 	And(`^message "(.+?)" number "(.+?)" should contain "(.+?)" as json field "(.+?)"$`, func(subject string, num int, val, key string) {
 		val = strings.Replace(val, "$(name)", serviceName, -1)
 		if len(messages[subject]) == 0 {
