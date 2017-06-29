@@ -345,6 +345,41 @@ func init() {
 		_, _ = n.Request("datacenter.set", msg, time.Second*3)
 	})
 
+	And(`^I want you to create the tests for me$`, func() {
+		fieldBlacklist := map[string]bool{
+			"azure_tentant_id":      true,
+			"azure_client_id":       true,
+			"azure_subscription_id": true,
+			"azure_client_secret":   true,
+			"azure_tenant_id":       true,
+			"service":               true,
+			"name":                  true,
+			"environment":           true,
+			"id":                    true,
+		}
+		for subject, m := range messages {
+			if string(subject[0]) != "_" && string(subject[0:8]) != "service." {
+				times := strconv.Itoa(len(m))
+				fmt.Println(`And an event "` + subject + `" should be called exactly "` + times + `" times`)
+				for i, message := range m {
+					var components map[string]interface{}
+					if err := json.Unmarshal(message, &components); err != nil {
+						log.Println(err.Error())
+					} else {
+						for field, value := range components {
+							if val, ok := value.(string); ok && val != "" {
+								if _, ok := fieldBlacklist[field]; ok == false {
+									num := strconv.Itoa(i)
+									fmt.Println(`And message "` + subject + `" number "` + num + `" should contain "` + field + `" as json field "` + val + `"`)
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	})
+
 	And(`^The azure datacenter "(.+?)" credentials should be "(.+?)", "(.+?)", "(.+?)", "(.+?)" and "(.+?)"$`, func(name, sID, cID, cSecret, tID, env string) {
 		msg := []byte(`{"name":"` + name + `", "type":"azure"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
