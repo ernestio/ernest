@@ -28,10 +28,13 @@ Feature: Ernest datacenter create
 
   Scenario: Deleting an existing datacenter with related services
     Given I setup ernest with target "https://ernest.local"
+    And I setup a new service name
     And the datacenter "test_dc" does not exist
+    And I'm logged in as "usr" / "secret123"
     And I run ernest with "datacenter create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region --fake test_dc"
+    Then The output should contain "Datacenter 'test_dc' successfully created"
     And The service "aws_test_service" does not exist
-    When I run ernest with "service apply internal/definitions/referenced.yml"
+    When I apply the definition "referenced.yml"
     And I run ernest with "datacenter list"
     And The output should contain "test_dc"
     And I run ernest with "datacenter delete test_dc"
