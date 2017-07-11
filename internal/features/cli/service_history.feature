@@ -32,4 +32,3 @@ Feature: Service history
     And The output line number "5" should contain "destroyable"
     And The output line number "5" should contain "usr"
     And The output line number "5" should contain "done"
-
