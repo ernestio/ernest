@@ -14,7 +14,6 @@ Feature: Ernest service info
     And I apply the definition "destroyable.yml"
     When I run ernest with "service info destroyable"
     Then The output should contain "Name : destroyable"
-
     And The output should contain "VPCs:"
     And The output should contain "| test-vpc | fakeaws |"
     And The output should contain "Networks:"
