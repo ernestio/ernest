@@ -22,7 +22,7 @@ Feature: Service apply
     And I'm logged in as "usr" / "secret123"
     And The service "aws_test_service" does not exist
     When I apply the definition "aws1.yml"
-    Then The output should contain "SUCCESS"
+    Then The output should contain "Status: Applied"
 
   Scenario: Logged service apply with internal file references
     Given I setup ernest with target "https://ernest.local"

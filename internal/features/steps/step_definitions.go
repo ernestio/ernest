@@ -67,23 +67,29 @@ func init() {
 		}
 	})
 
+	And(`^The output should contain "(.+?)"$`, func(needle string) {
+		if strings.Contains(lastOutput, needle) == false {
+			T.Errorf(`Last output string does not contain "` + needle + `": ` + "\n" + lastOutput)
+		}
+	})
+
 	Then(`^The output should not contain "(.+?)"$`, func(needle string) {
 		if strings.Contains(lastOutput, needle) == true {
 			T.Errorf(`Last output string does contains "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
 		}
 	})
 
-	Then(`^The output should contain regex"(.+?)"$`, func(needle string) {
+	Then(`^The output should contain regex "(.*)"$`, func(needle string) {
 		r := regexp.MustCompile(needle)
 		if r.MatchString(lastOutput) == false {
-			T.Errorf(`Last output string does not contain regex"` + needle + `": ` + "\n" + lastOutput)
+			T.Errorf(`Last output string does not contain regex "` + needle + `": ` + "\n" + lastOutput)
 		}
 	})
 
-	Then(`^The output should not contain regex "(.+?)"$`, func(needle string) {
+	Then(`^The output should not contain regex "(.*)"$`, func(needle string) {
 		r := regexp.MustCompile(needle)
 		if r.MatchString(lastOutput) == true {
-			T.Errorf(`Last output string does contain regex"` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
+			T.Errorf(`Last output string does contain regex "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
 		}
 	})
 
