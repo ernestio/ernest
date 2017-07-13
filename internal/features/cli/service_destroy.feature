@@ -24,6 +24,6 @@ Feature: Service destroy
     And I apply the definition "destroyable.yml"
     When I run ernest with "service destroy destroyable --yes"
     Then The output should not contain "Specified service name does not exist"
+    And I wait for "1" seconds
     When I run ernest with "service destroy destroyable --yes"
     Then The output should contain "Specified service name does not exist"
-

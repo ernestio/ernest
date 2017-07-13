@@ -146,7 +146,7 @@ func init() {
 	})
 
 	And(`^I wait for "(.+?)" seconds$`, func(n int) {
-		time.Sleep(time.Duration(n) * time.Millisecond)
+		time.Sleep(time.Duration(n) * time.Second)
 	})
 
 	Then(`^The output users table should contain "(.+?)" assigned to "(.+?)" group$`, func(user string, group string) {
