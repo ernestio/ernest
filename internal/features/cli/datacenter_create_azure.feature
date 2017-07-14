@@ -38,8 +38,6 @@ Feature: Ernest datacenter create
     Given I setup ernest with target "https://ernest.local"
     And the datacenter "tmp_datacenter" does not exist
     And I'm logged in as "usr" / "secret123"
-    When I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid --environment public tmp_datacenter"
-    And I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid --environment public tmp_datacenter"
+    When I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid tmp_datacenter"
+    And I run ernest with "datacenter create azure --subscription_id subid --client_id cliid --region westus --tenant_id tenid tmp_datacenter"
     Then The output should contain "Datacenter 'tmp_datacenter' already exists, please specify a different name"
-
-

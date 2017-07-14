@@ -56,6 +56,14 @@ func init() {
 		ernest("login", "--user", u, "--password", p)
 	})
 
+	Given(`^I'm logged in as "" / "(.+?)"$`, func(p string) {
+		ernest("login", "--password", p)
+	})
+
+	Given(`^I'm logged in as "(.+?)" / ""$`, func(u string) {
+		ernest("login", "--user", u)
+	})
+
 	When(`^I run ernest with "(.+?)"$`, func(args string) {
 		cmdArgs := strings.Split(args, " ")
 		ernest(cmdArgs...)
