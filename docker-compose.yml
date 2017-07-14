@@ -1,18 +1,17 @@
 version: "2"
-networks: {}
 services:
   all-all-aws-connector:
-    image: ernestio/all-all-aws-connector:2.1.0
+    image: ernestio/all-all-aws-connector:2.2.0
     links:
     - nats
     depends_on:
     - config-store
     environment:
-      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs_volume.create.aws,ebs_volume.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws,nats.find.aws,networks.find.aws,route53s.find.aws,s3s.find.aws,elbs.find.aws,vpcs.find.aws,instances.find.aws,firewalls.find.aws,ebs_volumes.find.aws,rds_clusters.find.aws,rds_instances.find.aws,internet_gateway.create.aws,internet_gateway.delete.aws,internet_gateways.find.aws
+      CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs_volume.create.aws,ebs_volume.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws,nats.find.aws,networks.find.aws,route53s.find.aws,s3s.find.aws,elbs.find.aws,vpcs.find.aws,instances.find.aws,firewalls.find.aws,ebs_volumes.find.aws,rds_clusters.find.aws,rds_instances.find.aws,internet_gateway.create.aws,internet_gateway.delete.aws,internet_gateways.find.aws,iam_role.create.aws,iam_role.delete.aws,iam_roles.find.aws,iam_policy.create.aws,iam_policy.delete.aws,iam_policies.find.aws,iam_instance_profile.create.aws,iam_instance_profile.delete.aws,iam_instance_profiles.find.aws
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   all-all-azure-connector:
-    image: ernestio/all-all-azure-connector:2.1.0
+    image: ernestio/all-all-azure-connector:2.2.0
     links:
     - nats
     depends_on:
@@ -22,7 +21,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   all-all-fake-connector:
-    image: ernestio/all-all-fake-connector:2.1.0
+    image: ernestio/all-all-fake-connector:2.2.0
     links:
     - nats
     depends_on:
@@ -31,7 +30,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   all-all-vcloud-connector:
-    image: ernestio/all-all-vcloud-connector:2.1.0
+    image: ernestio/all-all-vcloud-connector:2.2.0
     links:
     - nats
     depends_on:
@@ -40,7 +39,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   api-gateway:
-    image: ernestio/api-gateway:2.1.0
+    image: ernestio/api-gateway:2.2.0
     ports:
     - 8080:8080
     links:
@@ -52,7 +51,7 @@ services:
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
   config-store:
-    image: ernestio/config-store:2.1.0
+    image: ernestio/config-store:2.2.0
     entrypoint: /go/bin/config-store -config /etc/ernest/config.json
     volumes:
     - ./config/config-store/:/etc/ernest/
@@ -62,7 +61,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   datacenter-store:
-    image: ernestio/datacenter-store:2.1.0
+    image: ernestio/datacenter-store:2.2.0
     links:
     - nats
     depends_on:
@@ -71,7 +70,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   definition-mapper:
-    image: ernestio/definition-mapper:2.1.0
+    image: ernestio/definition-mapper:2.2.0
     links:
     - nats
     - postgres
@@ -81,7 +80,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   group-store:
-    image: ernestio/group-store:2.1.0
+    image: ernestio/group-store:2.2.0
     links:
     - nats
     depends_on:
@@ -90,7 +89,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   logger:
-    image: ernestio/logger:2.1.0
+    image: ernestio/logger:2.2.0
     ports:
     - 22001:22001
     volumes:
@@ -107,7 +106,7 @@ services:
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
   monit:
-    image: ernestio/monit:2.1.0
+    image: ernestio/monit:2.2.0
     ports:
     - 22000:22000
     links:
@@ -141,7 +140,7 @@ services:
     environment:
       DB_NAME: users,groups,datacenters,services,usage
   scheduler:
-    image: ernestio/scheduler:2.1.0
+    image: ernestio/scheduler:2.2.0
     links:
     - nats
     - postgres
@@ -151,7 +150,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   service-store:
-    image: ernestio/service-store:2.1.0
+    image: ernestio/service-store:2.2.0
     links:
     - nats
     depends_on:
@@ -160,7 +159,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   usage-store:
-    image: ernestio/usage-store:2.1.0
+    image: ernestio/usage-store:2.2.0
     links:
     - nats
     depends_on:
@@ -169,7 +168,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
   user-store:
-    image: ernestio/user-store:2.1.0
+    image: ernestio/user-store:2.2.0
     links:
     - nats
     depends_on:
@@ -177,3 +176,4 @@ services:
     environment:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       NATS_URI: nats://nats:4222
+networks: {}
