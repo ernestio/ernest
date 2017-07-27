@@ -1,23 +1,23 @@
-@datacenter @datacenter_list
-Feature: Ernest datacenter list
+@project @project_list
+Feature: Ernest project list
 
   Scenario: Non logged user listing
     Given I setup ernest with target "https://ernest.local"
     And I logout
-    When I run ernest with "datacenter list"
+    When I run ernest with "project list"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Logged user listing
     Given I setup ernest with target "https://ernest.local"
     When I'm logged in as "usr" / "secret123"
-    And I run ernest with "datacenter list"
+    And I run ernest with "project list"
     Then The output should contain "fake"
     And The output should contain "fakeaws"
 
   Scenario: Admin user listing
     Given I setup ernest with target "https://ernest.local"
     When I'm logged in as "ci_admin" / "secret123"
-    And I run ernest with "datacenter list"
+    And I run ernest with "project list"
     Then The output should contain "fake"
     Then The output should contain "test"
     And The output should contain "fakeaws"
@@ -25,9 +25,9 @@ Feature: Ernest datacenter list
   Scenario: Listing fields
     Given I setup ernest with target "https://ernest.local"
     When I'm logged in as "usr" / "secret123"
-    And I run ernest with "datacenter list"
-    Then The output should contain "VCloud Datacenters"
-    Then The output should contain "AWS Datacenters"
+    And I run ernest with "project list"
+    Then The output should contain "VCloud Projects"
+    Then The output should contain "AWS Projects"
     And The output should contain "fake"
     And The output should contain "fakeaws"
     And The output should contain "NAME"

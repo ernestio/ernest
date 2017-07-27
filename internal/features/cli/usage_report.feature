@@ -1,8 +1,8 @@
-@service @usage_report
+@environment @usage_report
 Feature: Usage report
 
   Scenario: Usage report
-    Given I setup a new service name
+    Given I setup a new environment name
     And I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
     And I apply the definition "aws1.yml"

@@ -1,9 +1,9 @@
 @azure @azure_creator
 Feature: Creator
 
-  Scenario: Applying a basic azure service
+  Scenario: Applying a basic azure environment
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "pwd"
     And I start recording
     And I apply the definition "azure2.yml"

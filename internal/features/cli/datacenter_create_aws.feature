@@ -1,36 +1,36 @@
-@datacenter @datacenter_create @datacenter_create_aws
-Feature: Ernest datacenter create
+@project @project_create @project_create_aws
+Feature: Ernest project create
 
-  Scenario: Non logged aws datacenter creation
+  Scenario: Non logged aws project creation
     Given I setup ernest with target "https://ernest.local"
     And I logout
-    When I run ernest with "datacenter create aws"
-    Then The output should contain "You should specify the datacenter name"
-    When I run ernest with "datacenter create aws tmp_datacenter"
+    When I run ernest with "project create aws"
+    Then The output should contain "You should specify the project name"
+    When I run ernest with "project create aws tmp_project"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
-  Scenario: Logged user aws datacenter creation
+  Scenario: Logged user aws project creation
     Given I setup ernest with target "https://ernest.local"
-    And the datacenter "tmp_datacenter" does not exist
+    And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
-    When I run ernest with "datacenter create aws"
-    Then The output should contain "You should specify the datacenter name"
-    When I run ernest with "datacenter create aws tmp_datacenter"
+    When I run ernest with "project create aws"
+    Then The output should contain "You should specify the project name"
+    When I run ernest with "project create aws tmp_project"
     Then The output should contain "Please, fix the error shown below to continue"
     And The output should contain "- Specify a valid secret access key with --secret_access_key flag"
-    When I run ernest with "datacenter create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_datacenter"
-    Then The output should contain "Datacenter 'tmp_datacenter' successfully created"
-    When I run ernest with "datacenter list"
-    Then The output should contain "tmp_datacenter"
+    When I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_project"
+    Then The output should contain "Project 'tmp_project' successfully created"
+    When I run ernest with "project list"
+    Then The output should contain "tmp_project"
     Then The output should contain "tmp_region"
     Then The output should contain "aws"
 
-  Scenario: Adding an already existing aws datacenter
+  Scenario: Adding an already existing aws project
     Given I setup ernest with target "https://ernest.local"
-    And the datacenter "tmp_datacenter" does not exist
+    And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
-    When I run ernest with "datacenter create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_datacenter"
-    And I run ernest with "datacenter create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_datacenter"
-    Then The output should contain "Datacenter 'tmp_datacenter' already exists, please specify a different name"
+    When I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_project"
+    And I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_project"
+    Then The output should contain "Project 'tmp_project' already exists, please specify a different name"
 
 

@@ -1,10 +1,10 @@
-@service
-Feature: Ernest service
+@environment
+Feature: Ernest environment
 
-  Scenario: running "service" command as logged in user
+  Scenario: running "environment" command as logged in user
     Given I setup ernest with target "https://ernest.local"
     When I'm logged in as "usr" / "secret123"
-    And I run ernest with "service"
+    And I run ernest with "environment"
     And The output should contain "list"
     And The output should contain "apply"
     And The output should contain "destroy"
@@ -14,10 +14,10 @@ Feature: Ernest service
     And The output should contain "info"
     And The output should contain "monitor"
 
-  Scenario: running "service" command as non logged in user
+  Scenario: running "environment" command as non logged in user
     Given I setup ernest with target "https://ernest.local"
     And I logout
-    When I run ernest with "service"
+    When I run ernest with "environment"
     And The output should contain "list"
     And The output should contain "list"
     And The output should contain "apply"
