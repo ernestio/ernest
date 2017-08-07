@@ -65,7 +65,9 @@ func init() {
 	})
 
 	When(`^I run ernest with "(.+?)"$`, func(args string) {
+		args = strings.Replace(args, "$(name)", serviceName, -1)
 		cmdArgs := strings.Split(args, " ")
+
 		ernest(cmdArgs...)
 	})
 
@@ -297,6 +299,19 @@ func init() {
 		}
 		def = getDefinitionPathAWS(def, serviceName)
 		ernest("environment", "apply", "--dry", def)
+	})
+
+	And(`^I apply "(.+?)" with "(.+?)"$`, func(def string, opts string) {
+		if delay := os.Getenv("ERNEST_APPLY_DELAY"); delay != "" {
+			if t, err := strconv.Atoi(delay); err == nil {
+				println("\nWaiting " + delay + " seconds...")
+				time.Sleep(time.Duration(t) * time.Second)
+			}
+		}
+		def = getDefinitionPathAWS(def, serviceName)
+		options := []string{"environment", "apply", def}
+		options = append(options, strings.Split(opts, " ")...)
+		ernest(options...)
 	})
 
 	And(`^message "(.+?)" number "(.+?)" should contain "(.+?)" as json field "(.+?)"$`, func(subject string, num int, val, key string) {
@@ -541,7 +556,7 @@ func init() {
 	})
 
 	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(environment string, status string) {
-		_, _ = n.Request("service.set", []byte(`{"name":"`+environment+`","status":"`+status+`"}`), time.Second*3)
+		_, _ = n.Request("build.set.status", []byte(`{"name":"`+environment+`","status":"`+status+`"}`), time.Second*3)
 	})
 
 	And(`^File "(.+?)" exists$`, func(filename string) {

@@ -12,7 +12,7 @@ Feature: Ernest environment info
     And I'm logged in as "usr" / "secret123"
     And The environment "destroyable" does not exist
     And I apply the definition "destroyable.yml"
-    When I run ernest with "environment info destroyable"
+    When I run ernest with "environment info fakeaws destroyable"
     Then The output should contain "Name : destroyable"
     And The output should contain "VPCs:"
     And The output should contain "| test-vpc | fakeaws |"

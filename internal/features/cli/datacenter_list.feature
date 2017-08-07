@@ -32,7 +32,6 @@ Feature: Ernest project list
     And The output should contain "fakeaws"
     And The output should contain "NAME"
     And The output should contain "ID"
-    And The output should contain "GROUP"
     And The output should contain "EXTERNAL NETWORK"
     And The output should contain "ORG"
     And The output should contain "URL"
