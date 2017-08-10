@@ -209,7 +209,7 @@ func init() {
 	})
 
 	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(service string, status string) {
-		_, _ = n.Request("service.set", []byte(`{"name":"`+service+`","status":"`+status+`"}`), time.Second*3)
+		_, _ = n.Request("build.set.status", []byte(`{"name":"`+service+`","status":"`+status+`"}`), time.Second*3)
 	})
 
 	And(`^File "(.+?)" exists$`, func(filename string) {
