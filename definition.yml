@@ -89,7 +89,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -194,4 +194,3 @@ repos:
     volumes:
       - ./logs/:/var/logs/
       - ./config/:/etc/ernest/
-
