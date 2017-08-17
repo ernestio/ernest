@@ -40,7 +40,7 @@ func init() {
 	cfg = ecc.NewConfig(os.Getenv("NATS_URI"))
 	n = cfg.Nats()
 
-	Given("^I setup a new service name$", func() {
+	Given("^I setup a new environment name$", func() {
 		serviceName = "aws" + strconv.Itoa(rand.Intn(9999999))
 	})
 
@@ -65,7 +65,9 @@ func init() {
 	})
 
 	When(`^I run ernest with "(.+?)"$`, func(args string) {
+		args = strings.Replace(args, "$(name)", serviceName, -1)
 		cmdArgs := strings.Split(args, " ")
+
 		ernest(cmdArgs...)
 	})
 
@@ -136,12 +138,12 @@ func init() {
 		_, _ = n.Request("user.del", msg, time.Second*3)
 	})
 
-	And(`^The datacenter "(.+?)" does not exist$`, func(d string) {
+	And(`^The project "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 	})
 
-	And(`^The service "(.+?)" does not exist$`, func(d string) {
+	And(`^The environment "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("service.del", msg, time.Second*3)
 	})
@@ -160,7 +162,7 @@ func init() {
 		_, _ = n.Request("user.set", msg, time.Second*3)
 	})
 
-	And(`^The datacenter "(.+?)" exists$`, func(d string) {
+	And(`^The project "(.+?)" exists$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 		msg = []byte(`{"name":"` + d + `"}`)
@@ -182,12 +184,12 @@ func init() {
 		}
 	})
 
-	Then(`^The output datacenters table should contain "(.+?)" assigned to "(.+?)" group$`, func(datacenter string, group string) {
+	Then(`^The output projects table should contain "(.+?)" assigned to "(.+?)" group$`, func(project string, group string) {
 		lines := strings.Split(lastOutput, "\n")
 		for _, l := range lines {
-			if strings.Contains(l, datacenter) {
+			if strings.Contains(l, project) {
 				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`Datacenter doesn't seem to belong to specified group: \n` + l)
+					T.Errorf(`Project doesn't seem to belong to specified group: \n` + l)
 				}
 			}
 		}
@@ -208,8 +210,8 @@ func init() {
 
 	})
 
-	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(service string, status string) {
-	    _, _ = n.Request("build.set.status", []byte(`{"name":"`+service+`","status":"`+status+`"}`), time.Second*3)
+	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(environment string, status string) {
+		_, _ = n.Request("build.set.status", []byte(`{"name":"`+environment+`","status":"`+status+`"}`), time.Second*3)
 	})
 
 	And(`^File "(.+?)" exists$`, func(filename string) {
@@ -228,8 +230,8 @@ func init() {
 	})
 
 	And(`^I stop recording$`, func() {
-		_ = sub.Unsubscribe()
 		time.Sleep(time.Second * 5)
+		_ = sub.Unsubscribe()
 	})
 
 	Then(`^all "(.+?)" messages should contain a field "(.+?)" with "(.+?)"$`, func(subject string, field string, val string) {
@@ -285,7 +287,7 @@ func init() {
 			}
 		}
 		def = getDefinitionPathAWS(def, serviceName)
-		ernest("service", "apply", def)
+		ernest("environment", "apply", def)
 	})
 
 	And(`^I apply the definition "(.+?)" with dry option$`, func(def string) {
@@ -296,7 +298,20 @@ func init() {
 			}
 		}
 		def = getDefinitionPathAWS(def, serviceName)
-		ernest("service", "apply", "--dry", def)
+		ernest("environment", "apply", "--dry", def)
+	})
+
+	And(`^I apply "(.+?)" with "(.+?)"$`, func(def string, opts string) {
+		if delay := os.Getenv("ERNEST_APPLY_DELAY"); delay != "" {
+			if t, err := strconv.Atoi(delay); err == nil {
+				println("\nWaiting " + delay + " seconds...")
+				time.Sleep(time.Duration(t) * time.Second)
+			}
+		}
+		def = getDefinitionPathAWS(def, serviceName)
+		options := []string{"environment", "apply", def}
+		options = append(options, strings.Split(opts, " ")...)
+		ernest(options...)
 	})
 
 	And(`^message "(.+?)" number "(.+?)" should contain "(.+?)" as json field "(.+?)"$`, func(subject string, num int, val, key string) {
@@ -353,12 +368,12 @@ func init() {
 		_, _ = n.Request("user.del", msg, time.Second*3)
 	})
 
-	And(`^the datacenter "(.+?)" does not exist$`, func(d string) {
+	And(`^the project "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 	})
 
-	And(`^The service "(.+?)" does not exist$`, func(d string) {
+	And(`^The environment "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("service.del", msg, time.Second*3)
 	})
@@ -377,7 +392,7 @@ func init() {
 		_, _ = n.Request("user.set", msg, time.Second*3)
 	})
 
-	And(`^the datacenter "(.+?)" exists$`, func(d string) {
+	And(`^the project "(.+?)" exists$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 		msg = []byte(`{"name":"` + d + `"}`)
@@ -419,7 +434,7 @@ func init() {
 		}
 	})
 
-	And(`^The azure datacenter "(.+?)" credentials should be "(.+?)", "(.+?)", "(.+?)", "(.+?)" and "(.+?)"$`, func(name, sID, cID, cSecret, tID, env string) {
+	And(`^The azure project "(.+?)" credentials should be "(.+?)", "(.+?)", "(.+?)", "(.+?)" and "(.+?)"$`, func(name, sID, cID, cSecret, tID, env string) {
 		msg := []byte(`{"name":"` + name + `", "type":"azure"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
 		var d struct {
@@ -471,7 +486,7 @@ func init() {
 		}
 	})
 
-	And(`^The aws datacenter "(.+?)" credentials should be "(.+?)" and "(.+?)"$`, func(name, token, secret string) {
+	And(`^The aws project "(.+?)" credentials should be "(.+?)" and "(.+?)"$`, func(name, token, secret string) {
 		msg := []byte(`{"name":"` + name + `", "type":"aws"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
 		var d struct {
@@ -514,12 +529,12 @@ func init() {
 		}
 	})
 
-	Then(`^The output datacenters table should contain "(.+?)" assigned to "(.+?)" group$`, func(datacenter string, group string) {
+	Then(`^The output projects table should contain "(.+?)" assigned to "(.+?)" group$`, func(project string, group string) {
 		lines := strings.Split(lastOutput, "\n")
 		for _, l := range lines {
-			if strings.Contains(l, datacenter) {
+			if strings.Contains(l, project) {
 				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`Datacenter doesn't seem to belong to specified group: \n` + l)
+					T.Errorf(`Project doesn't seem to belong to specified group: \n` + l)
 				}
 			}
 		}
@@ -540,8 +555,8 @@ func init() {
 
 	})
 
-	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(service string, status string) {
-		_, _ = n.Request("service.set", []byte(`{"name":"`+service+`","status":"`+status+`"}`), time.Second*3)
+	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(environment string, status string) {
+		_, _ = n.Request("build.set.status", []byte(`{"name":"`+environment+`","status":"`+status+`"}`), time.Second*3)
 	})
 
 	And(`^File "(.+?)" exists$`, func(filename string) {

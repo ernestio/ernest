@@ -1,7 +1,7 @@
 # Basic aws example
 ---
 name: aws_test_update_dc
-datacenter: update_datacenter
+datacenter: update_project
 
 vpcs:
   - name: test-vpc

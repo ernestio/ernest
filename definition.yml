@@ -84,6 +84,16 @@ repos:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
+  - name: authorization-store
+    path: git@github.com:ernestio/authorization-store.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: usage-store
     path: git@github.com:ernestio/usage-store.git
@@ -184,3 +194,4 @@ repos:
     volumes:
       - ./logs/:/var/logs/
       - ./config/:/etc/ernest/
+

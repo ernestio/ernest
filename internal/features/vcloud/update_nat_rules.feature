@@ -1,9 +1,9 @@
 @vcloud @update_nat_rules
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Updating router nat rules
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "vcloud5.yml"
     And I start recording

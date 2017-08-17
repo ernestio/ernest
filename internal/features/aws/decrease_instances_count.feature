@@ -1,9 +1,9 @@
 @aws @aws_decrease_instances_count
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Decreasing the instances count
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws2.yml"
     And I start recording

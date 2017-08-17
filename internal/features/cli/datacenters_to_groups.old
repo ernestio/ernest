@@ -1,0 +1,76 @@
+@group @projects_to_groups
+Feature: Ernest projects to groups
+
+  Scenario: Non logged - project to group
+    Given I setup ernest with target "https://ernest.local"
+    And I logout
+    When I run ernest with "group add-project"
+    Then The output should contain "You should specify the project name and group name"
+    When I run ernest with "group add-project tmp_project"
+    Then The output should contain "You should specify the group name"
+    When I run ernest with "group add-project tmp_project tmp_group"
+    Then The output should contain "You're not allowed to perform this action, please log in"
+
+  Scenario: Plain project - project to group
+    Given I setup ernest with target "https://ernest.local"
+    And I'm logged in as "usr" / "secret123"
+    When I run ernest with "group add-project"
+    Then The output should contain "You should specify the project name and group name"
+    When I run ernest with "group add-project tmp_project"
+    Then The output should contain "You should specify the group name"
+    When I run ernest with "group add-project tmp_project tmp_group"
+    Then The output should contain "You don't have permissions to perform this action"
+
+  Scenario: Admin project - project to group
+    Given I setup ernest with target "https://ernest.local"
+    And the group "tmp_group" exists
+    And the project "tmp_project" exists
+    And I'm logged in as "ci_admin" / "secret123"
+    When I run ernest with "group add-project"
+    Then The output should contain "You should specify the project name and group name"
+    When I run ernest with "group add-project tmp_project"
+    Then The output should contain "You should specify the group name"
+    When I run ernest with "group add-project tmp_project tmp_group"
+    Then The output should contain "Project 'tmp_project' is now assigned to group 'tmp_group'"
+    When I run ernest with "project list"
+    Then The output projects table should contain "tmp_project" assigned to "tmp_group" group
+
+  Scenario: Already assigned project
+    Given I setup ernest with target "https://ernest.local"
+    And the group "tmp_group" exists
+    And the project "tmp_project" exists
+    And I'm logged in as "ci_admin" / "secret123"
+    And I run ernest with "group add-project tmp_project tmp_group"
+    When I run ernest with "group add-project tmp_project tmp_group"
+    Then The output should contain "Project 'tmp_project' already belongs to 'tmp_group' group"
+
+  Scenario: Unexisting group
+    Given I setup ernest with target "https://ernest.local"
+    And the group "tmp_group" does not exist
+    And the project "tmp_project" exists
+    And I'm logged in as "ci_admin" / "secret123"
+    When I run ernest with "group add-project tmp_project tmp_group"
+    Then The output should contain "Group 'tmp_group' does not exist"
+
+  Scenario: Unexisting project
+    Given I setup ernest with target "https://ernest.local"
+    And the project "tmp_project" does not exist
+    And the group "tmp_group" exists
+    And I'm logged in as "ci_admin" / "secret123"
+    When I run ernest with "group add-project tmp_project tmp_group"
+    Then The output should contain "Project 'tmp_project' does not exist"
+
+  Scenario: Admin project - remove project from  group
+    Given I setup ernest with target "https://ernest.local"
+    And the group "tmp_group" exists
+    And the project "tmp_project" exists
+    And I'm logged in as "ci_admin" / "secret123"
+    And I run ernest with "group add-project tmp_project tmp_group"
+    When I run ernest with "group remove-project"
+    Then The output should contain "You should specify the project name and group name"
+    When I run ernest with "group remove-project tmp_project"
+    Then The output should contain "You should specify the group name"
+    When I run ernest with "group remove-project tmp_project tmp_group"
+    Then The output should contain "Project 'tmp_project' is not assigned anymore to group 'tmp_group'"
+    When I run ernest with "project list"
+    Then The output projects table should contain "tmp_project" assigned to " " group

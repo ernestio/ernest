@@ -1,9 +1,9 @@
 @aws @add_network
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Add a new network
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws7.yml"
     And I start recording

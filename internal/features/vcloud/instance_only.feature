@@ -1,9 +1,9 @@
 @vcloud @instance_only
-Feature: Service apply
+Feature: Environment apply
 
-  Scenario: Applying an instance only service
+  Scenario: Applying an instance only environment
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I start recording
     And I apply the definition "vcloud8.yml"
