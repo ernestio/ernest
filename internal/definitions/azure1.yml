@@ -88,4 +88,3 @@ resource_groups:
      - name: lb1
        frontend_ip_configurations:
          - name: fic1
-

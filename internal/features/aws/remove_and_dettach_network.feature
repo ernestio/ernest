@@ -1,9 +1,9 @@
 @aws @remove_and_dettach_network
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Removing a network and its asociated instances
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws10.yml"
     And I start recording

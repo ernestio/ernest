@@ -1,6 +1,6 @@
 # Basic aws example
 ---
-name: referenced
+name: my_service
 datacenter: test_dc
 bootstrapping: none
 service_ip: 172.16.186.44

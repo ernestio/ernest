@@ -1,9 +1,9 @@
 @aws @remove_security_groups
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Remove security groups
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws6.yml"
     And I start recording

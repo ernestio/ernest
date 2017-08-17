@@ -1,0 +1,152 @@
+name: my_service
+datacenter: fakeazure
+
+resource_groups:
+  - name: az-test
+    location: westeurope
+
+    security_groups:
+      - name: subnet-sg
+        rules:
+          - name: rule1
+            description: "subnet security group rule 1"
+            priority: 101
+            direction: Inbound
+            access: Allow
+            protocol: Tcp
+            source_port_range: 100-4096
+            destination_port_range: 100-4096
+            source_address_prefix: VirtualNetwork
+            destination_address_prefix: VirtualNetwork
+          - name: rule2
+            description: "subnet security group rule 2"
+            priority: 102
+            direction: Outbound
+            access: Deny
+            protocol: Tcp
+            source_port_range: 100-4096
+            destination_port_range: 100-4096
+            source_address_prefix: VirtualNetwork
+            destination_address_prefix: VirtualNetwork
+      - name: vm-sg
+        rules:
+          - name: rule1
+            description: "vm security group rule 1"
+            priority: 101
+            direction: Inbound
+            access: Allow
+            protocol: Tcp
+            source_port_range: 100-4096
+            destination_port_range: 100-4096
+            source_address_prefix: VirtualNetwork
+            destination_address_prefix: VirtualNetwork
+
+    virtual_networks:
+      - name: net
+        address_spaces:
+          - 10.0.0.0/16
+        subnets:
+          - name: sub1
+            address_prefix: 10.0.1.0/24
+            security_group: subnet-sg
+          - name: sub2
+            address_prefix: 10.0.2.0/24
+
+    storage_accounts:
+      - name: r3labssa1
+        account_type: Standard_LRS
+        containers:
+          - name: sc1
+            access_type: private
+
+    availability_sets:
+      - name: web
+        fault_domain_count: 2
+        update_domain_count: 4
+        managed: true
+            
+    virtual_machines:
+      - name: web
+        count: 1
+        size: Standard_DS2_v2
+        image: Canonical:UbuntuServer:16.04-LTS:latest
+        availability_set: web
+        delete_os_disk_on_termination: true
+        delete_data_disks_on_termination: true
+        os_profile:
+          computer_name: web
+        network_interfaces:
+          - name: web
+            enable_ip_forwarding: true
+            ip_configurations:
+              - name: config1
+                subnet: net:sub1
+                private_ip_address_allocation: dynamic
+                public_ip_address_allocation: static
+                load_balancer_backend_address_pools:
+                  - pool1
+        authentication:
+          admin_username: testadmin
+          admin_password: Password1234!
+          disable_password_authentication: false
+          ssh_keys:
+              "/home/testadmin/.ssh/authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrtWGubLw1eEckpFnzTvz2Dwg5H8qU8A8gZVBwJBMdthvgDZXSfqTpSUZBaWLtZAGA5Hfb4/fJ+uQB8ypJ9iFbglyXmlRiQ6D1BJ+qUdkiM3QOjOBMFNAhcdNZAFxH34f8/GEEM5HLAFcGeLTscBJNf0g8MrCv7ZnRp8gwcPea8jHqXdXjyP5KEJxdRpIP7o+c43ScHXR5D/j6Lu2On64BST+L20/OCCXWsXEXQNP9HHmiuZMM6IN4eSTb0YG6M624Q9SiuWmSiYcTwKA/IpuFApq4Y7euD7Nu8BB+bAJsHC46AOrGtIq4+7EN1bxn389lOxINqqXp6i628OSvlS0T jason.reid@r3labs.io"
+        storage_os_disk:
+          name: os
+          managed_disk_type: Standard_LRS
+          caching: ReadWrite
+          create_option: FromImage
+
+      - name: win
+        count: 2
+        size: Standard_DS1_v2
+        image: MicrosoftWindowsServer:WindowsServer:2016-Datacenter:latest
+        delete_os_disk_on_termination: true
+        delete_data_disks_on_termination: true
+        os_profile:
+          computer_name: win
+        os_profile_windows_config:
+          provision_vm_agent: true
+          enable_automatic_upgrades: true
+          winrm:
+            - protocol: http
+        network_interfaces:
+          - name: win
+            security_group: vm-sg
+            ip_configurations:
+              - name: config1
+                subnet: net:sub2
+                private_ip_address_allocation: dynamic
+                public_ip_address_allocation: static
+        authentication:
+          admin_username: testadmin
+          admin_password: Password1234!
+        storage_os_disk:
+          name: os
+          storage_account: r3labssa1
+          storage_container: sc1
+          caching: ReadWrite
+          create_option: FromImage
+
+    loadbalancers:
+      - name: lb
+        probes:
+          - name: http
+            port: 80
+            protocol: Http
+            request_path: /
+            interval: 10
+            max_failures: 3
+        backend_address_pools:
+          - pool1
+        frontend_ip_configurations:
+          - name: lbip
+            private_ip_address_allocation: dynamic
+            public_ip_address_allocation: static
+            rules:
+              - name: http
+                protocol: Tcp
+                frontend_port: 80
+                backend_port: 80
+                backend_address_pool: pool1
+                probe: http

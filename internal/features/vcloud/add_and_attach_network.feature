@@ -1,9 +1,9 @@
 @vcloud @add_and_attach_network
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Add a network and attach a new instance
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "vcloud2.yml"
     And I start recording

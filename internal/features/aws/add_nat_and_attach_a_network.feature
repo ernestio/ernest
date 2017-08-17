@@ -1,9 +1,9 @@
 @aws @add_nat_and_attach_a_network
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Add a nat gateway and attach a private network to it
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws11.yml"
     And I start recording
