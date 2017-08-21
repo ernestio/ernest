@@ -1,5 +1,5 @@
 name: my_service
-datacenter: fakeazure
+project: fakeazure
 
 resource_groups:
   - name: rg2

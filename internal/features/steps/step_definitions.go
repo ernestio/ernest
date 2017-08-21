@@ -590,8 +590,8 @@ func getDefinitionPathAWS(def string, service string) string {
 	for _, line := range lines {
 		if strings.Contains(line, "name: my_service") {
 			finalLines = append(finalLines, "name: "+service)
-		} else if strings.Contains(line, "datacenter: r3-dc2") {
-			finalLines = append(finalLines, "datacenter: fakeaws")
+		} else if strings.Contains(line, "project: r3-dc2") {
+			finalLines = append(finalLines, "project: fakeaws")
 		} else {
 			finalLines = append(finalLines, line)
 		}
