@@ -1,7 +1,7 @@
 # Basic aws example
 ---
 name: destroyable
-datacenter: r3-dc2
+project: r3-dc2
 bootstrapping: none
 service_ip: 172.16.186.44
 vpcs:

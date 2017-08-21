@@ -1,5 +1,5 @@
 name: aws-test-4
-datacenter: tom-aws
+project: tom-aws
 bootstrapping: none
 vpc_id: vpc-a921accd
 networks:

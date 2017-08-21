@@ -1,5 +1,5 @@
 name: aws-test-999
-datacenter: fakeaws
+project: fakeaws
 bootstrapping: none
 vpc_id: vpc-a921accd
 networks:
