@@ -51,6 +51,16 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
+  authenticator:
+    image: ernestio/authenticator:2.1.0
+    links:
+    - nats
+    depends_on:
+    - config-store
+    environment:
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+      JWT_SECRET: GENERATEDJWTSECRET
+      NATS_URI: nats://nats:4222
   config-store:
     image: ernestio/config-store:2.1.0
     entrypoint: /go/bin/config-store -config /etc/ernest/config.json

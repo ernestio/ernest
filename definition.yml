@@ -26,6 +26,18 @@ repos:
       JWT_SECRET: 'GENERATEDJWTSECRET'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
+  - name: authenticator
+    path: git@github.com:ernestio/authenticator.git
+    branch: master
+    links:
+      - nats
+    depends:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      JWT_SECRET: 'GENERATEDJWTSECRET'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+
   - name: monit
     path: git@github.com:ernestio/monit.git
     branch: master

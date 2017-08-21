@@ -1,9 +1,4 @@
 {
-  "redis": {
-    "addr": "redis:6379",
-    "password": "",
-    "DB": 0
-  },
   "postgres": {
     "names": [
       "users",
@@ -23,50 +18,5 @@
   "monitor": {
     "host": "127.0.0.1",
     "port": "22000"
-  },
-  "connectors": {
-    "routers": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "networks": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "instances": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "firewalls": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "nats": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "executions": [
-      "fake",
-      "salt"
-    ]
-  },
-  "salt": {
-    "user": "salt",
-    "password": "---"
   }
 }

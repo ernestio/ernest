@@ -1,8 +1,8 @@
 {
-  "redis": {
-    "addr": "redis:6379",
-    "password": "",
-    "DB": 0
+  "authenticator": {
+    "providers": [
+      {"name": "local"}
+    ]
   },
   "postgres": {
     "names": [
@@ -27,57 +27,5 @@
   "logger": {
     "host": "",
     "port": "22001"
-  },
-  "connectors": {
-    "routers": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake",
-      "azure",
-      "azure-fake"
-    ],
-    "networks": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "instances": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "firewalls": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "nats": [
-      "fake",
-      "vcloud",
-      "vcloud-fake",
-      "aws",
-      "aws-fake"
-    ],
-    "elbs": [
-      "fake",
-      "aws",
-      "aws-fake"
-    ],
-    "executions": [
-      "fake",
-      "salt"
-    ]
-  },
-  "salt": {
-    "user": "salt",
-    "password": "33Arma33"
   }
 }
