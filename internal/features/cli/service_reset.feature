@@ -12,6 +12,7 @@ Feature: Ernest environment reset
     And I'm logged in as "usr" / "secret123"
     And The environment "fakeaws/destroyable" does not exist
     And I apply the definition "destroyable.yml"
+    And I wait for "2" seconds
     When I run ernest with "env reset fakeaws destroyable"
     Then The output should contain "The environment 'fakeaws / destroyable' cannot be reset as its status is 'done'"
     And I force "fakeaws/destroyable" to be on status "in_progress"
