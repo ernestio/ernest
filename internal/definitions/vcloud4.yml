@@ -1,6 +1,6 @@
 ---
 name: my_service
-datacenter: fakevcloud
+project: fakevcloud
 
 routers:
   - name: vse2

@@ -1,7 +1,7 @@
 # Remove a network
 ---
 name: my_service
-datacenter: r3-dc2
+project: r3-dc2
 
 vpcs:
   - name: test-vpc
