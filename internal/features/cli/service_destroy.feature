@@ -12,6 +12,7 @@ Feature: Environment destroy
   Scenario: Logged environment destroy unexisting
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
+    And The environment "fakeaws/unexisting" does not exist
     When I run ernest with "env destroy"
     Then The output should contain "You should specify an existing project name"
     When I run ernest with "env destroy fakeaws"
@@ -22,7 +23,7 @@ Feature: Environment destroy
   Scenario: Logged environment destroy
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    And The environment "destroyable" does not exist
+    And The environment "fakeaws/destroyable" does not exist
     And I apply the definition "destroyable.yml"
     And I wait for "5" seconds
     When I run ernest with "env destroy fakeaws destroyable --yes"

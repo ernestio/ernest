@@ -24,7 +24,6 @@ Feature: Ernest user disable
     And I'm logged in as "ci_admin" / "secret123"
     And The output should contain "Welcome back ci_admin"
     When I run ernest with "user create to_disable secret123"
-    And I run ernest with "group-add to_disable test"
     And I'm logged in as "to_disable" / "secret123"
     Then The output should contain "Welcome back to_disable"
     When I'm logged in as "ci_admin" / "secret123"

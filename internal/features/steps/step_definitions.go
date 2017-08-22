@@ -128,11 +128,6 @@ func init() {
 		lastError = err
 	})
 
-	And(`^The group "(.+?)" does not exist$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-	})
-
 	And(`^The user "(.+?)" does not exist$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
@@ -146,13 +141,6 @@ func init() {
 	And(`^The environment "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("service.del", msg, time.Second*3)
-	})
-
-	And(`^The group "(.+?)" exists$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-		msg = []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.set", msg, time.Second*3)
 	})
 
 	And(`^The user "(.+?)" exists$`, func(user string) {
@@ -171,28 +159,6 @@ func init() {
 
 	And(`^I wait for "(.+?)" seconds$`, func(n int) {
 		time.Sleep(time.Duration(n) * time.Second)
-	})
-
-	Then(`^The output users table should contain "(.+?)" assigned to "(.+?)" group$`, func(user string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, user) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`User doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
-	})
-
-	Then(`^The output projects table should contain "(.+?)" assigned to "(.+?)" group$`, func(project string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, project) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`Project doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
 	})
 
 	Then(`^The output line number "(.+?)" should contain "(.+?)"$`, func(number int, needle string) {
@@ -358,11 +324,6 @@ func init() {
 		lastError = err
 	})
 
-	And(`^the group "(.+?)" does not exist$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-	})
-
 	And(`^the user "(.+?)" does not exist$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
@@ -376,13 +337,6 @@ func init() {
 	And(`^The environment "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("service.del", msg, time.Second*3)
-	})
-
-	And(`^the group "(.+?)" exists$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-		msg = []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.set", msg, time.Second*3)
 	})
 
 	And(`^the user "(.+?)" exists$`, func(user string) {
@@ -518,28 +472,6 @@ func init() {
 		time.Sleep(time.Duration(n) * time.Millisecond)
 	})
 
-	Then(`^The output users table should contain "(.+?)" assigned to "(.+?)" group$`, func(user string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, user) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`User doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
-	})
-
-	Then(`^The output projects table should contain "(.+?)" assigned to "(.+?)" group$`, func(project string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, project) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`Project doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
-	})
-
 	Then(`^The output line number "(.+?)" should contain "(.+?)"$`, func(number int, needle string) {
 		lines := strings.Split(lastOutput, "\n")
 		n := strconv.Itoa(number)
@@ -590,8 +522,8 @@ func getDefinitionPathAWS(def string, service string) string {
 	for _, line := range lines {
 		if strings.Contains(line, "name: my_service") {
 			finalLines = append(finalLines, "name: "+service)
-		} else if strings.Contains(line, "datacenter: r3-dc2") {
-			finalLines = append(finalLines, "datacenter: fakeaws")
+		} else if strings.Contains(line, "project: r3-dc2") {
+			finalLines = append(finalLines, "project: fakeaws")
 		} else {
 			finalLines = append(finalLines, line)
 		}

@@ -51,17 +51,6 @@ repos:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
-  - name: group-store
-    path: git@github.com:ernestio/group-store.git
-    branch: master
-    links:
-      - nats
-    depends_on:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
   - name: datacenter-store
     path: git@github.com:ernestio/datacenter-store.git
     branch: master

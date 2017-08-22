@@ -18,7 +18,7 @@ Feature: Ernest environment definition
     Then The output should contain "You should specify the env name"
     When I run ernest with "env definition fakeaws destroyable"
     Then The output should contain "name: destroyable"
-    And The output should contain "datacenter: fakeaws"
+    And The output should contain "project: fakeaws"
 
   Scenario: Logged user definition for a specific build
     Given I setup ernest with target "https://ernest.local"
@@ -27,5 +27,5 @@ Feature: Ernest environment definition
     And I apply the definition "destroyable.yml"
     When I run ernest with "env definition fakeaws destroyable"
     Then The output should contain "name: destroyable"
-    And The output should contain "datacenter: fakeaws"
+    And The output should contain "project: fakeaws"
 
