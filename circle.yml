@@ -34,11 +34,12 @@ dependencies:
     - $ROOTPATH/ernest/internal/ci_install_service.sh r3labs composable master
     - $ROOTPATH/ernest/internal/ci_install_service.sh ernestio ernest-cli $CLI_VERSION
     - mkdir /tmp/composable
+    - composable set build.path /tmp/composable
     - sed -i "s:443 ssl:80:g" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "s:ERNESTHOST:ernest.local:g" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "/ssl_certificate/d" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "s:443:80:g" $ROOTPATH/ernest/template.yml
-    - cd $ROOTPATH/ernest && composable gen -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION $EXTRA_OPTIONS definition.yml template.yml --
+    - cd $ROOTPATH/ernest && composable generate -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION $EXTRA_OPTIONS definition.yml template.yml --
     - cd $ROOTPATH/ernest && docker-compose -f docker-compose.yml up -d
     - cd $ROOTPATH/ernest && docker-compose logs > /tmp/compose.log:
           background: true
@@ -50,4 +51,3 @@ dependencies:
 test:
   override:
     - cd $ROOTPATH/ernest && make test
-

@@ -19,7 +19,7 @@ repos:
       - nats
     ports:
       - 8080:8080
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -33,7 +33,7 @@ repos:
       - nats
     ports:
       - 22000:22000
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -45,7 +45,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -56,7 +56,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -67,7 +67,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -78,7 +78,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -89,7 +89,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -101,7 +101,7 @@ repos:
     links:
       - nats
       - postgres
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -113,7 +113,7 @@ repos:
     links:
       - nats
       - postgres
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -124,7 +124,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -136,7 +136,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -147,7 +147,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -158,7 +158,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -172,7 +172,7 @@ repos:
       - nats
     ports:
       - 22001:22001
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
