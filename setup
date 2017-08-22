@@ -105,8 +105,7 @@ done
 
 
 # setup admin accounts
-./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'group.set' '{"id":"1","name": "admin"}'
-./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"group_id\": 1, \"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"admin\":true}"
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"admin\":true}"
 
 echo
 echo "Setup complete!"
