@@ -34,6 +34,7 @@ dependencies:
     - $ROOTPATH/ernest/internal/ci_install_service.sh r3labs composable master
     - $ROOTPATH/ernest/internal/ci_install_service.sh ernestio ernest-cli $CLI_VERSION
     - mkdir /tmp/composable
+    - composable set build.path /tmp/composable
     - sed -i "s:443 ssl:80:g" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "s:ERNESTHOST:ernest.local:g" $ROOTPATH/ernest/config/nginx/ernest.local
     - sed -i "/ssl_certificate/d" $ROOTPATH/ernest/config/nginx/ernest.local
