@@ -4,7 +4,7 @@
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
