@@ -15,7 +15,7 @@ Feature: Environment apply
     When I run ernest with "environment apply"
     Then The output should contain "You should specify a valid template path or store an ernest.yml on the current folder"
     When I run ernest with "environment apply internal/definitions/unexisting_dc.yml"
-    Then The output should contain "Specified datacenter does not exist"
+    Then The output should contain "Specified project does not exist"
 
   Scenario: Logged environment apply
     Given I setup ernest with target "https://ernest.local"
