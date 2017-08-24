@@ -1,7 +1,7 @@
 {
   "authenticator": {
     "providers": [
-      {"name": "local"}
+      {"type": "local"}
     ]
   },
   "postgres": {
