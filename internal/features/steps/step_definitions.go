@@ -44,6 +44,10 @@ func init() {
 		serviceName = "aws" + strconv.Itoa(rand.Intn(9999999))
 	})
 
+	Given(`^I setup a new environment name "(.+?)"$`, func(name string) {
+		serviceName = name
+	})
+
 	Given(`^I setup ernest with target "(.+?)"$`, func(target string) {
 		if os.Getenv("CURRENT_INSTANCE") != "" {
 			target = os.Getenv("CURRENT_INSTANCE")
