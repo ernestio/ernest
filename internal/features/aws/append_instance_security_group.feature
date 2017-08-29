@@ -11,7 +11,7 @@ Feature: Environment apply
     And I stop recording
     Then an event "instance.update.aws-fake" should be called exactly "1" times
     And all "instance.update.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "instance.update.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "instance.update.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "instance.update.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "instance.update.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And message "instance.update.aws-fake" number "0" should contain "null" as json field "security_group_aws_ids.0"

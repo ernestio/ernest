@@ -11,7 +11,7 @@ Feature: Environment apply
     And I stop recording
     Then an event "nat.create.aws-fake" should be called exactly "1" times
     And all "nat.create.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "nat.create.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "nat.create.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "nat.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "nat.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And all "nat.create.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
@@ -20,8 +20,8 @@ Feature: Environment apply
     And all "nat.create.aws-fake" messages should contain a field "_state" with "running"
     Then an event "network.create.aws-fake" should be called exactly "1" times
     And all "network.create.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "network.create.aws-fake" messages should contain a field "datacenter_region" with "fake"
     And all "network.create.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
     And all "network.create.aws-fake" messages should contain a field "range" with "10.2.0.0/24"
+    And all "network.create.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "network.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "network.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
