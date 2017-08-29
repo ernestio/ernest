@@ -14,7 +14,7 @@ Feature: Ernest login
 
   Scenario: Login with non existing user
     When I'm logged in as "unexisting" / "secret123"
-    Then The output should contain "The keypair user / password does not match any user on the database, please try again"
+    Then The output should contain "Authentication failed"
 
   Scenario: Login with no username   
     When I'm logged in as "" / "invalid123"

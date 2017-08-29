@@ -31,5 +31,4 @@ Feature: Ernest user disable
     And I run ernest with "user disable to_disable"
     And The output should contain "Account `to_disable` has been disabled"
     And I'm logged in as "to_disable" / "secret123"
-    Then The output should contain "The keypair user / password does not match any user on the database, please try again"
-
+    Then The output should contain "Authentication failed"
