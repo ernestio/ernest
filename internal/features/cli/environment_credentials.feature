@@ -33,3 +33,16 @@ Feature: Environment credentials
     Then all "instance.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "tmp_secret_up_to_16_chars_2"
     And all "instance.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "tmp_secret_access_key_2"
 
+  Scenario: Override environment credentials with update
+    Given I setup ernest with target "https://ernest.local"
+    And The environment "tmp_cred_update" does not exist
+    And I setup a new environment name "tmp_cred_update"
+    And I'm logged in as "usr" / "secret123"
+    And I apply the definition "aws8.yml"
+    When I run ernest with "env update fakeaws tmp_cred_update --secret_access_key tmp_secret_access_key_upd --access_key_id tmp_secret_up_to_16_chars_upd"
+    And I start recording
+    And I apply the definition "aws9.yml"
+    And I stop recording
+    Then all "network.delete.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "tmp_secret_up_to_16_chars_upd"
+    And all "network.delete.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "tmp_secret_access_key_upd"
+
