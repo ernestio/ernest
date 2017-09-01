@@ -396,33 +396,35 @@ func init() {
 		msg := []byte(`{"name":"` + name + `", "type":"azure"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
 		var d struct {
-			SubscriptionID string `json:"azure_subscription_id"`
-			ClientID       string `json:"azure_client_id"`
-			ClientSecret   string `json:"azure_client_secret"`
-			TenantID       string `json:"azure_tenant_id"`
-			Environment    string `json:"azure_environment"`
+			Credentials struct {
+				SubscriptionID string `json:"azure_subscription_id"`
+				ClientID       string `json:"azure_client_id"`
+				ClientSecret   string `json:"azure_client_secret"`
+				TenantID       string `json:"azure_tenant_id"`
+				Environment    string `json:"azure_environment"`
+			} `json:"credentials"`
 		}
 
 		key := os.Getenv("ERNEST_CRYPTO_KEY")
 		_ = json.Unmarshal(res.Data, &d)
 		crypto := aes.New()
-		subscriptionID, err := crypto.Decrypt(d.SubscriptionID, key)
+		subscriptionID, err := crypto.Decrypt(d.Credentials.SubscriptionID, key)
 		if err != nil {
 			log.Println(err)
 		}
-		clientID, err := crypto.Decrypt(d.ClientID, key)
+		clientID, err := crypto.Decrypt(d.Credentials.ClientID, key)
 		if err != nil {
 			log.Println(err)
 		}
-		clientSecret, err := crypto.Decrypt(d.ClientSecret, key)
+		clientSecret, err := crypto.Decrypt(d.Credentials.ClientSecret, key)
 		if err != nil {
 			log.Println(err)
 		}
-		tenantID, err := crypto.Decrypt(d.TenantID, key)
+		tenantID, err := crypto.Decrypt(d.Credentials.TenantID, key)
 		if err != nil {
 			log.Println(err)
 		}
-		environment, err := crypto.Decrypt(d.Environment, key)
+		environment, err := crypto.Decrypt(d.Credentials.Environment, key)
 		if err != nil {
 			log.Println(err)
 		}
@@ -448,18 +450,20 @@ func init() {
 		msg := []byte(`{"name":"` + name + `", "type":"aws"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
 		var d struct {
-			Token  string `json:"aws_access_key_id"`
-			Secret string `json:"aws_secret_access_key"`
+			Credentials struct {
+				Token  string `json:"aws_access_key_id"`
+				Secret string `json:"aws_secret_access_key"`
+			} `json:"credentials"`
 		}
 
 		key := os.Getenv("ERNEST_CRYPTO_KEY")
 		_ = json.Unmarshal(res.Data, &d)
 		crypto := aes.New()
-		tk, err := crypto.Decrypt(d.Token, key)
+		tk, err := crypto.Decrypt(d.Credentials.Token, key)
 		if err != nil {
 			log.Println(err)
 		}
-		se, err := crypto.Decrypt(d.Secret, key)
+		se, err := crypto.Decrypt(d.Credentials.Secret, key)
 		if err != nil {
 			log.Println(err)
 		}

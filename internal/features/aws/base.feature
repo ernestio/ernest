@@ -10,14 +10,14 @@ Feature: Environment apply
     And I stop recording
     Then an event "network.create.aws-fake" should be called exactly "1" times
     And all "network.create.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "network.create.aws-fake" messages should contain a field "datacenter_region" with "fake"
     And all "network.create.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
     And all "network.create.aws-fake" messages should contain a field "range" with "10.1.0.0/24"
+    And all "network.create.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "network.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "network.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     Then an event "firewall.create.aws-fake" should be called exactly "1" times
     And all "firewall.create.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
-    And all "firewall.create.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "firewall.create.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "firewall.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "firewall.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And all "firewall.create.aws-fake" messages should contain a field "name" with "web-sg-1"
@@ -28,7 +28,7 @@ Feature: Environment apply
     And message "firewall.create.aws-fake" number "0" should contain "running" as json field "_state"
     Then an event "instance.create.aws-fake" should be called exactly "1" times
     And all "instance.create.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "instance.create.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "instance.create.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "instance.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "instance.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And message "instance.create.aws-fake" number "0" should contain "foo" as json field "security_group_aws_ids.0"
