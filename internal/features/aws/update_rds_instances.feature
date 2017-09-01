@@ -13,7 +13,7 @@ Feature: Environment apply
     And all "rds_instance.update.aws-fake" messages should contain a field "_provider" with "aws-fake"
     And all "rds_instance.update.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "rds_instance.update.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
-    And all "rds_instance.update.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "rds_instance.update.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "rds_instance.update.aws-fake" messages should contain a field "name" with "test-1"
     And all "rds_instance.update.aws-fake" messages should contain a field "size" with "db.r3.xlarge"
     And all "rds_instance.update.aws-fake" messages should contain a field "cluster" with "aurora"

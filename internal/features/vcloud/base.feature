@@ -11,8 +11,8 @@ Feature: Environment apply
     Then an event "router.create.vcloud-fake" should be called exactly "1" times
     And all "router.create.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "router.create.vcloud-fake" messages should contain a field "name" with "vse2"
-    And all "router.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "router.create.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
+    And all "router.create.vcloud-fake" messages should contain an encrypted field "vcloud_url" with "https://vcloud.net"
     And all "router.create.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "router.create.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     And message "router.create.vcloud-fake" number "0" should contain "in_in_any" as json field "firewall_rules.0.name"
@@ -48,13 +48,13 @@ Feature: Environment apply
     Then an event "network.create.vcloud-fake" should be called exactly "1" times
     And all "network.create.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "network.create.vcloud-fake" messages should contain a field "range" with "10.1.0.0/24"
-    And all "network.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
+    And all "network.create.vcloud-fake" messages should contain an encrypted field "vcloud_url" with "https://vcloud.net"
     And all "network.create.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
     And all "network.create.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "network.create.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     Then an event "instance.create.vcloud-fake" should be called exactly "1" times
     And all "instance.create.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
-    And all "instance.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
+    And all "instance.create.vcloud-fake" messages should contain an encrypted field "vcloud_url" with "https://vcloud.net"
     And all "instance.create.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
     And all "instance.create.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "instance.create.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"

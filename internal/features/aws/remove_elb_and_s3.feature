@@ -13,7 +13,7 @@ Feature: Environment apply
     And all "elb.delete.aws-fake" messages should contain a field "_provider" with "aws-fake"
     And all "elb.delete.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "elb.delete.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
-    And all "elb.delete.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "elb.delete.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "elb.delete.aws-fake" messages should contain a field "name" with "elb-1"
     And message "elb.delete.aws-fake" number "0" should contain "web-1" as json field "instance_names.0"
     And message "elb.delete.aws-fake" number "0" should contain "foo" as json field "security_group_aws_ids.0"

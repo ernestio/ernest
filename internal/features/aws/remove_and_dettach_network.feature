@@ -11,14 +11,14 @@ Feature: Environment apply
     And I stop recording
     Then an event "network.delete.aws-fake" should be called exactly "1" times
     And all "network.delete.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "network.delete.aws-fake" messages should contain a field "datacenter_region" with "fake"
     And all "network.delete.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
     And all "network.delete.aws-fake" messages should contain a field "range" with "10.2.0.0/24"
+    And all "network.delete.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "network.delete.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "network.delete.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     Then an event "instance.delete.aws-fake" should be called exactly "1" times
     And all "instance.delete.aws-fake" messages should contain a field "_provider" with "aws-fake"
-    And all "instance.delete.aws-fake" messages should contain a field "datacenter_region" with "fake"
+    And all "instance.delete.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
     And all "instance.delete.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "instance.delete.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And message "instance.delete.aws-fake" number "0" should contain "null" as json field "security_group_aws_ids.0"
