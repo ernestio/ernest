@@ -1,9 +1,9 @@
 @vcloud @remove_and_dettach_network
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Remove a network and dettach an existing instance
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "vcloud3.yml"
     And I start recording
@@ -11,8 +11,8 @@ Feature: Service apply
     And I stop recording
     Then an event "instance.delete.vcloud-fake" should be called exactly "1" times
     And all "instance.delete.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
-    And all "instance.delete.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "instance.delete.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
+    And all "instance.delete.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "instance.delete.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "instance.delete.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     And all "instance.delete.vcloud-fake" messages should contain a field "name" with "web-1"
@@ -26,7 +26,7 @@ Feature: Service apply
     Then an event "network.delete.vcloud-fake" should be called exactly "1" times
     And all "network.delete.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "network.delete.vcloud-fake" messages should contain a field "range" with "10.1.0.0/24"
-    And all "network.delete.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "network.delete.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
+    And all "network.delete.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "network.delete.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "network.delete.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"

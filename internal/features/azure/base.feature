@@ -1,18 +1,18 @@
 @azure @azure_base
-Feature: Applying an azure based service
+Feature: Applying an azure based environment
 
-  Scenario: Applying a basic azure service
+  Scenario: Applying a basic azure environment
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "pwd"
     And I start recording
     And I apply the definition "azure1.yml"
     And I stop recording
     Then an event "resource_group.create.azure-fake" should be called exactly "1" times
     And all "resource_group.create.azure-fake" messages should contain a field "_provider" with "azure-fake"
-    And all "resource_group.create.azure-fake" messages should contain a field "datacenter_region" with "westus"
     And all "resource_group.create.azure-fake" messages should contain a field "name" with "rg2"
     And all "resource_group.create.azure-fake" messages should contain a field "location" with "eastus"
+    And all "resource_group.create.azure-fake" messages should contain an encrypted field "datacenter_region" with "westus"
     And all "resource_group.create.azure-fake" messages should contain an encrypted field "azure_client_id" with "cliid"
     And all "resource_group.create.azure-fake" messages should contain an encrypted field "azure_client_secret" with "clisec"
     And all "resource_group.create.azure-fake" messages should contain an encrypted field "azure_subscription_id" with "subid"

@@ -1,7 +1,7 @@
 # Basic aws example
 ---
 name: my_service
-datacenter: test_dc
+project: test_dc
 bootstrapping: none
 service_ip: 172.16.186.44
 vpcs:

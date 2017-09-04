@@ -1,9 +1,9 @@
 @azure @azure_creator
 Feature: Creator
 
-  Scenario: Applying a basic azure service
+  Scenario: Applying a basic azure environment
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "pwd"
     And I start recording
     And I apply the definition "azure2.yml"
@@ -197,7 +197,6 @@ Feature: Creator
     And message "virtual_machine.create.azure-fake" number "1" should contain "_state" as json field "running"
     And message "virtual_machine.create.azure-fake" number "1" should contain "vm_size" as json field "Standard_DS1_v2"
     And message "virtual_machine.create.azure-fake" number "1" should contain "datacenter_type" as json field "azure-fake"
-    And an event "group.get" should be called exactly "1" times
     And an event "virtual_machine.create.azure-fake.done" should be called exactly "2" times
     And message "virtual_machine.create.azure-fake.done" number "0" should contain "availability_set" as json field "web"
     And message "virtual_machine.create.azure-fake.done" number "0" should contain "type" as json field "virtual_machine.create.azure-fake.done"
@@ -340,7 +339,6 @@ Feature: Creator
     And message "subnet.create.azure-fake.done" number "0" should contain "_state" as json field "completed"
     And message "subnet.create.azure-fake.done" number "0" should contain "network_security_group" as json field "subnet-sg"
     And message "subnet.create.azure-fake.done" number "0" should contain "network_security_group_id" as json field "$(components.#[_component_id="security_group::subnet-sg"].id)"
-    And an event "datacenter.find" should be called exactly "1" times
     And an event "lb.create.azure-fake.done" should be called exactly "1" times
     And message "lb.create.azure-fake.done" number "0" should contain "datacenter_region" as json field "westus"
     And message "lb.create.azure-fake.done" number "0" should contain "_action" as json field "create"
@@ -453,8 +451,6 @@ Feature: Creator
     And message "virtual_machine.update.azure-fake" number "1" should contain "_state" as json field "running"
     And message "virtual_machine.update.azure-fake" number "1" should contain "datacenter_type" as json field "azure-fake"
     And message "virtual_machine.update.azure-fake" number "1" should contain "location" as json field "westeurope"
-    And an event "datacenter.find" should be called exactly "1" times
-    And an event "group.get" should be called exactly "1" times
     And an event "security_group.update.azure-fake.done" should be called exactly "1" times
     And message "security_group.update.azure-fake.done" number "0" should contain "_component" as json field "security_group"
     And message "security_group.update.azure-fake.done" number "0" should contain "resource_group_name" as json field "az-test"
@@ -743,7 +739,6 @@ Feature: Creator
     And message "network_interface.delete.azure-fake.done" number "0" should contain "datacenter_type" as json field "azure-fake"
     And message "network_interface.delete.azure-fake.done" number "0" should contain "_action" as json field "delete"
     And message "network_interface.delete.azure-fake.done" number "0" should contain "_state" as json field "completed"
-    And an event "group.get" should be called exactly "1" times
     And an event "public_ip.create.azure-fake.done" should be called exactly "2" times
     And message "public_ip.create.azure-fake.done" number "0" should contain "datacenter_region" as json field "westus"
     And message "public_ip.create.azure-fake.done" number "0" should contain "datacenter_name" as json field "fakeazure"
@@ -769,7 +764,6 @@ Feature: Creator
     And message "public_ip.create.azure-fake.done" number "1" should contain "resource_group_name" as json field "az-test"
     And message "public_ip.create.azure-fake.done" number "1" should contain "type" as json field "public_ip.create.azure-fake.done"
     And message "public_ip.create.azure-fake.done" number "1" should contain "datacenter_type" as json field "azure-fake"
-    And an event "datacenter.find" should be called exactly "1" times
     And an event "public_ip.delete.azure-fake.done" should be called exactly "1" times
     And message "public_ip.delete.azure-fake.done" number "0" should contain "_component_id" as json field "public_ip::web-2-config1"
     And message "public_ip.delete.azure-fake.done" number "0" should contain "datacenter_type" as json field "azure-fake"
@@ -878,7 +872,6 @@ Feature: Creator
     And message "network_interface.delete.azure-fake" number "0" should contain "network_security_group_id" as json field "$(components.#[_component_id="security_group::vm-sg"].id)"
     And message "network_interface.delete.azure-fake" number "0" should contain "_action" as json field "delete"
     And message "network_interface.delete.azure-fake" number "0" should contain "resource_group_name" as json field "az-test"
-    And an event "group.get" should be called exactly "1" times
     And an event "virtual_machine.delete.azure-fake" should be called exactly "1" times
     And message "virtual_machine.delete.azure-fake" number "0" should contain "_state" as json field "running"
     And message "virtual_machine.delete.azure-fake" number "0" should contain "datacenter_region" as json field "westus"
@@ -948,7 +941,6 @@ Feature: Creator
     And message "sql_firewall_rule.create.azure-fake.done" number "0" should contain "_component" as json field "sql_firewall_rule"
     And message "sql_firewall_rule.create.azure-fake.done" number "0" should contain "_state" as json field "completed"
     And message "sql_firewall_rule.create.azure-fake.done" number "0" should contain "datacenter_type" as json field "azure-fake"
-    And an event "datacenter.find" should be called exactly "1" times
     And an event "public_ip.delete.azure-fake" should be called exactly "1" times
     And message "public_ip.delete.azure-fake" number "0" should contain "datacenter_name" as json field "fakeazure"
     And message "public_ip.delete.azure-fake" number "0" should contain "_action" as json field "delete"
@@ -1081,7 +1073,6 @@ Feature: Creator
     And message "lb_backend_address_pool.delete.azure-fake" number "0" should contain "loadbalancer" as json field "lb"
     And message "lb_backend_address_pool.delete.azure-fake" number "0" should contain "_component_id" as json field "lb_backend_address_pool::pool1"
     And message "lb_backend_address_pool.delete.azure-fake" number "0" should contain "_provider" as json field "azure-fake"
-    And an event "datacenter.find" should be called exactly "1" times
     And an event "definition.map.creation" should be called exactly "1" times
     And message "definition.map.creation" number "0" should contain "previous_id" as json field "469d51d1-9524-4dae-6fbc-b7da83b0354f-6bfc681a4807703c77135f2a72c7dc40"
     And an event "public_ip.create.azure-fake.done" should be called exactly "1" times
@@ -1123,7 +1114,6 @@ Feature: Creator
     And message "availability_set.delete.azure-fake" number "0" should contain "_provider" as json field "azure-fake"
     And message "availability_set.delete.azure-fake" number "0" should contain "datacenter_region" as json field "westus"
     And message "availability_set.delete.azure-fake" number "0" should contain "_state" as json field "running"
-    And an event "group.get" should be called exactly "1" times
     And an event "public_ip.delete.azure-fake.done" should be called exactly "2" times
     And message "public_ip.delete.azure-fake.done" number "0" should contain "public_ip_address_allocation" as json field "static"
     And message "public_ip.delete.azure-fake.done" number "0" should contain "datacenter_type" as json field "azure-fake"

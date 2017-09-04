@@ -40,8 +40,12 @@ func init() {
 	cfg = ecc.NewConfig(os.Getenv("NATS_URI"))
 	n = cfg.Nats()
 
-	Given("^I setup a new service name$", func() {
+	Given("^I setup a new environment name$", func() {
 		serviceName = "aws" + strconv.Itoa(rand.Intn(9999999))
+	})
+
+	Given(`^I setup a new environment name "(.+?)"$`, func(name string) {
+		serviceName = name
 	})
 
 	Given(`^I setup ernest with target "(.+?)"$`, func(target string) {
@@ -65,7 +69,9 @@ func init() {
 	})
 
 	When(`^I run ernest with "(.+?)"$`, func(args string) {
+		args = strings.Replace(args, "$(name)", serviceName, -1)
 		cmdArgs := strings.Split(args, " ")
+
 		ernest(cmdArgs...)
 	})
 
@@ -94,7 +100,21 @@ func init() {
 		}
 	})
 
+	And(`^The output should contain regex "(.*)"$`, func(needle string) {
+		r := regexp.MustCompile(needle)
+		if r.MatchString(lastOutput) == false {
+			T.Errorf(`Last output string does not contain regex "` + needle + `": ` + "\n" + lastOutput)
+		}
+	})
+
 	Then(`^The output should not contain regex "(.*)"$`, func(needle string) {
+		r := regexp.MustCompile(needle)
+		if r.MatchString(lastOutput) == true {
+			T.Errorf(`Last output string does contain regex "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
+		}
+	})
+
+	And(`^The output should not contain regex "(.*)"$`, func(needle string) {
 		r := regexp.MustCompile(needle)
 		if r.MatchString(lastOutput) == true {
 			T.Errorf(`Last output string does contain regex "` + needle + `" but it shouldn't: ` + "\n" + lastOutput)
@@ -112,31 +132,19 @@ func init() {
 		lastError = err
 	})
 
-	And(`^The group "(.+?)" does not exist$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-	})
-
 	And(`^The user "(.+?)" does not exist$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
 	})
 
-	And(`^The datacenter "(.+?)" does not exist$`, func(d string) {
+	And(`^The project "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 	})
 
-	And(`^The service "(.+?)" does not exist$`, func(d string) {
+	And(`^The environment "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("service.del", msg, time.Second*3)
-	})
-
-	And(`^The group "(.+?)" exists$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-		msg = []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.set", msg, time.Second*3)
 	})
 
 	And(`^The user "(.+?)" exists$`, func(user string) {
@@ -146,7 +154,7 @@ func init() {
 		_, _ = n.Request("user.set", msg, time.Second*3)
 	})
 
-	And(`^The datacenter "(.+?)" exists$`, func(d string) {
+	And(`^The project "(.+?)" exists$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 		msg = []byte(`{"name":"` + d + `"}`)
@@ -155,28 +163,6 @@ func init() {
 
 	And(`^I wait for "(.+?)" seconds$`, func(n int) {
 		time.Sleep(time.Duration(n) * time.Second)
-	})
-
-	Then(`^The output users table should contain "(.+?)" assigned to "(.+?)" group$`, func(user string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, user) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`User doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
-	})
-
-	Then(`^The output datacenters table should contain "(.+?)" assigned to "(.+?)" group$`, func(datacenter string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, datacenter) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`Datacenter doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
 	})
 
 	Then(`^The output line number "(.+?)" should contain "(.+?)"$`, func(number int, needle string) {
@@ -194,8 +180,8 @@ func init() {
 
 	})
 
-	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(service string, status string) {
-		_, _ = n.Request("service.set", []byte(`{"name":"`+service+`","status":"`+status+`"}`), time.Second*3)
+	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(environment string, status string) {
+		_, _ = n.Request("build.set.status", []byte(`{"name":"`+environment+`","status":"`+status+`"}`), time.Second*3)
 	})
 
 	And(`^File "(.+?)" exists$`, func(filename string) {
@@ -214,8 +200,8 @@ func init() {
 	})
 
 	And(`^I stop recording$`, func() {
-		_ = sub.Unsubscribe()
 		time.Sleep(time.Second * 5)
+		_ = sub.Unsubscribe()
 	})
 
 	Then(`^all "(.+?)" messages should contain a field "(.+?)" with "(.+?)"$`, func(subject string, field string, val string) {
@@ -271,7 +257,7 @@ func init() {
 			}
 		}
 		def = getDefinitionPathAWS(def, serviceName)
-		ernest("service", "apply", def)
+		ernest("environment", "apply", def)
 	})
 
 	And(`^I apply the definition "(.+?)" with dry option$`, func(def string) {
@@ -282,7 +268,20 @@ func init() {
 			}
 		}
 		def = getDefinitionPathAWS(def, serviceName)
-		ernest("service", "apply", "--dry", def)
+		ernest("environment", "apply", "--dry", def)
+	})
+
+	And(`^I apply "(.+?)" with "(.+?)"$`, func(def string, opts string) {
+		if delay := os.Getenv("ERNEST_APPLY_DELAY"); delay != "" {
+			if t, err := strconv.Atoi(delay); err == nil {
+				println("\nWaiting " + delay + " seconds...")
+				time.Sleep(time.Duration(t) * time.Second)
+			}
+		}
+		def = getDefinitionPathAWS(def, serviceName)
+		options := []string{"environment", "apply", def}
+		options = append(options, strings.Split(opts, " ")...)
+		ernest(options...)
 	})
 
 	And(`^message "(.+?)" number "(.+?)" should contain "(.+?)" as json field "(.+?)"$`, func(subject string, num int, val, key string) {
@@ -329,31 +328,19 @@ func init() {
 		lastError = err
 	})
 
-	And(`^the group "(.+?)" does not exist$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-	})
-
 	And(`^the user "(.+?)" does not exist$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
 	})
 
-	And(`^the datacenter "(.+?)" does not exist$`, func(d string) {
+	And(`^the project "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 	})
 
-	And(`^The service "(.+?)" does not exist$`, func(d string) {
+	And(`^The environment "(.+?)" does not exist$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("service.del", msg, time.Second*3)
-	})
-
-	And(`^the group "(.+?)" exists$`, func(group string) {
-		msg := []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.del", msg, time.Second*3)
-		msg = []byte(`{"name":"` + group + `"}`)
-		_, _ = n.Request("group.set", msg, time.Second*3)
 	})
 
 	And(`^the user "(.+?)" exists$`, func(user string) {
@@ -363,7 +350,7 @@ func init() {
 		_, _ = n.Request("user.set", msg, time.Second*3)
 	})
 
-	And(`^the datacenter "(.+?)" exists$`, func(d string) {
+	And(`^the project "(.+?)" exists$`, func(d string) {
 		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 		msg = []byte(`{"name":"` + d + `"}`)
@@ -405,37 +392,39 @@ func init() {
 		}
 	})
 
-	And(`^The azure datacenter "(.+?)" credentials should be "(.+?)", "(.+?)", "(.+?)", "(.+?)" and "(.+?)"$`, func(name, sID, cID, cSecret, tID, env string) {
+	And(`^The azure project "(.+?)" credentials should be "(.+?)", "(.+?)", "(.+?)", "(.+?)" and "(.+?)"$`, func(name, sID, cID, cSecret, tID, env string) {
 		msg := []byte(`{"name":"` + name + `", "type":"azure"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
 		var d struct {
-			SubscriptionID string `json:"azure_subscription_id"`
-			ClientID       string `json:"azure_client_id"`
-			ClientSecret   string `json:"azure_client_secret"`
-			TenantID       string `json:"azure_tenant_id"`
-			Environment    string `json:"azure_environment"`
+			Credentials struct {
+				SubscriptionID string `json:"azure_subscription_id"`
+				ClientID       string `json:"azure_client_id"`
+				ClientSecret   string `json:"azure_client_secret"`
+				TenantID       string `json:"azure_tenant_id"`
+				Environment    string `json:"azure_environment"`
+			} `json:"credentials"`
 		}
 
 		key := os.Getenv("ERNEST_CRYPTO_KEY")
 		_ = json.Unmarshal(res.Data, &d)
 		crypto := aes.New()
-		subscriptionID, err := crypto.Decrypt(d.SubscriptionID, key)
+		subscriptionID, err := crypto.Decrypt(d.Credentials.SubscriptionID, key)
 		if err != nil {
 			log.Println(err)
 		}
-		clientID, err := crypto.Decrypt(d.ClientID, key)
+		clientID, err := crypto.Decrypt(d.Credentials.ClientID, key)
 		if err != nil {
 			log.Println(err)
 		}
-		clientSecret, err := crypto.Decrypt(d.ClientSecret, key)
+		clientSecret, err := crypto.Decrypt(d.Credentials.ClientSecret, key)
 		if err != nil {
 			log.Println(err)
 		}
-		tenantID, err := crypto.Decrypt(d.TenantID, key)
+		tenantID, err := crypto.Decrypt(d.Credentials.TenantID, key)
 		if err != nil {
 			log.Println(err)
 		}
-		environment, err := crypto.Decrypt(d.Environment, key)
+		environment, err := crypto.Decrypt(d.Credentials.Environment, key)
 		if err != nil {
 			log.Println(err)
 		}
@@ -457,22 +446,24 @@ func init() {
 		}
 	})
 
-	And(`^The aws datacenter "(.+?)" credentials should be "(.+?)" and "(.+?)"$`, func(name, token, secret string) {
+	And(`^The aws project "(.+?)" credentials should be "(.+?)" and "(.+?)"$`, func(name, token, secret string) {
 		msg := []byte(`{"name":"` + name + `", "type":"aws"}`)
 		res, _ := n.Request("datacenter.get", msg, time.Second*3)
 		var d struct {
-			Token  string `json:"aws_access_key_id"`
-			Secret string `json:"aws_secret_access_key"`
+			Credentials struct {
+				Token  string `json:"aws_access_key_id"`
+				Secret string `json:"aws_secret_access_key"`
+			} `json:"credentials"`
 		}
 
 		key := os.Getenv("ERNEST_CRYPTO_KEY")
 		_ = json.Unmarshal(res.Data, &d)
 		crypto := aes.New()
-		tk, err := crypto.Decrypt(d.Token, key)
+		tk, err := crypto.Decrypt(d.Credentials.Token, key)
 		if err != nil {
 			log.Println(err)
 		}
-		se, err := crypto.Decrypt(d.Secret, key)
+		se, err := crypto.Decrypt(d.Credentials.Secret, key)
 		if err != nil {
 			log.Println(err)
 		}
@@ -487,28 +478,6 @@ func init() {
 
 	And(`^I wait for "(.+?)" seconds$`, func(n int) {
 		time.Sleep(time.Duration(n) * time.Millisecond)
-	})
-
-	Then(`^The output users table should contain "(.+?)" assigned to "(.+?)" group$`, func(user string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, user) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`User doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
-	})
-
-	Then(`^The output datacenters table should contain "(.+?)" assigned to "(.+?)" group$`, func(datacenter string, group string) {
-		lines := strings.Split(lastOutput, "\n")
-		for _, l := range lines {
-			if strings.Contains(l, datacenter) {
-				if !strings.Contains(l, "| "+group) {
-					T.Errorf(`Datacenter doesn't seem to belong to specified group: \n` + l)
-				}
-			}
-		}
 	})
 
 	Then(`^The output line number "(.+?)" should contain "(.+?)"$`, func(number int, needle string) {
@@ -526,8 +495,8 @@ func init() {
 
 	})
 
-	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(service string, status string) {
-		_, _ = n.Request("service.set", []byte(`{"name":"`+service+`","status":"`+status+`"}`), time.Second*3)
+	And(`^I force "(.+?)" to be on status "(.+?)"$`, func(environment string, status string) {
+		_, _ = n.Request("build.set.status", []byte(`{"name":"`+environment+`","status":"`+status+`"}`), time.Second*3)
 	})
 
 	And(`^File "(.+?)" exists$`, func(filename string) {
@@ -561,8 +530,8 @@ func getDefinitionPathAWS(def string, service string) string {
 	for _, line := range lines {
 		if strings.Contains(line, "name: my_service") {
 			finalLines = append(finalLines, "name: "+service)
-		} else if strings.Contains(line, "datacenter: r3-dc2") {
-			finalLines = append(finalLines, "datacenter: fakeaws")
+		} else if strings.Contains(line, "project: r3-dc2") {
+			finalLines = append(finalLines, "project: fakeaws")
 		} else {
 			finalLines = append(finalLines, line)
 		}
