@@ -12,7 +12,7 @@ Feature: Environment apply
     Then an event "instance.update.vcloud-fake" should be called exactly "2" times
     And all "instance.update.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "instance.update.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
-    And all "instance.update.vcloud-fake" messages should contain an encrypted field "vcloud_url" with "https://vcloud.net"
+    And all "instance.update.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "instance.update.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "instance.update.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     And message "instance.update.vcloud-fake" number "0" should contain "web-1" as json field "name"

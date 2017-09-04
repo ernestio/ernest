@@ -13,6 +13,6 @@ Feature: Environment apply
     And all "network.create.aws-fake" messages should contain a field "_provider" with "aws-fake"
     And all "network.create.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
     And all "network.create.aws-fake" messages should contain a field "range" with "10.2.0.0/24"
-    And all "network.create.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
+    And all "network.create.aws-fake" messages should contain a field "datacenter_region" with "fake"
     And all "network.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "network.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
