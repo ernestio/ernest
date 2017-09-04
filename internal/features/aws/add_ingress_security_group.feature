@@ -11,7 +11,7 @@ Feature: Environment apply
     And I stop recording
     Then an event "firewall.update.aws-fake" should be called exactly "1" times
     And all "firewall.update.aws-fake" messages should contain a field "vpc_id" with "fakeaws"
-    And all "firewall.update.aws-fake" messages should contain an encrypted field "datacenter_region" with "fake"
+    And all "firewall.update.aws-fake" messages should contain a field "datacenter_region" with "fake"
     And all "firewall.update.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "firewall.update.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And all "firewall.update.aws-fake" messages should contain a field "name" with "web-sg-1"
