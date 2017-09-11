@@ -1,27 +1,27 @@
-@service @service_import
-Feature: Service import
+@environment @environment_import
+Feature: Environment import
 
-  Scenario: Non logged service import
+  Scenario: Non logged environment import
     Given I setup ernest with target "https://ernest.local"
     And I logout
-    When I run ernest with "service import"
+    When I run ernest with "environment import"
     Then The output should contain "You're not allowed to perform this action, please log in"
-    When I run ernest with "service import imported"
+    When I run ernest with "environment import imported"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
-  Scenario: Logged service import errors
+  Scenario: Logged environment import errors
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    When I run ernest with "service import"
-    Then The output should contain "You should specify an existing datacenter name"
-    When I run ernest with "service import unexisting"
-    Then The output should contain "You should specify a valid service name"
+    When I run ernest with "environment import"
+    Then The output should contain "You should specify an existing project name"
+    When I run ernest with "environment import unexisting"
+    Then The output should contain "You should specify a valid environment name"
 
-  Scenario: Logged service non existing import
+  Scenario: Logged environment non existing import
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    And The service "imported" does not exist
-    When I run ernest with "service import fakeaws imported"
+    And The environment "imported" does not exist
+    When I run ernest with "environment import fakeaws imported"
     Then The output should contain regex "Ebs Volumes\s*2/2\s*Found"
     And The output should contain regex "Elbs\s*1/1\s*Found"
     And The output should contain regex "Firewalls\s*2/2\s*Found"

@@ -1,9 +1,9 @@
 @aws @add_elb_and_s3
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Add an elb and an s3
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws12.yml"
     And I start recording

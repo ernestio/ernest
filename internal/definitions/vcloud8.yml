@@ -1,6 +1,6 @@
 ---
 name: my_service
-datacenter: fakevcloud
+project: fakevcloud
 
 instances:
   - name: web

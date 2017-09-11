@@ -1,9 +1,9 @@
 @vcloud @update_firewall_rules
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Updating router firewall rules
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "vcloud5.yml"
     And I start recording
@@ -12,8 +12,8 @@ Feature: Service apply
     Then an event "router.update.vcloud-fake" should be called exactly "1" times
     And all "router.update.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "router.update.vcloud-fake" messages should contain a field "name" with "vse2"
-    And all "router.update.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "router.update.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
+    And all "router.update.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "router.update.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "router.update.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     And message "router.update.vcloud-fake" number "0" should contain "in_in_any" as json field "firewall_rules.0.name"

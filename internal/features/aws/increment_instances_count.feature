@@ -1,9 +1,9 @@
 @aws @aws_increment_instances_count
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Incrementing instances count
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "aws1.yml"
     And I start recording

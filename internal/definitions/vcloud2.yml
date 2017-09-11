@@ -1,10 +1,10 @@
 ---
 name: my_service
-datacenter: fakevcloud
+project: fakevcloud
 
 routers:
   - name: vse2
-    rules:
+    firewall_rules:
     - name: in_in_any
       source: internal
       from_port: any
@@ -37,8 +37,10 @@ routers:
       protocol: tcp
       action: allow
 
-    port_forwarding:
+    nat_rules:
       - source: 172.16.186.44
         from_port: '22'
         to_port: '22'
         destination: 10.1.0.11
+        protocol: tcp
+        type: dnat

@@ -1,9 +1,9 @@
 @vcloud @vcloud_base
-Feature: Service apply
+Feature: Environment apply
 
-  Scenario: Applying a basic service
+  Scenario: Applying a basic environment
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I start recording
     And I apply the definition "vcloud1.yml"
@@ -11,8 +11,8 @@ Feature: Service apply
     Then an event "router.create.vcloud-fake" should be called exactly "1" times
     And all "router.create.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "router.create.vcloud-fake" messages should contain a field "name" with "vse2"
-    And all "router.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "router.create.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
+    And all "router.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "router.create.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "router.create.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     And message "router.create.vcloud-fake" number "0" should contain "in_in_any" as json field "firewall_rules.0.name"

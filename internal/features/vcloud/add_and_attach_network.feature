@@ -1,9 +1,9 @@
 @vcloud @add_and_attach_network
-Feature: Service apply
+Feature: Environment apply
 
   Scenario: Add a network and attach a new instance
     Given I setup ernest with target "https://ernest.local"
-    And I setup a new service name
+    And I setup a new environment name
     When I'm logged in as "usr" / "secret123"
     And I apply the definition "vcloud2.yml"
     And I start recording
@@ -12,8 +12,8 @@ Feature: Service apply
     Then an event "network.create.vcloud-fake" should be called exactly "1" times
     And all "network.create.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
     And all "network.create.vcloud-fake" messages should contain a field "range" with "10.1.0.0/24"
-    And all "network.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "network.create.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
+    And all "network.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
     And all "network.create.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
     And all "network.create.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
     Then an event "instance.create.vcloud-fake" should be called exactly "1" times

@@ -1,6 +1,6 @@
 ---
 name: myService2
-datacenter: r3-dc2
+project: r3-dc2
 
 vpcs:
   - name: myVPC

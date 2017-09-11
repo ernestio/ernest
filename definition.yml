@@ -19,7 +19,19 @@ repos:
       - nats
     ports:
       - 8080:8080
-    depends:
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      JWT_SECRET: 'GENERATEDJWTSECRET'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+
+  - name: authenticator
+    path: git@github.com:ernestio/authenticator.git
+    branch: master
+    links:
+      - nats
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -33,7 +45,7 @@ repos:
       - nats
     ports:
       - 22000:22000
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -45,18 +57,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
-      - config-store
-    environment:
-      NATS_URI: 'nats://nats:4222'
-      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-
-  - name: group-store
-    path: git@github.com:ernestio/group-store.git
-    branch: master
-    links:
-      - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -67,7 +68,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -78,19 +79,29 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
+  - name: authorization-store
+    path: git@github.com:ernestio/authorization-store.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: usage-store
     path: git@github.com:ernestio/usage-store.git
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -102,7 +113,7 @@ repos:
     links:
       - nats
       - postgres
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -114,7 +125,7 @@ repos:
     links:
       - nats
       - postgres
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -125,7 +136,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -137,7 +148,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -148,7 +159,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -159,7 +170,7 @@ repos:
     branch: master
     links:
       - nats
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
@@ -173,7 +184,7 @@ repos:
       - nats
     ports:
       - 22001:22001
-    depends:
+    depends_on:
       - config-store
     environment:
       NATS_URI: 'nats://nats:4222'
