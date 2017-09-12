@@ -6,8 +6,9 @@ services:
     ports:
       - 4222:4222
   postgres:
-    image: r3labs/postgres
+    image: postgres:9.6.5-alpine
     volumes:
+      - ./config/postgres:/docker-entrypoint-initdb.d
       - ./postgres/data:/var/lib/postgresql/data
     environment:
       DB_NAME: users,projects,environments,usage,authorizations

@@ -10,7 +10,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
-    entrypoint: /go/bin/config-store -config /etc/ernest/config.json
+    entrypoint: ./config-store -config /etc/ernest/config.json
 
   - name: api-gateway
     path: git@github.com:ernestio/api-gateway.git
@@ -59,6 +59,7 @@ repos:
       - nats
     depends_on:
       - config-store
+      - postgres
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
@@ -70,6 +71,7 @@ repos:
       - nats
     depends_on:
       - config-store
+      - postgres
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
@@ -81,6 +83,7 @@ repos:
       - nats
     depends_on:
       - config-store
+      - postgres
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
@@ -92,6 +95,7 @@ repos:
       - nats
     depends_on:
       - config-store
+      - postgres
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
@@ -103,6 +107,7 @@ repos:
       - nats
     depends_on:
       - config-store
+      - postgres
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
