@@ -1,6 +1,9 @@
 # ernest
-Full Stack Application Orchestration
 
+master:  [![CircleCI](https://circleci.com/gh/ernestio/ernest/tree/master.svg?style=shield)](https://circleci.com/gh/ernestio/ernest/tree/master)  
+develop: [![CircleCI](https://circleci.com/gh/ernestio/ernest/tree/develop.svg?style=shield)](https://circleci.com/gh/ernestio/ernest/tree/develop)
+
+Full Stack Application Orchestration
 
 ## Quickstart
 

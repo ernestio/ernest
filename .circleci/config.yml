@@ -1,0 +1,44 @@
+version: 2
+jobs:
+   build:
+     machine:
+       image: circleci/classic:201709-01
+     environment:
+       NATS_URI:  nats://127.0.0.1:4222
+       ROOTPATH: /home/circleci/.go_workspace/src/github.com/ernestio
+       NATS_URI_TEST:  nats://127.0.0.1:4222
+       GOBIN: /home/circleci/.go_workspace/bin
+       CURRENT_INSTANCE: http://ernest.local:80/
+       JWT_SECRET: test
+       IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
+       ERNEST_LOG_FILE: '/tmp/ernest.log'
+       ERNEST_APPLY_DELAY: 1
+       ERNEST_CRYPTO_KEY: mMYlPIvI11z20H1BnBmB223355667788
+       CLI_VERSION: develop
+       BASE_VERSION: develop
+     working_directory: /home/circleci/.go_workspace/src/github.com/ernestio/ernest
+     steps:
+       - checkout
+       - run: 
+           name: Setup Hosts File
+           command: echo 127.0.0.1 ernest.local | sudo tee -a /etc/hosts
+       - run: 
+           name: Install Dependencies
+           command: |
+             make dev-deps
+             ./internal/ci_install_service.sh r3labs natsc master
+             ./internal/ci_install_service.sh r3labs composable master
+             ./internal/ci_install_service.sh ernestio ernest-cli $CLI_VERSION
+             mkdir /tmp/composable && composable set build.path /tmp/composable
+             sed -i "s:443 ssl:80:g" config/nginx/ernest.local
+             sed -i "s:ERNESTHOST:ernest.local:g" config/nginx/ernest.local
+             sed -i "/ssl_certificate/d" config/nginx/ernest.local
+             sed -i "s:443:80:g" template.yml
+             composable generate -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION $EXTRA_OPTIONS definition.yml template.yml --
+             docker-compose -f docker-compose.yml up -d
+             docker-compose logs > /tmp/compose.log:
+                 background: true
+             ./internal/ci_setup.sh
+       - run: 
+           name: Integration Tests
+           command: make test
