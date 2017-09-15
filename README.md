@@ -9,7 +9,6 @@ Full Stack Application Orchestration
 
 Follow the instructions on the [download page](http://docs.ernest.io/downloads/) to install ernest, then take a look at our [getting started page](http://docs.ernest.io/getting-started/) to see how to work with ernest.
 
-
 ## Contributing
 
 Please read through our
