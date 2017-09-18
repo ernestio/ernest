@@ -1,11 +1,13 @@
 # ernest
-Full Stack Application Orchestration
 
+master:  [![CircleCI](https://circleci.com/gh/ernestio/ernest/tree/master.svg?style=shield)](https://circleci.com/gh/ernestio/ernest/tree/master)  
+develop: [![CircleCI](https://circleci.com/gh/ernestio/ernest/tree/develop.svg?style=shield)](https://circleci.com/gh/ernestio/ernest/tree/develop)
+
+Full Stack Application Orchestration
 
 ## Quickstart
 
 Follow the instructions on the [download page](http://docs.ernest.io/downloads/) to install ernest, then take a look at our [getting started page](http://docs.ernest.io/getting-started/) to see how to work with ernest.
-
 
 ## Contributing
 

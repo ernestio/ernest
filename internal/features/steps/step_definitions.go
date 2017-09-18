@@ -200,7 +200,7 @@ func init() {
 	})
 
 	And(`^I stop recording$`, func() {
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * 1)
 		_ = sub.Unsubscribe()
 	})
 
