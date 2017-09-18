@@ -36,9 +36,12 @@ jobs:
              sed -i "s:443:80:g" template.yml
              composable generate -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION $EXTRA_OPTIONS definition.yml template.yml --
              docker-compose -f docker-compose.yml up -d
-             docker-compose logs > /tmp/compose.log:
-                 background: true
-             ./internal/ci_setup.sh
+       - run:
+           name: Docker Compose Logs
+           command: docker-compose logs > /tmp/compose.log
+           background: true
        - run: 
            name: Integration Tests
-           command: make test
+           command: |
+             ./internal/ci_setup.sh
+             make test
