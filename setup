@@ -24,21 +24,22 @@ command_exists () {
     fi
 }
 
-echo -e "\n\e[34mErnest Setup Tool"
+echo -e "\n\e[94mErnest Setup Tool"
 echo -e "=================\e[39m\n"
 
 # input
 while [[ -z $ERNESTHOSTNAME ]]; do
-  echo -e -n "\e[34mHostname: \e[39m"
+  echo -e -n "\e[94mHostname: \e[39m"
 	read ERNESTHOSTNAME
 done
 while [[ -z $ERNESTUSER ]]; do
-  echo -e -n "\e[34mUsername: \e[39m" 
+  echo -e -n "\e[94mUsername: \e[39m" 
 	read ERNESTUSER
 done
 while [[ -z $ERNESTPASSWORD ]]; do
-  echo -e -n "\e[34mPassword: \e[39m"
+  echo -e -n "\e[94mPassword: \e[39m"
 	read -s ERNESTPASSWORD
+	echo
 done
 
 # prereqs
@@ -102,5 +103,5 @@ chmod +x ./natsc
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$ERNESTUSER\", \"password\": \"$ERNESTPASSWORD\", \"admin\":true}" &> /dev/null
 
 echo -e "\n\e[32mSetup complete!\e[39m\n"
-echo -e "Please download the latest client from \e[34mhttps://github.com/ernestio/ernest-cli/releases\e[39m"
-echo -e "Then configure with \e[34m'ernest-cli setup'\e[39m providing \e[34mhttps://$ERNESTHOSTNAME\e[39m as the target."
+echo -e "Please download the latest client from \e[94mhttps://github.com/ernestio/ernest-cli/releases\e[39m"
+echo -e "Then configure with \e[94m'ernest-cli setup'\e[39m providing \e[94mhttps://$ERNESTHOSTNAME\e[39m as the target."
