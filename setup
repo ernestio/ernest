@@ -20,38 +20,46 @@ fi
 
 command_exists () {
     if ! type "$1" &> /dev/null; then
-        echo -e "\nCheck failed! prerequisite requirements not met\n$1 not found! Please make requirement is installed."
+        echo -e "\n\e[31m[FAIL]\e[39m Prerequisite requirements not met\n$1 not found!\nPlease make sure all requirements are installed."
         exit 1
     fi
 }
-echo "#################"
-echo "Ernest Setup Tool"
-echo "#################"
 
-echo
+echo -e "\n\e[34mErnest Setup Tool"
+echo -e "=================\e[39m\n"
 
-LICENSE=$1
-if ! [[ -z "${LICENSE// }" ]]; then
-  if [ ! -f $LICENSE ]; then
-    echo "[ WARNING ] License file not found"
-    echo
-    exit
-  fi
-fi
+# input
+ERNESTHOST=""
+USERNAME=""
+PASSWORD=""
+while [[ $ERNESTHOST = "" ]]; do
+  read -p "Hostname: " ERNESTHOST
+done
+while [[ $USERNAME = "" ]]; do
+  read -p "Username: " USERNAME
+done
+while [[ $PASSWORD = "" ]]; do
+  read -s -p "Password: " PASSWORD
+done
 
-# Check for prerequisites
-echo "Checking Prerequisites"
+# prereqs
+echo -e -n "\n\nChecking prerequisites... "
 command_exists wget
 command_exists openssl
 command_exists docker
 command_exists docker-compose
+echo -e "\e[32mdone\e[39m\n"
 
+echo -e "\e[32mStarting Ernest\e[39m\n"
 
-
-# Setup config (hostname & nginx ssl)
-echo
-echo "Please enter in the hostname you wish ernest to run as"
-read ERNESTHOST
+# license
+LICENSE=$1
+if ! [[ -z "${LICENSE// }" ]]; then
+  if [ ! -f $LICENSE ]; then
+    echo -e "\e[33m[WARNING]\e[39m No license found\n"
+    exit
+  fi
+fi
 
 openssl req \
     -new \
@@ -61,7 +69,7 @@ openssl req \
     -x509 \
     -subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOST" \
     -keyout ./config/nginx/ernest.key \
-    -out ./config/nginx/ernest.crt
+    -out ./config/nginx/ernest.crt &> /dev/null
 
 sed -i.bak "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
@@ -81,33 +89,19 @@ sed -i.bak "s:CRYPTO_KEY_TEMPLATE:$CRYPTO_KEY:g" docker-compose.yml && rm docker
 # Make volume for postgres data
 mkdir -p postgres/data
 
-
-echo
-echo "Starting Ernest"
 # run docker compose, add a '-d' to run in daemon mode
 docker-compose up -d
 
 # Download the natsc tool
-wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc
+wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc &> /dev/null
 chmod +x ./natsc
 
-echo "Please provide your desired admin credentials:"
-USERNAME=
-PASSWORD=
-while [[ $USERNAME = "" ]]; do
-  read -p "- Username: " USERNAME
-done
-while [[ $PASSWORD = "" ]]; do
-  read -s -p "- Password: " PASSWORD
-  echo
-done
-
-
-
+# NOTE: Wait for backend services to become available.
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'authorization.find' '{}' &> /dev/null
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'datacenter.find' '{}' &> /dev/null
 # setup admin accounts
-./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"admin\":true}"
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"admin\":true}" &> /dev/null
 
-echo
-echo "Setup complete!"
+echo -e "\n\e[32mSetup complete!\e[39m\n"
 echo "Please download the last version of ernest-cli from https://github.com/ernestio/ernest-cli/releases"
-echo "and run 'ernest-cli setup' providing https://$ERNESTHOST as target"
+echo "and run 'ernest-cli setup' providing https://$ERNESTHOST as the target."
