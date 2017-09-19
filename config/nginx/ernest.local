@@ -12,7 +12,7 @@ upstream backendlogger {
 
 server {
     listen 443 ssl;
-    server_name ERNESTHOST;
+    server_name ERNESTHOSTNAME;
     ssl_certificate /etc/nginx/conf.d/ernest.crt;
     ssl_certificate_key /etc/nginx/conf.d/ernest.key;
 

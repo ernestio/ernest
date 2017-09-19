@@ -2,7 +2,6 @@
 
 set -e
 
-
 # Check if there is a preiously existing version of ernest
 EXISTING=$(docker ps -q -f name=api-gateway)
 if [[ $EXISTING = *[!\ ]* ]]; then
@@ -29,17 +28,17 @@ echo -e "\n\e[34mErnest Setup Tool"
 echo -e "=================\e[39m\n"
 
 # input
-ERNESTHOST=""
-USERNAME=""
-PASSWORD=""
-while [[ $ERNESTHOST = "" ]]; do
-  read -p "Hostname: " ERNESTHOST
+while [[ -z $ERNESTHOSTNAME ]]; do
+  echo -e -n "\e[34mHostname: \e[39m"
+	read ERNESTHOSTNAME
 done
-while [[ $USERNAME = "" ]]; do
-  read -p "Username: " USERNAME
+while [[ -z $ERNESTUSER ]]; do
+  echo -e -n "\e[34mUsername: \e[39m" 
+	read ERNESTUSER
 done
-while [[ $PASSWORD = "" ]]; do
-  read -s -p "Password: " PASSWORD
+while [[ -z $ERNESTPASSWORD ]]; do
+  echo -e -n "\e[34mPassword: \e[39m"
+	read -s ERNESTPASSWORD
 done
 
 # prereqs
@@ -67,11 +66,11 @@ openssl req \
     -days 365 \
     -nodes \
     -x509 \
-    -subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOST" \
+    -subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOSTNAME" \
     -keyout ./config/nginx/ernest.key \
     -out ./config/nginx/ernest.crt &> /dev/null
 
-sed -i.bak "s/ERNESTHOST/$ERNESTHOST/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
+sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
 # Setup a random JWT Token for api-gateway
 if [[ -z $TOKEN ]]; then
@@ -99,9 +98,9 @@ chmod +x ./natsc
 # NOTE: Wait for backend services to become available.
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'authorization.find' '{}' &> /dev/null
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'datacenter.find' '{}' &> /dev/null
-# setup admin accounts
-./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$USERNAME\", \"password\": \"$PASSWORD\", \"admin\":true}" &> /dev/null
+# setup admin account
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$ERNESTUSER\", \"password\": \"$ERNESTPASSWORD\", \"admin\":true}" &> /dev/null
 
 echo -e "\n\e[32mSetup complete!\e[39m\n"
-echo "Please download the last version of ernest-cli from https://github.com/ernestio/ernest-cli/releases"
-echo "and run 'ernest-cli setup' providing https://$ERNESTHOST as the target."
+echo -e "Please download the latest client from \e[34mhttps://github.com/ernestio/ernest-cli/releases\e[39m"
+echo -e "Then configure with \e[34m'ernest-cli setup'\e[39m providing \e[34mhttps://$ERNESTHOSTNAME\e[39m as the target."
