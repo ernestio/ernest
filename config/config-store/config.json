@@ -1,7 +1,17 @@
 {
   "authenticator": {
     "providers": [
-      {"type": "local"}
+      {
+        "type": "local"
+      },
+      {
+        "type": "federation",
+        "config": {
+          "url": "https://adfs.dev.r3labs.io",
+          "scope": "http://ernest.io",
+          "domain": "AD"
+        }
+      }
     ]
   },
   "postgres": {
