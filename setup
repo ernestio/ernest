@@ -2,6 +2,12 @@
 
 set -e
 
+RED='\033[31;1m'
+GREEN='\033[32;1m'
+YELLOW='\033[33;1m'
+BLUE='\033[34m'
+NC='\033[0m'
+
 # Check if there is a preiously existing version of ernest
 EXISTING=$(docker ps -q -f name=api-gateway)
 if [[ $EXISTING = *[!\ ]* ]]; then
@@ -18,45 +24,44 @@ if [[ $EXISTING = *[!\ ]* ]]; then
 fi
 
 command_exists () {
-    if ! type "$1" &> /dev/null; then
-        echo -e "\n\e[31m[FAIL]\e[39m Prerequisite requirements not met\n$1 not found!\nPlease make sure all requirements are installed."
-        exit 1
-    fi
+	if ! type "$1" &> /dev/null; then
+		printf "\n$RED%s$NC %s\n$1 %s\n%s" "[FAIL]" "Prerequisite requirements not met" "not found!" "Please make sure all requirements are installed."
+    exit 1
+  fi
 }
 
-echo -e "\n\e[94mErnest Setup Tool"
-echo -e "=================\e[39m\n"
+printf "\n$BLUE%s\n%s$NC\n\n" "Ernest Setup Tool" "================="
 
 # input
 while [[ -z $ERNESTHOSTNAME ]]; do
-  echo -e -n "\e[94mHostname: \e[39m"
+	printf "$BLUE%s$NC " "Hostname:"
 	read ERNESTHOSTNAME
 done
 while [[ -z $ERNESTUSER ]]; do
-  echo -e -n "\e[94mUsername: \e[39m" 
+	printf "$BLUE%s$NC " "Username:"
 	read ERNESTUSER
 done
 while [[ -z $ERNESTPASSWORD ]]; do
-  echo -e -n "\e[94mPassword: \e[39m"
+	printf "$BLUE%s$NC " "Password:"
 	read -s ERNESTPASSWORD
 	echo
 done
 
 # prereqs
-echo -e -n "\n\nChecking prerequisites... "
+printf "\n%s " "Checking prerequisites..."
 command_exists wget
 command_exists openssl
 command_exists docker
 command_exists docker-compose
-echo -e "\e[32mdone\e[39m\n"
+printf "$GREEN%s$NC\n" "done"
 
-echo -e "\e[32mStarting Ernest\e[39m\n"
+printf "\n$GREEN%s$NC\n\n" "Starting Ernest"
 
 # license
 LICENSE=$1
 if ! [[ -z "${LICENSE// }" ]]; then
   if [ ! -f $LICENSE ]; then
-    echo -e "\e[33m[WARNING]\e[39m No license found\n"
+		printf "$YELLOW%s$NC %s\n" "[WARNING]" "No license found"
     exit
   fi
 fi
@@ -102,6 +107,6 @@ chmod +x ./natsc
 # setup admin account
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$ERNESTUSER\", \"password\": \"$ERNESTPASSWORD\", \"admin\":true}" &> /dev/null
 
-echo -e "\n\e[32mSetup complete!\e[39m\n"
-echo -e "Please download the latest client from \e[94mhttps://github.com/ernestio/ernest-cli/releases\e[39m"
-echo -e "Then configure with \e[94m'ernest-cli setup'\e[39m providing \e[94mhttps://$ERNESTHOSTNAME\e[39m as the target."
+printf "\n$GREEN%s$NC\n\n" "Setup complete!"
+printf "%s $BLUE%s$NC\n" "Please download the latest client from" "https://github.com/ernestio/ernest-cli/releases"
+printf "%s $BLUE%s$NC %s $BLUE%s$NC %s\n" "Then configure with" "ernest-cli setup" "providing" "https://$ERNESTHOSTNAME" "as the target."
