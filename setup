@@ -9,7 +9,7 @@ BLUE='\033[34m'
 NC='\033[0m'
 
 # Check if there is a preiously existing version of ernest
-#EXISTING=$(docker ps -q -f name=api-gateway)
+EXISTING=$(docker ps -q -f name=api-gateway)
 if [[ $EXISTING = *[!\ ]* ]]; then
   echo "You already have an existing ernest instance running"
   echo "ernest will be upgraded to last version."
