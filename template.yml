@@ -5,6 +5,7 @@ services:
     image: nats
     ports:
       - 4222:4222
+    restart: always
   postgres:
     image: postgres:9.6.5-alpine
     volumes:
@@ -12,6 +13,7 @@ services:
       - ./postgres/data:/var/lib/postgresql/data
     environment:
       DB_NAME: users,projects,environments,usage,authorizations
+    restart: always
   nginx:
     image: nginx
     volumes:
@@ -24,3 +26,4 @@ services:
       - logger:logger
     ports:
       - 443:443
+    restart: always

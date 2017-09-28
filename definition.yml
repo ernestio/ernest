@@ -11,6 +11,7 @@ repos:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
     entrypoint: ./config-store -config /etc/ernest/config.json
+    restart: always
 
   - name: api-gateway
     path: git@github.com:ernestio/api-gateway.git
@@ -25,6 +26,7 @@ repos:
       NATS_URI: 'nats://nats:4222'
       JWT_SECRET: 'GENERATEDJWTSECRET'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: authenticator
     path: git@github.com:ernestio/authenticator.git
@@ -37,6 +39,7 @@ repos:
       NATS_URI: 'nats://nats:4222'
       JWT_SECRET: 'GENERATEDJWTSECRET'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: monit
     path: git@github.com:ernestio/monit.git
@@ -51,6 +54,7 @@ repos:
       NATS_URI: 'nats://nats:4222'
       JWT_SECRET: 'GENERATEDJWTSECRET'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: user-store
     path: git@github.com:ernestio/user-store.git
@@ -63,6 +67,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: datacenter-store
     path: git@github.com:ernestio/datacenter-store.git
@@ -75,6 +80,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: service-store
     path: git@github.com:ernestio/service-store.git
@@ -87,6 +93,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: authorization-store
     path: git@github.com:ernestio/authorization-store.git
@@ -99,6 +106,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: usage-store
     path: git@github.com:ernestio/usage-store.git
@@ -111,6 +119,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: scheduler
     path: git@github.com:ernestio/scheduler.git
@@ -123,6 +132,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: definition-mapper
     path: git@github.com:ernestio/definition-mapper.git
@@ -135,6 +145,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: all-all-azure-connector
     path: git@github.com:ernestio/all-all-azure-connector.git
@@ -147,6 +158,7 @@ repos:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       CONNECTORS: public_ip.create.azure,public_ip.update.azure,public_ip.delete.azure,public_ips.find.azure,virtual_network.create.azure,virtual_network.update.azure,virtual_network.delete.azure,virtual_networks.find.azure,resource_group.create.azure,resource_group.update.azure,resource_group.delete.azure,resource_groups.find.azure,subnet.create.azure,subnet.update.azure,subnet.delete.azure,subnets.find.azure,network_interface.create.azure,network_interface.update.azure,network_interface.delete.azure,network_inerfaces.find.azure,storage_account.create.azure,storage_account.update.azure,storage_account.delete.azure,storage_accounts.find.azure,storage_container.create.azure,storage_container.update.azure,storage_container.delete.azure,storage_containers.find.azure,virtual_machine.create.azure,virtual_machine.update.azure,virtual_machine.delete.azure,virtual_machines.find.azure,lb.create.azure,lb.update.azure,lb.deletev,lbs.find.azure,sql_server.create.azure,sql_server.update.azure,sql_server.delete.azure,sql_servers.find.azure,local_network_gateway.create.azure,local_network_gateway.update.azure,local_network_gateway.delete.azure,local_network_gateways.find.azure,network_security_group.create.azure,network_security_group.update.azure,network_security_group.delete.azure,network_security_groups.find.azure,sql_database.create.azure,sql_database.update.azure,sql_database.delete.azure,sql_databases.find.azure,availability_set.create.azure,availability_set.update.azure,availability_set.delete.azure,availability_sets.find.azure,managed_disk.create.azure,managed_disk.update.azure,managed_disk.delete.azure,managed_disks.find.azure
+    restart: always
 
   - name: all-all-fake-connector
     path: git@github.com:ernestio/all-all-fake-connector.git
@@ -158,6 +170,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: all-all-vcloud-connector
     path: git@github.com:ernestio/all-all-vcloud-connector.git
@@ -169,6 +182,7 @@ repos:
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: all-all-aws-connector
     path: git@github.com:ernestio/all-all-aws-connector.git
@@ -181,6 +195,7 @@ repos:
       NATS_URI: 'nats://nats:4222'
       CONNECTORS: nat.create.aws,nat.update.aws,nat.delete.aws,network.create.aws,network.delete.aws,route53.create.aws,route53.delete.aws,route53.update.aws,s3.create.aws,s3.update.aws,s3.delete.aws,elb.create.aws,elb.delete.aws,elb.update.aws,vpc.create.aws,vpc.delete.aws,instance.delete.aws,instance.update.aws,instance.create.aws,firewall.create.aws,firewall.update.aws,firewall.delete.aws,ebs_volume.create.aws,ebs_volume.delete.aws,rds_cluster.create.aws,rds_cluster.update.aws,rds_cluster.delete.aws,rds_instance.create.aws,rds_instance.update.aws,rds_instance.delete.aws,nats.find.aws,networks.find.aws,route53s.find.aws,s3s.find.aws,elbs.find.aws,vpcs.find.aws,instances.find.aws,firewalls.find.aws,ebs_volumes.find.aws,rds_clusters.find.aws,rds_instances.find.aws,internet_gateway.create.aws,internet_gateway.delete.aws,internet_gateways.find.aws,iam_role.create.aws,iam_role.delete.aws,iam_roles.find.aws,iam_policy.create.aws,iam_policy.delete.aws,iam_policies.find.aws,iam_instance_profile.create.aws,iam_instance_profile.delete.aws,iam_instance_profiles.find.aws
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
 
   - name: logger
     path: git@github.com:ernestio/logger.git
@@ -200,3 +215,4 @@ repos:
     volumes:
       - ./logs/:/var/logs/
       - ./config/:/etc/ernest/
+    restart: always
