@@ -15,5 +15,4 @@ Feature: Ernest environment list
     When I run ernest with "environment list"
     Then The output should contain "destroyable"
     And The output should not contain "errored"
-    And The output should contain "usr"
 

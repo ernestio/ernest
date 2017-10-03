@@ -142,11 +142,6 @@ func init() {
 		_, _ = n.Request("datacenter.del", msg, time.Second*3)
 	})
 
-	And(`^The environment "(.+?)" does not exist$`, func(d string) {
-		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
-		_, _ = n.Request("service.del", msg, time.Second*3)
-	})
-
 	And(`^The user "(.+?)" exists$`, func(user string) {
 		msg := []byte(`{"username":"` + user + `"}`)
 		_, _ = n.Request("user.del", msg, time.Second*3)
@@ -339,8 +334,8 @@ func init() {
 	})
 
 	And(`^The environment "(.+?)" does not exist$`, func(d string) {
-		msg := []byte(`{"name":"` + d + `", "type":"aws"}`)
-		_, _ = n.Request("service.del", msg, time.Second*3)
+		msg := []byte(`{"name":"` + d + `"}`)
+		_, _ = n.Request("environment.del", msg, time.Second*3)
 	})
 
 	And(`^the user "(.+?)" exists$`, func(user string) {
