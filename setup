@@ -76,6 +76,9 @@ openssl req \
     -keyout ./config/nginx/ernest.key \
     -out ./config/nginx/ernest.crt &> /dev/null
 
+if ! [[ -z "${LICENSE// }" ]]; then
+  cp ./config/nginx/ernest.licensed ./config/nginx/ernest.local
+fi
 sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
 # Setup a random JWT Token for api-gateway
