@@ -555,6 +555,13 @@ func run(timeout int, command string, args ...string) (string, error) {
 		return "cmd.StdoutPipe() error: " + err.Error(), err
 	}
 
+	// get pipe to standard output
+	stderr, err := cmd.StderrPipe()
+	if err != nil {
+		log.Println("cmd.StderrPipe() error: " + err.Error())
+		return "cmd.StderrPipe() error: " + err.Error(), err
+	}
+
 	// start process via command
 	if err := cmd.Start(); err != nil {
 		log.Println("cmd.Start() error: " + err.Error())
@@ -563,11 +570,15 @@ func run(timeout int, command string, args ...string) (string, error) {
 
 	// setup a buffer to capture standard output
 	var buf bytes.Buffer
+	var ebuf bytes.Buffer
 
 	// create a channel to capture any errors from wait
 	done := make(chan error)
 	go func() {
 		if _, err := buf.ReadFrom(stdout); err != nil {
+			panic("buf.Read(stdout) error: " + err.Error())
+		}
+		if _, err := ebuf.ReadFrom(stderr); err != nil {
 			panic("buf.Read(stdout) error: " + err.Error())
 		}
 		done <- cmd.Wait()
@@ -585,6 +596,7 @@ func run(timeout int, command string, args ...string) (string, error) {
 		if err != nil {
 			close(done)
 			log.Println("process done, with error : " + err.Error())
+			fmt.Println(ebuf.String())
 			return buf.String(), nil
 		}
 		// log.Println("process completed : " + buf.String())

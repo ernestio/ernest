@@ -35,7 +35,7 @@ Feature: Environment credentials
 
   Scenario: Override environment credentials with update
     Given I setup ernest with target "https://ernest.local"
-    And The environment "tmp_cred_update" does not exist
+    And The environment "fakeaws/tmp_cred_update" does not exist
     And I setup a new environment name "tmp_cred_update"
     And I'm logged in as "usr" / "secret123"
     And I apply the definition "aws8.yml"
