@@ -19,14 +19,15 @@ Feature: Environment apply
 
   Scenario: Logged environment apply
     Given I setup ernest with target "https://ernest.local"
+    And I setup a new environment name "aws_test_environment"
     And I'm logged in as "usr" / "secret123"
-    And The environment "aws_test_environment" does not exist
-    When I apply the definition "aws1.yml"
+    And The environment "fakeaws/aws_test_environment" does not exist
+    And I apply the definition "aws1.yml"
     Then The output should contain "Status: Applied"
 
   Scenario: Logged environment apply with internal file references
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    And The environment "aws_test_environment" does not exist
+    And The environment "fakeaws/aws_test_environment" does not exist
     When I apply the definition "aws-template1-unexisting.yml"
     Then The output should contain "Can't access referenced file"

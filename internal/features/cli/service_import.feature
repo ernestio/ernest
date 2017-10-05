@@ -20,7 +20,9 @@ Feature: Environment import
   Scenario: Logged environment non existing import
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    And The environment "imported" does not exist
+    And The environment "fakeaws/imported" does not exist
+    When I run ernest with "environment create fakeaws imported"
+    Then The output should contain "Environment successfully created"
     When I run ernest with "environment import fakeaws imported"
     Then The output should contain regex "Ebs Volumes\s*2/2\s*Found"
     And The output should contain regex "Elbs\s*1/1\s*Found"

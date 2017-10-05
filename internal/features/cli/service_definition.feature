@@ -10,7 +10,7 @@ Feature: Ernest environment definition
   Scenario: Logged user definition
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    And The environment "destroyable" does not exist
+    And The environment "fakeaws/destroyable" does not exist
     And I apply the definition "destroyable.yml"
     When I run ernest with "env definition"
     Then The output should contain "You should specify the project name"
@@ -23,7 +23,7 @@ Feature: Ernest environment definition
   Scenario: Logged user definition for a specific build
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
-    And The environment "destroyable" does not exist
+    And The environment "fakeaws/destroyable" does not exist
     And I apply the definition "destroyable.yml"
     When I run ernest with "env definition fakeaws destroyable"
     Then The output should contain "name: destroyable"
