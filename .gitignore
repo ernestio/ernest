@@ -11,3 +11,4 @@ internal/features/_test/
 docker-compose.local.yml
 docker-compose.test.yml
 license.txt
+ernest-verifier
