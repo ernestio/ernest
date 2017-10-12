@@ -1,6 +1,7 @@
 ---
 repos:
   - name: config-store
+    edition: community
     path: git@github.com:ernestio/config-store.git
     branch: master
     volumes:
@@ -13,6 +14,7 @@ repos:
     entrypoint: ./config-store -config /etc/ernest/config.json
 
   - name: api-gateway
+    edition: community
     path: git@github.com:ernestio/api-gateway.git
     branch: master
     links:
@@ -27,6 +29,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: authenticator
+    edition: community
     path: git@github.com:ernestio/authenticator.git
     branch: master
     links:
@@ -39,6 +42,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: monit
+    edition: community
     path: git@github.com:ernestio/monit.git
     branch: master
     links:
@@ -53,6 +57,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: user-store
+    edition: community
     path: git@github.com:ernestio/user-store.git
     branch: master
     links:
@@ -65,6 +70,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: datacenter-store
+    edition: community
     path: git@github.com:ernestio/datacenter-store.git
     branch: master
     links:
@@ -77,6 +83,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: service-store
+    edition: community
     path: git@github.com:ernestio/service-store.git
     branch: master
     links:
@@ -89,6 +96,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: authorization-store
+    edition: community
     path: git@github.com:ernestio/authorization-store.git
     branch: master
     links:
@@ -101,6 +109,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: usage-store
+    edition: community
     path: git@github.com:ernestio/usage-store.git
     branch: master
     links:
@@ -113,6 +122,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: scheduler
+    edition: community
     path: git@github.com:ernestio/scheduler.git
     branch: master
     links:
@@ -125,6 +135,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: definition-mapper
+    edition: community
     path: git@github.com:ernestio/definition-mapper.git
     branch: master
     links:
@@ -137,6 +148,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: all-all-azure-connector
+    edition: community
     path: git@github.com:ernestio/all-all-azure-connector.git
     branch: master
     links:
@@ -149,6 +161,7 @@ repos:
       CONNECTORS: public_ip.create.azure,public_ip.update.azure,public_ip.delete.azure,public_ips.find.azure,virtual_network.create.azure,virtual_network.update.azure,virtual_network.delete.azure,virtual_networks.find.azure,resource_group.create.azure,resource_group.update.azure,resource_group.delete.azure,resource_groups.find.azure,subnet.create.azure,subnet.update.azure,subnet.delete.azure,subnets.find.azure,network_interface.create.azure,network_interface.update.azure,network_interface.delete.azure,network_inerfaces.find.azure,storage_account.create.azure,storage_account.update.azure,storage_account.delete.azure,storage_accounts.find.azure,storage_container.create.azure,storage_container.update.azure,storage_container.delete.azure,storage_containers.find.azure,virtual_machine.create.azure,virtual_machine.update.azure,virtual_machine.delete.azure,virtual_machines.find.azure,lb.create.azure,lb.update.azure,lb.deletev,lbs.find.azure,sql_server.create.azure,sql_server.update.azure,sql_server.delete.azure,sql_servers.find.azure,local_network_gateway.create.azure,local_network_gateway.update.azure,local_network_gateway.delete.azure,local_network_gateways.find.azure,network_security_group.create.azure,network_security_group.update.azure,network_security_group.delete.azure,network_security_groups.find.azure,sql_database.create.azure,sql_database.update.azure,sql_database.delete.azure,sql_databases.find.azure,availability_set.create.azure,availability_set.update.azure,availability_set.delete.azure,availability_sets.find.azure,managed_disk.create.azure,managed_disk.update.azure,managed_disk.delete.azure,managed_disks.find.azure
 
   - name: all-all-fake-connector
+    edition: community
     path: git@github.com:ernestio/all-all-fake-connector.git
     branch: master
     links:
@@ -160,6 +173,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: all-all-vcloud-connector
+    edition: community
     path: git@github.com:ernestio/all-all-vcloud-connector.git
     branch: master
     links:
@@ -171,6 +185,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: all-all-aws-connector
+    edition: community
     path: git@github.com:ernestio/all-all-aws-connector.git
     branch: master
     links:
@@ -183,6 +198,7 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
 
   - name: logger
+    edition: community
     path: git@github.com:ernestio/logger.git
     branch: master
     links:
@@ -200,3 +216,33 @@ repos:
     volumes:
       - ./logs/:/var/logs/
       - ./config/:/etc/ernest/
+
+  - name: notification-store
+    edition: enterprise
+    path: git@github.com:r3labs/notification-store.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+
+  - name: papi
+    edition: enterprise
+    path: git@github.com:r3labs/papi.git
+    branch: master
+    links:
+      - nats
+      - api-gateway:api-gateway
+    depends_on:
+    - config-store
+    environment:
+      JWT_SECRET: 'GENERATEDJWTSECRET'
+      NATS_URI: nats://nats:4222
+      DEFAULT_PORT: 8081
+      DEFAULT_TARGET: http://api-gateway:8080/
+    ports:
+    - 8081:8081
+
