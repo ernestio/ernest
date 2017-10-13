@@ -31,11 +31,3 @@ Feature: Ernest login
   Scenario: Login with invalid characters in password
     When I'm logged in as "usr" / "secret^123"
     Then The output should contain "Password can only contain the following characters: a-z 0-9 @._-"
-
-  Scenario: Login as a federated user
-    When I'm logged in as "user-federation" / "secret123"
-    Then The output should contain "Welcome back user-federation"
-
-  Scenario: Login as a federated admin user
-    When I'm logged in as "admin-federation" / "secret123"
-    Then The output should contain "Welcome back admin-federation"
