@@ -10,3 +10,21 @@
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
     restart: always
+
+  - name: papi
+    path: git@github.com:r3labs/papi.git
+    branch: master
+    links:
+      - nats
+      - api-gateway:api-gateway
+    depends_on:
+    - config-store
+    environment:
+      JWT_SECRET: 'GENERATEDJWTSECRET'
+      NATS_URI: nats://nats:4222
+      DEFAULT_PORT: 8081
+      DEFAULT_TARGET: http://api-gateway:8080/
+    ports:
+    - 8081:8081
+    restart: always
+

@@ -5,7 +5,7 @@ set -e
 RED='\033[31;1m'
 GREEN='\033[32;1m'
 YELLOW='\033[33;1m'
-BLUE='\033[34m'
+BLUE='\033[34;1m'
 NC='\033[0m'
 
 # Check if there is a preiously existing version of ernest
@@ -76,6 +76,9 @@ openssl req \
     -keyout ./config/nginx/ernest.key \
     -out ./config/nginx/ernest.crt &> /dev/null
 
+if ! [[ -z "${LICENSE// }" ]]; then
+  cp ./config/nginx/ernest.licensed ./config/nginx/ernest.local
+fi
 sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
 # Setup a random JWT Token for api-gateway

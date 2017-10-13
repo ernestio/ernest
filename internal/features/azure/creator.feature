@@ -404,9 +404,7 @@ Feature: Creator
     And message "availability_set.create.azure-fake" number "0" should contain "datacenter_type" as json field "azure-fake"
     And message "availability_set.create.azure-fake" number "0" should contain "_component" as json field "availability_set"
     And message "availability_set.create.azure-fake" number "0" should contain "_provider" as json field "azure-fake"
-    And an event "user.get" should be called exactly "1" times
-    And message "user.get" number "0" should contain "username" as json field "usr"
-    And an event "definition.map.creation" should be called exactly "1" times
+    And an event "mapping.get.create" should be called exactly "1" times
     And an event "lb_backend_address_pool.create.azure-fake" should be called exactly "1" times
     And message "lb_backend_address_pool.create.azure-fake" number "0" should contain "resource_group_name" as json field "az-test"
     And message "lb_backend_address_pool.create.azure-fake" number "0" should contain "_provider" as json field "azure-fake"
@@ -422,8 +420,6 @@ Feature: Creator
     When I start recording
     And I apply the definition "azure3.yml"
     And I stop recording
-    And an event "user.get" should be called exactly "1" times
-    And message "user.get" number "0" should contain "username" as json field "usr"
     And an event "virtual_machine.update.azure-fake" should be called exactly "2" times
     And message "virtual_machine.update.azure-fake" number "0" should contain "_action" as json field "update"
     And message "virtual_machine.update.azure-fake" number "0" should contain "_state" as json field "running"
@@ -503,15 +499,11 @@ Feature: Creator
     And message "virtual_machine.update.azure-fake.done" number "1" should contain "_action" as json field "update"
     And message "virtual_machine.update.azure-fake.done" number "1" should contain "resource_group_name" as json field "az-test"
     And message "virtual_machine.update.azure-fake.done" number "1" should contain "_provider" as json field "azure-fake"
-    And an event "definition.map.creation" should be called exactly "1" times
-    And message "definition.map.creation" number "0" should contain "previous_id" as json field "2ca00d28-7950-4bb2-6979-10ee511e488d-eaba84f7d09de6135727818e04e88d37"
+    And an event "mapping.get.update" should be called exactly "1" times
     When I start recording
     And I apply the definition "azure4.yml"
     And I stop recording
-    And an event "user.get" should be called exactly "1" times
-    And message "user.get" number "0" should contain "username" as json field "usr"
-    And an event "definition.map.creation" should be called exactly "1" times
-    And message "definition.map.creation" number "0" should contain "previous_id" as json field "270a5fa1-7501-4c8c-6c03-50ffbebacce0-a543e3231f71356fbffd3b411f2048c5"
+    And an event "mapping.get.update" should be called exactly "1" times
     And an event "subnet.create.azure-fake.done" should be called exactly "1" times
     And message "subnet.create.azure-fake.done" number "0" should contain "address_prefix" as json field "10.0.2.0/24"
     And message "subnet.create.azure-fake.done" number "0" should contain "datacenter_name" as json field "fakeazure"
@@ -966,10 +958,7 @@ Feature: Creator
     And message "public_ip.delete.azure-fake.done" number "0" should contain "_provider" as json field "azure-fake"
     And message "public_ip.delete.azure-fake.done" number "0" should contain "_state" as json field "completed"
     And message "public_ip.delete.azure-fake.done" number "0" should contain "datacenter_region" as json field "westus"
-    And an event "user.get" should be called exactly "1" times
-    And message "user.get" number "0" should contain "username" as json field "usr"
-    And an event "definition.map.creation" should be called exactly "1" times
-    And message "definition.map.creation" number "0" should contain "previous_id" as json field "ccb53f80-d1de-44d1-6fa1-b28c69eb08a5-61c2b4804f1b5d175ebe8c95fd0e40ca"
+    And an event "mapping.get.update" should be called exactly "1" times
     And an event "sql_server.create.azure-fake" should be called exactly "1" times
     And message "sql_server.create.azure-fake" number "0" should contain "location" as json field "westeurope"
     And message "sql_server.create.azure-fake" number "0" should contain "_component" as json field "sql_server"
@@ -1015,8 +1004,6 @@ Feature: Creator
     And I start recording
     And I apply the definition "azure6.yml"
     And I stop recording
-    And an event "user.get" should be called exactly "1" times
-    And message "user.get" number "0" should contain "username" as json field "usr"
     And an event "lb_rule.delete.azure-fake.done" should be called exactly "1" times
     And message "lb_rule.delete.azure-fake.done" number "0" should contain "_component_id" as json field "lb_rule::http"
     And message "lb_rule.delete.azure-fake.done" number "0" should contain "loadbalancer" as json field "lb"
@@ -1073,8 +1060,7 @@ Feature: Creator
     And message "lb_backend_address_pool.delete.azure-fake" number "0" should contain "loadbalancer" as json field "lb"
     And message "lb_backend_address_pool.delete.azure-fake" number "0" should contain "_component_id" as json field "lb_backend_address_pool::pool1"
     And message "lb_backend_address_pool.delete.azure-fake" number "0" should contain "_provider" as json field "azure-fake"
-    And an event "definition.map.creation" should be called exactly "1" times
-    And message "definition.map.creation" number "0" should contain "previous_id" as json field "469d51d1-9524-4dae-6fbc-b7da83b0354f-6bfc681a4807703c77135f2a72c7dc40"
+    And an event "mapping.get.update" should be called exactly "1" times
     And an event "public_ip.create.azure-fake.done" should be called exactly "1" times
     And message "public_ip.create.azure-fake.done" number "0" should contain "_action" as json field "create"
     And message "public_ip.create.azure-fake.done" number "0" should contain "_state" as json field "completed"

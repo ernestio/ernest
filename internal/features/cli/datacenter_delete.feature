@@ -33,7 +33,7 @@ Feature: Ernest project create
     And I'm logged in as "usr" / "secret123"
     And I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region --fake test_dc"
     Then The output should contain "Project 'test_dc' successfully created"
-    And The environment "aws_test_environment" does not exist
+    And The environment "test_dc/aws_test_environment" does not exist
     When I apply the definition "referenced.yml"
     And I run ernest with "project list"
     And The output should contain "test_dc"
