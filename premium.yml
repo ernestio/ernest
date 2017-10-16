@@ -11,6 +11,18 @@
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
     restart: always
 
+  - name: federation
+    path: git@github.com:r3labs/federation.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
+
   - name: papi
     path: git@github.com:r3labs/papi.git
     branch: master
@@ -27,4 +39,3 @@
     ports:
     - 8081:8081
     restart: always
-
