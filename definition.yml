@@ -234,6 +234,7 @@ repos:
     restart: always
 
   - name: notification-store
+    edition: enterprise
     path: git@github.com:r3labs/notification-store.git
     branch: master
     links:
@@ -246,6 +247,7 @@ repos:
     restart: always
 
   - name: federation
+    edition: enterprise
     path: git@github.com:r3labs/federation.git
     branch: master
     links:
@@ -258,6 +260,7 @@ repos:
     restart: always
 
   - name: papi
+    edition: enterprise
     path: git@github.com:r3labs/papi.git
     branch: master
     links:

@@ -117,6 +117,7 @@ printf "\n$blue%s$nc\n\n" "Starting Ernest"
 
 # run docker compose, add a '-d' to run in daemon mode
 docker-compose up -d
+docker logout
 
 # Download the natsc tool
 wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc &> /dev/null
