@@ -1,12 +1,10 @@
 #!/bin/bash
 
-set -e
-
-RED='\033[31;1m'
-GREEN='\033[32;1m'
-YELLOW='\033[33;1m'
-BLUE='\033[34;1m'
-NC='\033[0m'
+red='\033[31m'
+green='\033[32m'
+yellow='\033[33m'
+blue='\033[34;1m'
+nc='\033[0m'
 
 # Check if there is a preiously existing version of ernest
 EXISTING=$(docker ps -q -f name=api-gateway)
@@ -25,24 +23,24 @@ fi
 
 command_exists () {
 	if ! type "$1" &> /dev/null; then
-		printf "\n$RED%s$NC %s\n$1 %s\n%s" "[FAIL]" "Prerequisite requirements not met" "not found!" "Please make sure all requirements are installed."
+		printf "\n$red%s$nc %s\n$1 %s\n%s" "[ERROR]" "Prerequisite requirements not met" "not found!" "Please make sure all requirements are installed."
     exit 1
   fi
 }
 
-printf "\n$BLUE%s\n%s$NC\n\n" "Ernest Setup Tool" "================="
+printf "\n$blue%s\n%s$nc\n" "Ernest Setup Tool" "-----------------"
 
 # input
 while [[ -z $ERNESTHOSTNAME ]]; do
-	printf "$BLUE%s$NC " "Hostname:"
+	printf "$blue%s$nc " "Hostname:"
 	read ERNESTHOSTNAME
 done
 while [[ -z $ERNESTUSER ]]; do
-	printf "$BLUE%s$NC " "Username:"
+	printf "$blue%s$nc " "Username:"
 	read ERNESTUSER
 done
 while [[ -z $ERNESTPASSWORD ]]; do
-	printf "$BLUE%s$NC " "Password:"
+	printf "$blue%s$nc " "Password:"
 	read -s ERNESTPASSWORD
 	echo
 done
@@ -53,19 +51,36 @@ command_exists wget
 command_exists openssl
 command_exists docker
 command_exists docker-compose
-printf "$GREEN%s$NC\n" "done"
-
-printf "\n$GREEN%s$NC\n\n" "Starting Ernest"
+printf "$green%s$nc\n\n" "done"
 
 # license
-LICENSE=$1
-if ! [[ -z "${LICENSE// }" ]]; then
-  if [ ! -f $LICENSE ]; then
-		printf "$YELLOW%s$NC %s\n" "[WARNING]" "No license found"
-    exit
-  fi
+if [[ -f license.txt ]]; then
+	printf "%s\n%s" "License found" "Validating... "
+	
+	wget https://s3-eu-west-1.amazonaws.com/ernest-tools/ernest-verifier-`uname` -O ernest-verifier &> /dev/null
+	chmod +x ernest-verifier
+
+	ernest-verifier license.txt &> /dev/null
+
+	if [[ ! $? == 0 ]]; then
+		printf "$red%s$nc\n" "failed"
+		exit 1
+	fi 	
+
+ 	printf "$green%s$nc\n" "done"
+
+	registryHost=$(grep registryHost license.txt | awk -F \" '{printf $4}')
+	registryUser=$(grep registryUser license.txt | awk -F \" '{printf $4}')
+	registryToken=$(grep registryToken license.txt | awk -F \" '{printf $4}')
+
+  docker login -u $registryUser -p $registryToken $registryHost &> /dev/null
+	cp docker-compose.enterprise.yml docker-compose.yml
+ 	cp config/nginx/ernest.licensed config/nginx/ernest.local
+else
+	printf "$yellow%s$nc %s\n\n" "[WARNING]" "No license found"
 fi
 
+printf "%s" "\nGenerating Certificates... "
 openssl req \
     -new \
     -newkey rsa:4096 \
@@ -75,41 +90,49 @@ openssl req \
     -subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOSTNAME" \
     -keyout ./config/nginx/ernest.key \
     -out ./config/nginx/ernest.crt &> /dev/null
+printf "$green%s$nc\n" "done"
 
-if ! [[ -z "${LICENSE// }" ]]; then
-  cp ./config/nginx/ernest.licensed ./config/nginx/ernest.local
-fi
 sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
 # Setup a random JWT Token for api-gateway
 if [[ -z $TOKEN ]]; then
-  echo "Generating new api token secret"
+  printf "%s" "Generating API token... "
   TOKEN=`openssl rand -base64 32`
+	printf "$green%s$nc\n" "done"
 fi
 sed -i.bak "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml && rm docker-compose.yml.bak
 
-# Setup a random CRIPTO_KEY
+# Setup a random CRYPTO_KEY
 if [[ -z $CRYPTO_KEY ]]; then
+  printf "%s" "Generating cryptographic key... "
   CRYPTO_KEY=`openssl rand -base64 24`
+	printf "$green%s$nc\n" "done"
 fi
 sed -i.bak "s:CRYPTO_KEY_TEMPLATE:$CRYPTO_KEY:g" docker-compose.yml && rm docker-compose.yml.bak
 
 # Make volume for postgres data
 mkdir -p postgres/data
 
+printf "\n$blue%s$nc\n\n" "Starting Ernest"
+
 # run docker compose, add a '-d' to run in daemon mode
 docker-compose up -d
+docker logout
 
 # Download the natsc tool
 wget https://s3-eu-west-1.amazonaws.com/ernest-tools/natsc-`uname` -O natsc &> /dev/null
 chmod +x ./natsc
 
 # NOTE: Wait for backend services to become available.
+printf "\n%s" "Waiting for services... "
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'authorization.find' '{}' &> /dev/null
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'datacenter.find' '{}' &> /dev/null
+printf "$green%s$nc\n" "done"
 # setup admin account
+printf "%s" "Creating accounts... "
 ./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$ERNESTUSER\", \"password\": \"$ERNESTPASSWORD\", \"admin\":true}" &> /dev/null
+printf "$green%s$nc\n" "done"
 
-printf "\n$GREEN%s$NC\n\n" "Setup complete!"
-printf "%s $BLUE%s$NC\n" "Please download the latest client from" "https://github.com/ernestio/ernest-cli/releases"
-printf "%s $BLUE%s$NC %s $BLUE%s$NC %s\n" "Then configure with" "ernest-cli setup" "providing" "https://$ERNESTHOSTNAME" "as the target."
+printf "\n$green%s$nc\n\n" "Setup complete!"
+printf "%s $blue%s$nc\n" "Please download the latest client from" "https://github.com/ernestio/ernest-cli/releases"
+printf "%s $blue%s$nc %s $blue%s$nc %s\n" "Then configure with" "ernest-cli setup" "providing" "https://$ERNESTHOSTNAME" "as the target."

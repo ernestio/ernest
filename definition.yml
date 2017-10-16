@@ -1,6 +1,7 @@
 ---
 repos:
   - name: config-store
+    edition: community
     path: git@github.com:ernestio/config-store.git
     branch: master
     volumes:
@@ -14,6 +15,7 @@ repos:
     restart: always
 
   - name: api-gateway
+    edition: community
     path: git@github.com:ernestio/api-gateway.git
     branch: master
     links:
@@ -29,6 +31,7 @@ repos:
     restart: always
 
   - name: authenticator
+    edition: community
     path: git@github.com:ernestio/authenticator.git
     branch: master
     links:
@@ -42,6 +45,7 @@ repos:
     restart: always
 
   - name: monit
+    edition: community
     path: git@github.com:ernestio/monit.git
     branch: master
     links:
@@ -57,6 +61,7 @@ repos:
     restart: always
 
   - name: user-store
+    edition: community
     path: git@github.com:ernestio/user-store.git
     branch: master
     links:
@@ -70,6 +75,7 @@ repos:
     restart: always
 
   - name: datacenter-store
+    edition: community
     path: git@github.com:ernestio/datacenter-store.git
     branch: master
     links:
@@ -83,6 +89,7 @@ repos:
     restart: always
 
   - name: service-store
+    edition: community
     path: git@github.com:ernestio/service-store.git
     branch: master
     links:
@@ -96,6 +103,7 @@ repos:
     restart: always
 
   - name: authorization-store
+    edition: community
     path: git@github.com:ernestio/authorization-store.git
     branch: master
     links:
@@ -109,6 +117,7 @@ repos:
     restart: always
 
   - name: usage-store
+    edition: community
     path: git@github.com:ernestio/usage-store.git
     branch: master
     links:
@@ -122,6 +131,7 @@ repos:
     restart: always
 
   - name: scheduler
+    edition: community
     path: git@github.com:ernestio/scheduler.git
     branch: master
     links:
@@ -135,6 +145,7 @@ repos:
     restart: always
 
   - name: definition-mapper
+    edition: community
     path: git@github.com:ernestio/definition-mapper.git
     branch: master
     links:
@@ -148,6 +159,7 @@ repos:
     restart: always
 
   - name: all-all-azure-connector
+    edition: community
     path: git@github.com:ernestio/all-all-azure-connector.git
     branch: master
     links:
@@ -161,6 +173,7 @@ repos:
     restart: always
 
   - name: all-all-fake-connector
+    edition: community
     path: git@github.com:ernestio/all-all-fake-connector.git
     branch: master
     links:
@@ -173,6 +186,7 @@ repos:
     restart: always
 
   - name: all-all-vcloud-connector
+    edition: community
     path: git@github.com:ernestio/all-all-vcloud-connector.git
     branch: master
     links:
@@ -185,6 +199,7 @@ repos:
     restart: always
 
   - name: all-all-aws-connector
+    edition: community
     path: git@github.com:ernestio/all-all-aws-connector.git
     branch: master
     links:
@@ -198,6 +213,7 @@ repos:
     restart: always
 
   - name: logger
+    edition: community
     path: git@github.com:ernestio/logger.git
     branch: master
     links:
@@ -215,4 +231,48 @@ repos:
     volumes:
       - ./logs/:/var/logs/
       - ./config/:/etc/ernest/
+    restart: always
+
+  - name: notification-store
+    edition: enterprise
+    path: git@github.com:r3labs/notification-store.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
+
+  - name: federation
+    edition: enterprise
+    path: git@github.com:r3labs/federation.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
+    restart: always
+
+  - name: papi
+    edition: enterprise
+    path: git@github.com:r3labs/papi.git
+    branch: master
+    links:
+      - nats
+      - api-gateway:api-gateway
+    depends_on:
+    - config-store
+    environment:
+      JWT_SECRET: 'GENERATEDJWTSECRET'
+      NATS_URI: nats://nats:4222
+      DEFAULT_PORT: 8081
+      DEFAULT_TARGET: http://api-gateway:8080/
+    ports:
+    - 8081:8081
     restart: always
