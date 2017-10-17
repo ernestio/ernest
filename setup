@@ -77,10 +77,10 @@ if [[ -f license.txt ]]; then
 	cp docker-compose.enterprise.yml docker-compose.yml
  	cp config/nginx/ernest.licensed config/nginx/ernest.local
 else
-	printf "$yellow%s$nc %s\n\n" "[WARNING]" "No license found"
+	printf "$yellow%s$nc %s\n" "[WARNING]" "No license found"
 fi
 
-printf "%s" "\nGenerating Certificates... "
+printf "\n%s" "Generating Certificates... "
 openssl req \
     -new \
     -newkey rsa:4096 \
