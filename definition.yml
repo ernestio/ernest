@@ -276,3 +276,15 @@ repos:
     ports:
     - 8081:8081
     restart: always
+
+  - name: supervisor
+    edition: enterprise
+    path: git@github.com:r3labs/supervisor.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+    restart: always
