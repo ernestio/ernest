@@ -10,3 +10,5 @@ internal/features/_test/
 *__.go
 docker-compose.local.yml
 docker-compose.test.yml
+license.txt
+ernest-verifier
