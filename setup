@@ -60,7 +60,7 @@ if [[ -f license.txt ]]; then
 	wget https://s3-eu-west-1.amazonaws.com/ernest-tools/ernest-verifier-`uname` -O ernest-verifier &> /dev/null
 	chmod +x ernest-verifier
 
-	ernest-verifier license.txt &> /dev/null
+	./ernest-verifier license.txt &> /dev/null
 
 	if [[ ! $? == 0 ]]; then
 		printf "$red%s$nc\n" "failed"
