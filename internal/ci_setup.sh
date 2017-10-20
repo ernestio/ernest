@@ -1,7 +1,3 @@
-$GOBIN/natsc request -s $NATS_URI -t 5 -r 99 'user.set' '{"username": "ci_admin", "password": "secret123", "type": "local", "admin":true}'
-# NOTE: Wait for backend services to become available.
-$GOBIN/natsc request -s $NATS_URI -t 5 -r 99 'authorization.find' '{}'
-$GOBIN/natsc request -s $NATS_URI -t 5 -r 99 'datacenter.find' '{}'
 ernest-cli target $CURRENT_INSTANCE
 ernest-cli login --user ci_admin --password secret123
 ernest-cli user create usr secret123
