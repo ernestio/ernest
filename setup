@@ -130,7 +130,7 @@ printf "\n%s" "Waiting for services... "
 printf "$green%s$nc\n" "done"
 # setup admin account
 printf "%s" "Creating accounts... "
-./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$ERNESTUSER\", \"password\": \"$ERNESTPASSWORD\", \"type\": \"local\", \"admin\":true}" &> /dev/null
+./natsc request -s nats://127.0.0.1:4222 -t 5 -r 99 'user.set' "{\"username\": \"$ERNESTUSER\", \"password\": \"$ERNESTPASSWORD\", \"admin\":true}" &> /dev/null
 printf "$green%s$nc\n" "done"
 
 printf "\n$green%s$nc\n\n" "Setup complete!"
