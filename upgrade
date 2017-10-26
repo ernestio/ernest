@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+blue='\033[34;1m'
+nc='\033[0m'
+
+printf "\n$blue%s\n%s$nc\n\n" "Ernest Upgrade Tool" "-------------------"
+
+API_CONTAINER=$(docker ps | grep api-gateway | awk '{print $1}')
+TOKEN=$(docker exec $API_CONTAINER sh -c 'echo $JWT_SECRET')
+CRYPTO_KEY=$(docker exec $API_CONTAINER sh -c 'echo $ERNEST_CRYPTO_KEY')
+
+docker-compose down
+git checkout docker-compose.yml
+git checkout config/nginx/ernest.local
+git checkout master
+git pull
+
+export TOKEN CRYPTO_KEY
+
+printf "\n$blue%s$nc\n" "Starting upgrade"
+
+./setup
