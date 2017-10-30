@@ -26,26 +26,11 @@ jobs:
            name: Install Dependencies
            command: |
              make dev-deps
-             
              $ROOTPATH/ernest/internal/ci_install_service.sh r3labs composable master
              composable set build.path /tmp/composable
              mkdir -p /tmp/composable
              composable generate -G $BASE_VERSION -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' $EXTRA_OPTIONS definition.yml template.yml
-
              $ROOTPATH/ernest/internal/ci_install_service.sh ernestio ernest-cli $CLI_VERSION
-
-
-
-             #./internal/ci_install_service.sh r3labs natsc master
-             #./internal/ci_install_service.sh r3labs composable master
-             #./internal/ci_install_service.sh ernestio ernest-cli $CLI_VERSION
-             #mkdir /tmp/composable && composable set build.path /tmp/composable
-             #sed -i "s:443 ssl:80:g" config/nginx/ernest.local
-             #sed -i "s:ERNESTHOST:ernest.local:g" config/nginx/ernest.local
-             #sed -i "/ssl_certificate/d" config/nginx/ernest.local
-             #sed -i "s:443:80:g" template.yml
-             #composable generate -E ERNEST_CRYPTO_KEY=$ERNEST_CRYPTO_KEY -exclude='*-aws-connector,*-vcloud-connector' -G $BASE_VERSION $EXTRA_OPTIONS definition.yml template.yml --
-             #docker-compose -f docker-compose.yml up -d
              ERNESTHOSTNAME=localhost ERNESTUSER=ci_admin ERNESTPASSWORD=secret123 ./setup
        - run:
            name: Docker Compose Logs
