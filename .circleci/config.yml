@@ -8,7 +8,7 @@ jobs:
        ROOTPATH: /home/circleci/.go_workspace/src/github.com/ernestio
        NATS_URI_TEST:  nats://127.0.0.1:4222
        GOBIN: /home/circleci/.go_workspace/bin
-       CURRENT_INSTANCE: http://ernest.local:80/
+       CURRENT_INSTANCE: https://ernest.local
        JWT_SECRET: test
        IMPORT_PATH: "github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
        ERNEST_LOG_FILE: '/tmp/ernest.log'
