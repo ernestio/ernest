@@ -288,3 +288,15 @@ repos:
     environment:
       NATS_URI: nats://nats:4222
     restart: always
+
+  - name: mfa
+    edition: enterprise
+    path: git@github.com:r3labs/mfa.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+    restart: always
