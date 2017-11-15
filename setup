@@ -39,13 +39,13 @@ command_exists docker-compose
 printf "$green%s$nc\n\n" "done"
 
 # license
-if [[ -f license.txt ]]; then
+if [[ -f license.json ]]; then
 	printf "%s\n%s" "License found" "Validating... "
 	
 	wget https://s3-eu-west-1.amazonaws.com/ernest-tools/ernest-verifier-`uname` -O ernest-verifier &> /dev/null
 	chmod +x ernest-verifier
 
-	./ernest-verifier license.txt &> /dev/null
+	./ernest-verifier license.json &> /dev/null
 
 	if [[ ! $? == 0 ]]; then
 		printf "$red%s$nc\n" "failed"
@@ -54,15 +54,17 @@ if [[ -f license.txt ]]; then
 
  	printf "$green%s$nc\n" "done"
 
-	registryHost=$(grep registryHost license.txt | awk -F \" '{printf $4}')
-	registryUser=$(grep registryUser license.txt | awk -F \" '{printf $4}')
-	registryToken=$(grep registryToken license.txt | awk -F \" '{printf $4}')
-
-  docker login -u $registryUser -p $registryToken $registryHost &> /dev/null
-	cp docker-compose.enterprise.yml docker-compose.yml
  	cp config/nginx/ernest.licensed config/nginx/ernest.local
-else
-	printf "$yellow%s$nc %s\n" "[WARNING]" "No license found"
+
+  if ! $(grep -q '"contact": "Developer License"' license.json); then
+    cp docker-compose.enterprise.yml docker-compose.yml
+
+    registryHost=$(grep registryHost license.json | awk -F \" '{printf $4}')
+    registryUser=$(grep registryUser license.json | awk -F \" '{printf $4}')
+    registryToken=$(grep registryToken license.json | awk -F \" '{printf $4}')
+
+    docker login -u $registryUser -p $registryToken $registryHost &> /dev/null
+  fi
 fi
 
 printf "\n%s" "Generating Certificates... "
