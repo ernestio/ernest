@@ -8,7 +8,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-aws-connector:3.1.1
+    image: quay.io/r3labs/all-all-aws-connector:3.2.0
     links:
     - nats
     restart: always
@@ -20,7 +20,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-azure-connector:3.1.1
+    image: quay.io/r3labs/all-all-azure-connector:3.2.0
     links:
     - nats
     restart: always
@@ -31,7 +31,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-fake-connector:3.1.1
+    image: quay.io/r3labs/all-all-fake-connector:3.2.0
     links:
     - nats
     restart: always
@@ -42,7 +42,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-vcloud-connector:3.1.1
+    image: quay.io/r3labs/all-all-vcloud-connector:3.2.0
     links:
     - nats
     restart: always
@@ -54,7 +54,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/api-gateway:3.1.1
+    image: quay.io/r3labs/api-gateway:3.2.0
     links:
     - nats
     ports:
@@ -68,7 +68,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/authenticator:3.1.1
+    image: quay.io/r3labs/authenticator:3.2.0
     links:
     - nats
     restart: always
@@ -80,7 +80,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/authorization-store:3.1.1
+    image: quay.io/r3labs/authorization-store:3.2.0
     links:
     - nats
     restart: always
@@ -90,7 +90,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/config-store:3.1.1
+    image: quay.io/r3labs/config-store:3.2.0
     links:
     - nats
     restart: always
@@ -104,7 +104,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/datacenter-store:3.1.1
+    image: quay.io/r3labs/datacenter-store:3.2.0
     links:
     - nats
     restart: always
@@ -115,7 +115,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/definition-mapper:3.1.1
+    image: quay.io/r3labs/definition-mapper:3.2.0
     links:
     - nats
     - postgres
@@ -127,7 +127,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/federation:3.1.1
+    image: quay.io/r3labs/federation:3.2.0
     links:
     - nats
     restart: always
@@ -141,7 +141,7 @@ services:
       ERNEST_LOG_FILE: /var/logs/ernest.log
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/logger:3.1.1
+    image: quay.io/r3labs/logger:3.2.0
     links:
     - nats
     ports:
@@ -150,6 +150,16 @@ services:
     volumes:
     - ./logs/:/var/logs/
     - ./config/:/etc/ernest/
+  mfa:
+    depends_on:
+    - config-store
+    environment:
+      ERNEST_EDITION: enterprise
+      NATS_URI: nats://nats:4222
+    image: quay.io/r3labs/mfa:3.2.0
+    links:
+    - nats
+    restart: always
   monit:
     depends_on:
     - config-store
@@ -158,7 +168,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/monit:3.1.1
+    image: quay.io/r3labs/monit:3.2.0
     links:
     - nats
     ports:
@@ -189,7 +199,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/notification-store:3.1.1
+    image: quay.io/r3labs/notification-store:3.2.0
     links:
     - nats
     restart: always
@@ -202,7 +212,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/papi:3.1.1
+    image: quay.io/r3labs/papi:3.2.0
     links:
     - nats
     - api-gateway:api-gateway
@@ -224,7 +234,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/scheduler:3.1.1
+    image: quay.io/r3labs/scheduler:3.2.0
     links:
     - nats
     - postgres
@@ -237,7 +247,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/service-store:3.1.1
+    image: quay.io/r3labs/service-store:3.2.0
     links:
     - nats
     restart: always
@@ -247,7 +257,7 @@ services:
     environment:
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/supervisor:3.1.1
+    image: quay.io/r3labs/supervisor:3.2.0
     links:
     - nats
     restart: always
@@ -259,7 +269,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/usage-store:3.1.1
+    image: quay.io/r3labs/usage-store:3.2.0
     links:
     - nats
     restart: always
@@ -271,7 +281,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/user-store:3.1.1
+    image: quay.io/r3labs/user-store:3.2.0
     links:
     - nats
     restart: always
