@@ -9,29 +9,63 @@ nc='\033[0m'
 command_exists () {
 	if ! type "$1" &> /dev/null; then
 		printf "\n$red%s$nc %s\n$1 %s\n%s" "[ERROR]" "Prerequisite requirements not met" "not found!" "Please make sure all requirements are installed."
-    exit 1
-  fi
+		exit 1
+	fi
 }
 
-printf "\n$blue%s\n%s$nc\n" "Ernest Setup Tool" "-----------------"
+validate_username () {
+	if ! [[ $ERNESTUSER =~ ^[a-zA-Z0-9@._-]*$ ]]; then
+		printf "$red%s$nc\n\n" "Username can only contain the following characters: a-z 0-9 @._-"
+		unset ERNESTUSER
+	fi
+}
+
+validate_password () {
+	if [[ ${#ERNESTPASSWORD} -lt 8 ]]; then
+		printf "$red%s$nc\n\n" "Minimum password length is 8 characters"
+		unset ERNESTPASSWORD
+		return
+	fi
+
+	if ! [[ $ERNESTPASSWORD =~ ^[a-zA-Z0-9@._-]*$ ]]; then
+		printf "$red%s$nc\n\n" "Password can only contain the following characters: a-z 0-9 @._-"
+		unset ERNESTPASSWORD
+		return
+	fi
+	echo
+}
+
+printf "\n$blue%s\n%s$nc\n\n" "Ernest Setup Tool" "-----------------"
 
 # input
 while [[ -z $ERNESTHOSTNAME ]]; do
 	printf "$blue%s$nc " "Hostname:"
 	read ERNESTHOSTNAME
 done
+
+if ! [[ -z $ERNESTUSER ]]; then
+	validate_username
+fi
+
 while [[ -z $ERNESTUSER ]]; do
 	printf "$blue%s$nc " "Username:"
 	read ERNESTUSER
+	validate_username
 done
+
+if ! [[ -z $ERNESTPASSWORD ]]; then
+	validate_password
+fi
+
 while [[ -z $ERNESTPASSWORD ]]; do
 	printf "$blue%s$nc " "Password:"
 	read -s ERNESTPASSWORD
 	echo
+	validate_password
 done
 
 # prereqs
-printf "\n%s " "Checking prerequisites..."
+printf "%s " "Checking prerequisites..."
 command_exists wget
 command_exists openssl
 command_exists docker
@@ -41,7 +75,7 @@ printf "$green%s$nc\n\n" "done"
 # license
 if [[ -f license.json ]]; then
 	printf "%s\n%s" "License found" "Validating... "
-	
+
 	wget https://s3-eu-west-1.amazonaws.com/ernest-tools/ernest-verifier-`uname` -O ernest-verifier &> /dev/null
 	chmod +x ernest-verifier
 
@@ -50,49 +84,49 @@ if [[ -f license.json ]]; then
 	if [[ ! $? == 0 ]]; then
 		printf "$red%s$nc\n" "failed"
 		exit 1
-	fi 	
+	fi
 
- 	printf "$green%s$nc\n" "done"
+	printf "$green%s$nc\n" "done"
 
- 	cp config/nginx/ernest.licensed config/nginx/ernest.local
+	cp config/nginx/ernest.licensed config/nginx/ernest.local
 
-  if $(grep -q 'image: quay.io' docker-compose.yml); then
-    cp docker-compose.enterprise.yml docker-compose.yml
+	if $(grep -q 'image: quay.io' docker-compose.yml); then
+		cp docker-compose.enterprise.yml docker-compose.yml
 
-    registryHost=$(grep registryHost license.json | awk -F \" '{printf $4}')
-    registryUser=$(grep registryUser license.json | awk -F \" '{printf $4}')
-    registryToken=$(grep registryToken license.json | awk -F \" '{printf $4}')
+		registryHost=$(grep registryHost license.json | awk -F \" '{printf $4}')
+		registryUser=$(grep registryUser license.json | awk -F \" '{printf $4}')
+		registryToken=$(grep registryToken license.json | awk -F \" '{printf $4}')
 
-    docker login -u $registryUser -p $registryToken $registryHost &> /dev/null
-  fi
+		docker login -u $registryUser -p $registryToken $registryHost &> /dev/null
+	fi
 fi
 
 printf "\n%s" "Generating Certificates... "
 openssl req \
-    -new \
-    -newkey rsa:4096 \
-    -days 365 \
-    -nodes \
-    -x509 \
-    -subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOSTNAME" \
-    -keyout ./config/nginx/ernest.key \
-    -out ./config/nginx/ernest.crt &> /dev/null
+		-new \
+		-newkey rsa:4096 \
+		-days 365 \
+		-nodes \
+		-x509 \
+		-subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOSTNAME" \
+		-keyout ./config/nginx/ernest.key \
+		-out ./config/nginx/ernest.crt &> /dev/null
 printf "$green%s$nc\n" "done"
 
 sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
 # Setup a random JWT Token for api-gateway
 if [[ -z $TOKEN ]]; then
-  printf "%s" "Generating API token... "
-  TOKEN=`openssl rand -base64 32`
+	printf "%s" "Generating API token... "
+	TOKEN=`openssl rand -base64 32`
 	printf "$green%s$nc\n" "done"
 fi
 sed -i.bak "s:GENERATEDJWTSECRET:$TOKEN:g" docker-compose.yml && rm docker-compose.yml.bak
 
 # Setup a random CRYPTO_KEY
 if [[ -z $CRYPTO_KEY ]]; then
-  printf "%s" "Generating cryptographic key... "
-  CRYPTO_KEY=`openssl rand -base64 24`
+	printf "%s" "Generating cryptographic key... "
+	CRYPTO_KEY=`openssl rand -base64 24`
 	printf "$green%s$nc\n" "done"
 fi
 sed -i.bak "s:CRYPTO_KEY_TEMPLATE:$CRYPTO_KEY:g" docker-compose.yml && rm docker-compose.yml.bak
