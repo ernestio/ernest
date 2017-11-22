@@ -279,6 +279,63 @@ func init() {
 		ernest(options...)
 	})
 
+	And(`^all "(.+?)" messages should contain a credentials field "(.+?)" with "(.+?)"$`, func(subject string, field string, val string) {
+		var msg map[string]interface{}
+		if len(messages[subject]) == 0 {
+			T.Errorf("No '" + subject + "' messages where caught")
+			return
+		}
+		for _, body := range messages[subject] {
+			err := json.Unmarshal(body, &msg)
+			if err != nil {
+				fmt.Println(err)
+			}
+			creds, ok := msg["_credentials"].(map[string]interface{})
+			if !ok {
+				T.Errorf("Message " + subject + " does not contain the '_credentials' field\nOriginal message : " + (string(body)))
+			}
+
+			if value, ok := creds[field].(string); ok == false {
+				fmt.Println(field)
+				fmt.Println(creds)
+				T.Errorf("Message " + subject + " does not contain the " + field + "/" + val + " pair\nOriginal message : " + (string(body)))
+			} else {
+				if val != value {
+					T.Errorf("Value " + value + " for field " + field + " is not equal to " + val + "\nOriginal message : " + (string(body)))
+				}
+			}
+		}
+	})
+
+	And(`^all "(.+?)" messages should contain an encrypted credentials field "(.+?)" with "(.+?)"$`, func(subject string, field string, val string) {
+		var msg map[string]interface{}
+		if len(messages[subject]) == 0 {
+			T.Errorf("No '" + subject + "' messages where caught")
+			return
+		}
+		for _, body := range messages[subject] {
+			err := json.Unmarshal(body, &msg)
+			if err != nil {
+				fmt.Println(err)
+			}
+			creds, ok := msg["_credentials"].(map[string]interface{})
+			if !ok {
+				T.Errorf("Message " + subject + " does not contain the '_credentials' field\nOriginal message : " + (string(body)))
+			}
+
+			if value, ok := creds[field].(string); ok == false {
+				fmt.Println(field)
+				fmt.Println(creds)
+				T.Errorf("Message " + subject + " does not contain the " + field + "/" + val + " pair\nOriginal message : " + (string(body)))
+			} else {
+				dec, _ := crypto.Decrypt(value, key)
+				if val != dec {
+					T.Errorf("Decrypted value " + dec + " for field " + field + " is not equal to " + val + "\nOriginal message : " + (string(body)))
+				}
+			}
+		}
+	})
+
 	And(`^message "(.+?)" number "(.+?)" should contain "(.+?)" as json field "(.+?)"$`, func(subject string, num int, val, key string) {
 		val = strings.Replace(val, "$(name)", serviceName, -1)
 		if len(messages[subject]) == 0 {

@@ -10,10 +10,10 @@ Feature: Environment apply
     And I stop recording
     Then an event "instance.create.vcloud-fake" should be called exactly "1" times
     And all "instance.create.vcloud-fake" messages should contain a field "_provider" with "vcloud-fake"
-    And all "instance.create.vcloud-fake" messages should contain a field "datacenter_name" with "fakevcloud"
-    And all "instance.create.vcloud-fake" messages should contain a field "vcloud_url" with "https://vcloud.net"
-    And all "instance.create.vcloud-fake" messages should contain an encrypted field "datacenter_username" with "fakeuser@test"
-    And all "instance.create.vcloud-fake" messages should contain an encrypted field "datacenter_password" with "test123"
+    And all "instance.create.vcloud-fake" messages should contain a credentials field "vcloud_vdc_name" with "fakevcloud"
+    And all "instance.create.vcloud-fake" messages should contain a credentials field "vcloud_url" with "https://vcloud.net"
+    And all "instance.create.vcloud-fake" messages should contain a credentials field "vcloud_username" with "fakeuser@test"
+    And all "instance.create.vcloud-fake" messages should contain an encrypted credentials field "vcloud_password" with "test123"
     And all "instance.create.vcloud-fake" messages should contain a field "name" with "web-1"
     And all "instance.create.vcloud-fake" messages should contain a field "hostname" with "web-1"
     And all "instance.create.vcloud-fake" messages should contain a field "ip" with "10.1.0.11"
