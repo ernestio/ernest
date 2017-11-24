@@ -39,7 +39,7 @@ Feature: Environment apply
     And message "router.create.vcloud-fake" number "0" should contain "internal" as json field "firewall_rules.3.destination_ip"
     And message "router.create.vcloud-fake" number "0" should contain "22" as json field "firewall_rules.3.destination_port"
     And message "router.create.vcloud-fake" number "0" should contain "tcp" as json field "firewall_rules.3.protocol"
-    And message "router.create.vcloud-fake" number "0" should contain "dnat" as json field "nat_rules.0.type"
+    And message "router.create.vcloud-fake" number "0" should contain "DNAT" as json field "nat_rules.0.type"
     And message "router.create.vcloud-fake" number "0" should contain "172.16.186.44" as json field "nat_rules.0.origin_ip"
     And message "router.create.vcloud-fake" number "0" should contain "22" as json field "nat_rules.0.origin_port"
     And message "router.create.vcloud-fake" number "0" should contain "10.1.0.11" as json field "nat_rules.0.translation_ip"
