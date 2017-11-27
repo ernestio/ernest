@@ -76,7 +76,7 @@ func init() {
 		ernest(cmdArgs...)
 	})
 
-	Then(`^The output should contain "(.+?)"$`, func(needle string) {
+	Then(`^[T|t]he output should contain "(.+?)"$`, func(needle string) {
 		if strings.Contains(lastOutput, needle) == false {
 			T.Errorf(`Last output string does not contain "` + needle + `": ` + "\n" + lastOutput)
 		}
@@ -101,7 +101,7 @@ func init() {
 		}
 	})
 
-	And(`^The output should contain regex "(.*)"$`, func(needle string) {
+	And(`^[T|t]he output should contain regex "(.*)"$`, func(needle string) {
 		r := regexp.MustCompile(needle)
 		if r.MatchString(lastOutput) == false {
 			T.Errorf(`Last output string does not contain regex "` + needle + `": ` + "\n" + lastOutput)
