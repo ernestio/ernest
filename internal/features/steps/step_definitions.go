@@ -17,6 +17,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dgryski/dgoogauth"
 	aes "github.com/ernestio/crypto/aes"
 	ecc "github.com/ernestio/ernest-config-client"
 	"github.com/nats-io/nats"
@@ -69,6 +70,35 @@ func init() {
 	})
 
 	When(`^I run ernest with "(.+?)"$`, func(args string) {
+		args = strings.Replace(args, "$(name)", serviceName, -1)
+		cmdArgs := strings.Split(args, " ")
+
+		ernest(cmdArgs...)
+	})
+
+	When(`^I verify with "(.+?)" / "(.+?)" / "(.+?)"$`, func(username, password, code string) {
+		if code == "123456" {
+			msg, _ := n.Request("user.get", []byte(`{"username":"`+username+`"}`), time.Second)
+
+			var data map[string]interface{}
+			err := json.Unmarshal(msg.Data, &data)
+			if err != nil {
+				log.Println(err)
+			}
+
+			t0 := int64(time.Now().Unix() / 30)
+			cInt := dgoogauth.ComputeCode(data["mfa_secret"].(string), t0)
+			code = fmt.Sprintf("%06d", cInt)
+		}
+
+		ernest("login", "--user", username, "--password", password, "--verification-code", code)
+	})
+
+	And(`^I'm logged in as "(.+?)" / "(.+?)"$`, func(u, p string) {
+		ernest("login", "--user", u, "--password", p)
+	})
+
+	And(`^I run ernest with "(.+?)"$`, func(args string) {
 		args = strings.Replace(args, "$(name)", serviceName, -1)
 		cmdArgs := strings.Split(args, " ")
 
@@ -147,6 +177,13 @@ func init() {
 		_, _ = n.Request("user.del", msg, time.Second*3)
 		msg = []byte(`{"username":"` + user + `","password":"secret123"}`)
 		_, _ = n.Request("user.set", msg, time.Second*3)
+	})
+
+	And(`^the user "(.+?)" exists with mfa enabled$`, func(user string) {
+		msg := []byte(`{"username":"` + user + `"}`)
+		_, _ = n.Request("user.del", msg, time.Second)
+		msg = []byte(`{"username": "` + user + `", "password": "secret123", "mfa": true}`)
+		_, _ = n.Request("user.set", msg, time.Second)
 	})
 
 	And(`^The project "(.+?)" exists$`, func(d string) {
