@@ -17,6 +17,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/dgryski/dgoogauth"
 	aes "github.com/ernestio/crypto/aes"
 	ecc "github.com/ernestio/ernest-config-client"
 	"github.com/nats-io/nats"
@@ -563,11 +564,30 @@ func init() {
 		_ = os.Remove(filename)
 	})
 
-	When(`^I verify with "(.+?)" / "(.+?)" / "(.+?)"$`, func(i1 int, i2 int, s1 string, s2 string, s3 string) {
-		fmt.Println("skipping")
-		T.Skip() // pending
+	When(`^I verify with "(.+?)" / "(.+?)" / "(.+?)"$`, func(username, password, code string) {
+		if code == "123456" {
+			msg, _ := n.Request("user.get", []byte(`{"username":"`+username+`"}`), time.Second)
+
+			var data map[string]interface{}
+			err := json.Unmarshal(msg.Data, &data)
+			if err != nil {
+				log.Println(err)
+			}
+
+			t0 := int64(time.Now().Unix() / 30)
+			cInt := dgoogauth.ComputeCode(data["mfa_secret"].(string), t0)
+			code = fmt.Sprintf("%06d", cInt)
+		}
+
+		ernest("login", "--user", username, "--password", password, "--verification-code", code)
 	})
 
+	And(`^the user "(.+?)" exists with mfa enabled$`, func(user string) {
+		msg := []byte(`{"username":"` + user + `"}`)
+		_, _ = n.Request("user.del", msg, time.Second)
+		msg = []byte(`{"username": "` + user + `", "password": "secret123", "mfa": true}`)
+		_, _ = n.Request("user.set", msg, time.Second)
+	})
 }
 
 func getDefinitionPathAWS(def string, service string) string {
