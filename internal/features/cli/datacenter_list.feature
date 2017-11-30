@@ -32,10 +32,8 @@ Feature: Ernest project list
     And The output should contain "fakeaws"
     And The output should contain "NAME"
     And The output should contain "ID"
-    And The output should contain "EXTERNAL NETWORK"
+    And The output should contain "VDC"
     And The output should contain "ORG"
     And The output should contain "URL"
     And The output should contain "aws-fake"
     And The output should contain "vcloud-fake"
-
-

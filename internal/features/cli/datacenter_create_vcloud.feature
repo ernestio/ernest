@@ -22,7 +22,7 @@ Feature: Ernest project create
     And The output should contain "- Specify a valid user name with --user"
     And The output should contain "- Specify a valid organization with --org"
     And The output should contain "- Specify a valid password with --password"
-    When I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_project"
+    When I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --vdc tmp_project tmp_project"
     Then The output should contain "Project 'tmp_project' successfully created"
     When I run ernest with "project list"
     Then The output should contain "tmp_project"
@@ -36,8 +36,6 @@ Feature: Ernest project create
     Given I setup ernest with target "https://ernest.local"
     And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
-    When I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_project"
-    And I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_project"
+    When I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --vdc tmp_project tmp_project"
+    And I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --vdc tmp_project tmp_project"
     Then The output should contain "Project 'tmp_project' already exists, please specify a different name"
-
-
