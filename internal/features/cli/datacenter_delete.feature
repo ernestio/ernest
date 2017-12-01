@@ -11,7 +11,7 @@ Feature: Ernest project create
     Given I setup ernest with target "https://ernest.local"
     And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
-    And I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vse-url http://vse.url --vcloud-url https://myernest.com --public-network MY-PUBLIC-NETWORK tmp_project"
+    And I run ernest with "project create vcloud --user usr --password xxxx --org MY-ORG-NAME --vcloud-url https://myernest.com --vdc tmp_project tmp_project"
     And I run ernest with "project list"
     And The output should contain "tmp_project"
     When I run ernest with "project delete tmp_project"
