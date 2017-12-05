@@ -596,6 +596,7 @@ func init() {
 	And(`^I have a federation provider configured$`, func() {
 		msg := []byte(`{"providers": [{"type": "local"}, {"type": "federation-fake"}]}`)
 		_, _ = n.Request("config.set.authenticator", msg, time.Second)
+		time.Sleep(time.Second * 4)
 	})
 }
 
