@@ -69,6 +69,10 @@ func init() {
 		ernest("login", "--user", u)
 	})
 
+	When(`^I log in as "(.+?)" / "(.+?)"$`, func(u, p string) {
+		ernest("login", "--user", u, "--password", p)
+	})
+
 	When(`^I run ernest with "(.+?)"$`, func(args string) {
 		args = strings.Replace(args, "$(name)", serviceName, -1)
 		cmdArgs := strings.Split(args, " ")
@@ -587,6 +591,12 @@ func init() {
 		_, _ = n.Request("user.del", msg, time.Second)
 		msg = []byte(`{"username": "` + user + `", "password": "secret123", "mfa": true}`)
 		_, _ = n.Request("user.set", msg, time.Second)
+	})
+
+	And(`^I have a federation provider configured$`, func() {
+		msg := []byte(`{"providers": [{"type": "local"}, {"type": "federation-fake"}]}`)
+		_, _ = n.Request("config.set.authenticator", msg, time.Second)
+		time.Sleep(time.Second * 4)
 	})
 }
 
