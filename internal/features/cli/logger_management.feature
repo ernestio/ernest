@@ -11,7 +11,7 @@ Feature: Ernest preferences management
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "preferences logger add basic --logfile /tmp/ernest.log"
-    Then The output should contain "You're not allowed to perform this action, please log in"
+    Then The output should contain "You don’t have permissions to perform this action"
 
   Scenario: Logged as admin user basic logger creation
     Given I setup ernest with target "https://ernest.local"

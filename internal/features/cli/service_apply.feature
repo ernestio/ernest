@@ -5,7 +5,8 @@ Feature: Environment apply
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "environment apply"
-    Then The output should contain "You're not allowed to perform this action, please log in"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env apply <file.yml>"
     When I run ernest with "environment apply definitions/aws1.yml"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
@@ -13,7 +14,8 @@ Feature: Environment apply
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "environment apply"
-    Then The output should contain "You should specify a valid template path or store an ernest.yml on the current folder"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env apply <file.yml>"
     When I run ernest with "environment apply internal/definitions/unexisting_dc.yml"
     Then The output should contain "Specified project does not exist"
 

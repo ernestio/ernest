@@ -7,9 +7,9 @@ Feature: Ernest user change-password
   Scenario: Non logged user password modification
     Given I logout
     When I run ernest with "user change-password"
-    Then The output should contain "You don’t have permissions to perform this action"
+    Then The output should contain "You're not allowed to perform this action, please log in"
     When I run ernest with "user change-password --user usr --password xx"
-    Then The output should contain "You don’t have permissions to perform this action"
+    Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Plain user password modification
     Given I'm logged in as "usr" / "secret123"
