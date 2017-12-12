@@ -5,7 +5,8 @@ Feature: Environment history
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "env history"
-    Then The output should contain "You're not allowed to perform this action, please log in"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env history <my_project> <my_env>"
     When I run ernest with "env destroy fakeaws destroyable"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
@@ -13,11 +14,13 @@ Feature: Environment history
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "env history"
-    Then The output should contain "You should specify an existing project name"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env history <my_project> <my_env>"
     When I run ernest with "env history fakeaws"
-    Then The output should contain "You should specify an existing environment name"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env history <my_project> <my_env>"
     When I run ernest with "env history fakeaws unexisting"
-    Then The output should contain "There are no registered builds for this environment"
+    Then The output should contain "Environment not found"
 
   Scenario: Logged environment history
     Given I setup ernest with target "https://ernest.local"

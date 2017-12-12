@@ -17,15 +17,18 @@ Feature: Environment revert
     Given I'm logged in as "usr" / "secret123"
     And I apply the definition "service-revert.yml"
     When I run ernest with "env revert myService"
-    Then The output should contain "Please specify a project, environment and build ID"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env revert <project> <env_name> <build_id>"
 
   Scenario: User reverts a environment providing an invalid build ID
     Given I'm logged in as "usr" / "secret123"
     And I apply the definition "service-revert.yml"
     When I run ernest with "env revert fakeaws myService 99"
-    Then The output should contain "Invalid build ID"
+    Then The output should contain "Specified environment build does not exist"
 
   Scenario: Unauthenticated user reverts a environment
     Given I logout
     When I run ernest with "env revert"
+    Then The output should contain "$ ernest env revert <project> <env_name> <build_id>"
+    When I run ernest with "env revert proj env build"
     Then The output should contain "You're not allowed to perform this action, please log in"

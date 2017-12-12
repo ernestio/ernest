@@ -5,17 +5,20 @@ Feature: Environment import
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "environment import"
-    Then The output should contain "You're not allowed to perform this action, please log in"
-    When I run ernest with "environment import imported"
+    Then The output should contain "Please provide required parameters:"
+    Then The output should contain "$ ernest env import <my_project> <my_env>"
+    When I run ernest with "environment import project imported"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Logged environment import errors
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "environment import"
-    Then The output should contain "You should specify an existing project name"
+    Then The output should contain "Please provide required parameters:"
+    Then The output should contain "$ ernest env import <my_project> <my_env>"
     When I run ernest with "environment import unexisting"
-    Then The output should contain "You should specify a valid environment name"
+    Then The output should contain "Please provide required parameters:"
+    Then The output should contain "$ ernest env import <my_project> <my_env>"
 
   Scenario: Logged environment non existing import
     Given I setup ernest with target "https://ernest.local"

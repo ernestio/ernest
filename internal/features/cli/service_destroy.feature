@@ -5,7 +5,8 @@ Feature: Environment destroy
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "env destroy"
-    Then The output should contain "You're not allowed to perform this action, please log in"
+    Then The output should contain "Please provide required parameters:"
+    Then The output should contain "$ ernest env delete <my_project> <my_environment>"
     When I run ernest with "env destroy fakeaws destroyable"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
@@ -14,11 +15,13 @@ Feature: Environment destroy
     And I'm logged in as "usr" / "secret123"
     And The environment "fakeaws/unexisting" does not exist
     When I run ernest with "env destroy"
-    Then The output should contain "You should specify an existing project name"
+    Then The output should contain "Please provide required parameters:"
+    Then The output should contain "$ ernest env delete <my_project> <my_environment>"
     When I run ernest with "env destroy fakeaws"
-    Then The output should contain "You should specify an existing project environment"
+    Then The output should contain "Please provide required parameters:"
+    Then The output should contain "$ ernest env delete <my_project> <my_environment>"
     When I run ernest with "env destroy fakeaws unexisting --yes"
-    Then The output should contain "Specified environment name does not exist"
+    Then The output should contain "Environment not found"
 
   Scenario: Logged environment destroy
     Given I setup ernest with target "https://ernest.local"
@@ -30,4 +33,4 @@ Feature: Environment destroy
     Then The output should not contain "Specified environment name does not exist"
     And I wait for "1" seconds
     When I run ernest with "env destroy fakeaws destroyable --yes"
-    Then The output should contain "Specified environment name does not exist"
+    Then The output should contain "Environment not found"

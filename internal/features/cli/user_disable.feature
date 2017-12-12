@@ -5,16 +5,16 @@ Feature: Ernest user disable
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "user disable"
-    Then The output should contain "You should specify an username"
+    Then The output should contain "Please provide required parameters"
     When I run ernest with "user disable usr"
-    Then The output should contain "You don’t have permissions to perform this action"
+    Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Plain user disable
     Given I setup ernest with target "https://ernest.local"
     And I'm logged in as "usr" / "secret123"
     And The output should contain "Welcome back usr"
     When I run ernest with "user disable"
-    Then The output should contain "You should specify an username"
+    Then The output should contain "Please provide required parameters"
     When I run ernest with "user disable usr"
     Then The output should contain "You don’t have permissions to perform this action"
 

@@ -15,4 +15,4 @@ Feature: Ernest logout
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I logout
-    Then The output should contain "You're already logged out"
+    Then The output should contain "You're not allowed to perform this action, please log in"

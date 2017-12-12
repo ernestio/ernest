@@ -5,6 +5,8 @@ Feature: Ernest azure project update
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "project update azure"
+    Then The output should contain "Please provide required parameters"
+    When I run ernest with "project update azure mine"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Updating an existing azure project
@@ -23,4 +25,4 @@ Feature: Ernest azure project update
     And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "project update azure --subscription_id u_subid --client_id u_cliid --client_secret secret --tenant_id u_tenid --environment u_public tmp_project"
-    Then The output should contain "Project 'tmp_project' does not exist, please specify a different project name"
+    Then The output should contain "Project not found"
