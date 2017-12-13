@@ -139,7 +139,7 @@ mkdir -p postgres/data
 printf "\n$blue%s$nc\n\n" "Starting Ernest"
 
 # run docker compose, add a '-d' to run in daemon mode
-if $is_development_build ; then
+if $is_a_development_build ; then
 	composable up
 else
 	docker-compose up -d
