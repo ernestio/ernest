@@ -5,7 +5,7 @@ Feature: Ernest project create
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "project create aws"
-    Then The output should contain "You should specify the project name"
+    Then The output should contain "Please provide required parameters"
     When I run ernest with "project create aws tmp_project"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
@@ -14,10 +14,12 @@ Feature: Ernest project create
     And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "project create aws"
-    Then The output should contain "You should specify the project name"
+    Then The output should contain "Please provide required parameters"
     When I run ernest with "project create aws tmp_project"
     Then The output should contain "Please, fix the error shown below to continue"
-    And The output should contain "- Specify a valid secret access key with --secret_access_key flag"
+    And The output should contain "- Specify a valid --secret_access_key flag"
+    And The output should contain "- Specify a valid --access_key_id flag"
+    And The output should contain "- Specify a valid --region flag"
     When I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_project"
     Then The output should contain "Project 'tmp_project' successfully created"
     When I run ernest with "project list"
@@ -31,6 +33,4 @@ Feature: Ernest project create
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_project"
     And I run ernest with "project create aws --secret_access_key tmp_secret_access_key --access_key_id tmp_secret_up_to_16_chars --region tmp_region tmp_project"
-    Then The output should contain "Project 'tmp_project' already exists, please specify a different name"
-
-
+    Then The output should contain "Specified project already exists"

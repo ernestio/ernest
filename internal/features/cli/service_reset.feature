@@ -5,6 +5,9 @@ Feature: Ernest environment reset
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "environment reset"
+    Then The output should contain "Please provide required parameters:"
+    And The output should contain "$ ernest env reset <my_env>"
+    When I run ernest with "environment reset project environment"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Logged user reset
@@ -14,7 +17,7 @@ Feature: Ernest environment reset
     And I apply the definition "destroyable.yml"
     And I wait for "2" seconds
     When I run ernest with "env reset fakeaws destroyable"
-    Then The output should contain "The environment 'fakeaws / destroyable' cannot be reset as its status is 'done'"
+    Then The output should contain "Reset only applies to an 'in progress' environment, however environment "
     And I force "fakeaws/destroyable" to be on status "in_progress"
     When I run ernest with "env list"
     And The output line number "3" should contain "destroyable"
@@ -25,4 +28,4 @@ Feature: Ernest environment reset
     And The output line number "3" should contain "destroyable"
     And The output line number "3" should contain "errored"
     When I run ernest with "environment reset fakeaws destroyable"
-    Then The output should contain "The environment 'fakeaws / destroyable' cannot be reset as its status is 'errored'"
+    Then The output should contain "Reset only applies to an 'in progress' environment, however environment"

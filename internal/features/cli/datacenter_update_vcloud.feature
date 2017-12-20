@@ -5,6 +5,9 @@ Feature: Ernest vcloud project update
     Given I setup ernest with target "https://ernest.local"
     And I logout
     When I run ernest with "project update vcloud"
+    Then The output should contain "Please provide required parameters"
+    And The output should contain "ernest project update vcloud"
+    When I run ernest with "project update vcloud something"
     Then The output should contain "You're not allowed to perform this action, please log in"
 
   Scenario: Updating an existing vcloud project
@@ -22,4 +25,4 @@ Feature: Ernest vcloud project update
     And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
     When I run ernest with "project update vcloud tmp_project --user me --org MY-NEW-ORG --password secret"
-    Then The output should contain "Project 'tmp_project' does not exist, please specify a different project name"
+    Then The output should contain "Project not found"
