@@ -6,7 +6,7 @@ Feature: Ernest login
 
   Scenario: Login as admin user
     When I'm logged in as "ci_admin" / "secret123"
-    Then The output should contain "Welcome back ci_admin"
+    Then The output should contain "FAIL!!!"
 
   Scenario: Login as plain user
     When I'm logged in as "usr" / "secret123"
