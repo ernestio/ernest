@@ -72,7 +72,6 @@ command_exists docker
 command_exists docker-compose
 printf "$green%s$nc\n\n" "done"
 
-is_a_development_build=true
 # license
 if [[ -f license.json ]]; then
 	printf "%s\n%s" "License found" "Validating... "
@@ -92,7 +91,6 @@ if [[ -f license.json ]]; then
 	cp config/nginx/ernest.licensed config/nginx/ernest.local
 
 	if $(grep -q 'image: quay.io' docker-compose.yml); then
-		is_a_development_build=false
 		cp docker-compose.enterprise.yml docker-compose.yml
 
 		registryHost=$(grep registryHost license.json | awk -F \" '{printf $4}')
@@ -138,8 +136,9 @@ mkdir -p postgres/data
 
 printf "\n$blue%s$nc\n\n" "Starting Ernest"
 
-# run docker compose, add a '-d' to run in daemon mode
-if $is_a_development_build ; then
+# Boot services via docker-compose or composable (if available).
+composable_exists=$(command -v composable &> /dev/null; echo $?)
+if [ $composable_exists -eq 0 ]; then
 	composable up
 else
 	docker-compose up -d
