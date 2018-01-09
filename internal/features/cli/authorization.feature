@@ -32,10 +32,3 @@ Feature: Ernest authorization management
     And I wait for "3" seconds
     And I run ernest with "env list"
     Then The output should contain "auth_env"
-    When I'm logged in as "usr" / "secret123"
-    And I run ernest with "env list"
-    Then The output should not contain "auth_env"
-    When I run ernest with "env info auth_project auth_env"
-    Then The output should contain "Environment not found"
-    When I run ernest with "project info auth_project"
-    Then The output should contain "You don't have permissions to perform this action, please contact the resource owner"
