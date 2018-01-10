@@ -30,7 +30,9 @@ Feature: Environment destroy
     And I apply the definition "destroyable.yml"
     And I wait for "5" seconds
     When I run ernest with "env destroy fakeaws destroyable --yes"
-    Then The output should not contain "Specified environment name does not exist"
+    Then The output should contain "Environment Name:"
+    Then The output should contain "Destroyed"
+    And The output should contain "Environment successfully removed"
     And I wait for "1" seconds
     When I run ernest with "env destroy fakeaws destroyable --yes"
     Then The output should contain "Environment not found"
