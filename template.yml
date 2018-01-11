@@ -12,7 +12,7 @@ services:
       - ./config/postgres:/docker-entrypoint-initdb.d
       - ./postgres/data:/var/lib/postgresql/data
     environment:
-      DB_NAME: users,projects,environments,usage,authorizations
+      DB_NAME: users,projects,environments,usage,authorizations,policies
     restart: always
   nginx:
     image: nginx:1.13.5-alpine
