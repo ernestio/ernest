@@ -8,8 +8,6 @@ Feature: Ernest role management
     Then The output should contain "Please provide a role with --role flag"
     When I run ernest with "role set --role owner"
     Then The output should contain "Please provide a user with --user flag"
-    When I run ernest with "role set --role owner --user roler"
-    Then The output should contain "Please provide a project with --project flag"
     When I run ernest with "role set --role owner --user roler --project test_project"
     Then The output should contain "You're not allowed to perform this action, please log in"
     When I run ernest with "role set --role owner --user roler --project test_project --environment test_environment"
