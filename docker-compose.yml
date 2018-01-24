@@ -8,7 +8,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-aws-connector:3.3.2
+    image: quay.io/r3labs/all-all-aws-connector:3.4.0
     links:
     - nats
     restart: always
@@ -20,7 +20,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-azure-connector:3.3.2
+    image: quay.io/r3labs/all-all-azure-connector:3.4.0
     links:
     - nats
     restart: always
@@ -31,7 +31,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-fake-connector:3.3.2
+    image: quay.io/r3labs/all-all-fake-connector:3.4.0
     links:
     - nats
     restart: always
@@ -42,7 +42,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/all-all-vcloud-connector:3.3.2
+    image: quay.io/r3labs/all-all-vcloud-connector:3.4.0
     links:
     - nats
     restart: always
@@ -54,7 +54,7 @@ services:
       ERNEST_EDITION: community
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/api-gateway:3.3.2
+    image: quay.io/r3labs/api-gateway:3.4.0
     links:
     - nats
     ports:
@@ -68,7 +68,7 @@ services:
       ERNEST_EDITION: community
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/authenticator:3.3.2
+    image: quay.io/r3labs/authenticator:3.4.0
     links:
     - nats
     restart: always
@@ -80,7 +80,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/authorization-store:3.3.2
+    image: quay.io/r3labs/authorization-store:3.4.0
     links:
     - nats
     restart: always
@@ -90,7 +90,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/config-store:3.3.2
+    image: quay.io/r3labs/config-store:3.4.0
     links:
     - nats
     restart: always
@@ -104,7 +104,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/datacenter-store:3.3.2
+    image: quay.io/r3labs/datacenter-store:3.4.0
     links:
     - nats
     restart: always
@@ -115,7 +115,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/definition-mapper:3.3.2
+    image: quay.io/r3labs/definition-mapper:3.4.0
     links:
     - nats
     - postgres
@@ -130,7 +130,7 @@ services:
       ERNEST_LOG_FILE: /var/logs/ernest.log
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/logger:3.3.2
+    image: quay.io/r3labs/logger:3.4.0
     links:
     - nats
     ports:
@@ -147,7 +147,7 @@ services:
       ERNEST_EDITION: community
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/monit:3.3.2
+    image: quay.io/r3labs/monit:3.4.0
     links:
     - nats
     ports:
@@ -173,7 +173,7 @@ services:
     - ./config/nginx/ernest.crt:/etc/nginx/conf.d/ernest.crt
   postgres:
     environment:
-      DB_NAME: users,projects,environments,usage,authorizations
+      DB_NAME: users,projects,environments,usage,authorizations,policies
     image: postgres:9.6.5-alpine
     restart: always
     volumes:
@@ -186,7 +186,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/scheduler:3.3.2
+    image: quay.io/r3labs/scheduler:3.4.0
     links:
     - nats
     - postgres
@@ -199,7 +199,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/service-store:3.3.2
+    image: quay.io/r3labs/service-store:3.4.0
     links:
     - nats
     restart: always
@@ -211,7 +211,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/usage-store:3.3.2
+    image: quay.io/r3labs/usage-store:3.4.0
     links:
     - nats
     restart: always
@@ -223,7 +223,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/r3labs/user-store:3.3.2
+    image: quay.io/r3labs/user-store:3.4.0
     links:
     - nats
     restart: always
