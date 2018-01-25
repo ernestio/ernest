@@ -313,3 +313,16 @@ repos:
     environment:
       NATS_URI: nats://nats:4222
     restart: always
+
+  - name: compliance
+    edition: enterprise
+    path: git@github.com:r3labs/compliance.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+      - config-store
+      - postgres
+    environment:
+      NATS_URI: nats://nats:4222
+    restart: always
