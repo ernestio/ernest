@@ -6,7 +6,7 @@ services:
     ports:
       - 4222:4222
   postgres:
-    image: r3labs/postgres
+    image: postgres:9.6.5-alpine
     environment:
       DB_NAME: users,groups,datacenters,services
   nginx:
