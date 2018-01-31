@@ -48,7 +48,7 @@ compatibility, this project is maintained under
 
 ## Copyright and License
 
-Code and documentation copyright since 2015 r3labs.io authors.
+Code and documentation copyright since 2015 ernest.io authors.
 
 Code released under
 [the Mozilla Public License Version 2.0](LICENSE).
