@@ -26,6 +26,6 @@ Feature: Environment apply
     And all "s3.create.aws-fake" messages should contain an encrypted field "aws_access_key_id" with "up_to_16_characters_secret"
     And all "s3.create.aws-fake" messages should contain an encrypted field "aws_secret_access_key" with "fake_up_to_16_characters"
     And all "s3.create.aws-fake" messages should contain a field "bucket_location" with "eu-west-1"
-    And message "s3.create.aws-fake" number "0" should contain "foo@r3labs.io" as json field "grantees.0.id"
+    And message "s3.create.aws-fake" number "0" should contain "foo@ernest.io" as json field "grantees.0.id"
     And message "s3.create.aws-fake" number "0" should contain "emailaddress" as json field "grantees.0.type"
     And message "s3.create.aws-fake" number "0" should contain "FULL_CONTROL" as json field "grantees.0.permissions"
