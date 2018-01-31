@@ -248,7 +248,7 @@ repos:
 
   - name: federation
     edition: enterprise
-    path: git@github.com:r3labs/federation.git
+    path: git@github.com:ernestio/federation.git
     branch: master
     links:
       - nats
@@ -261,7 +261,7 @@ repos:
 
   - name: papi
     edition: enterprise
-    path: git@github.com:r3labs/papi.git
+    path: git@github.com:ernestio/papi.git
     branch: master
     links:
       - nats
@@ -279,7 +279,7 @@ repos:
 
   - name: supervisor
     edition: enterprise
-    path: git@github.com:r3labs/supervisor.git
+    path: git@github.com:ernestio/supervisor.git
     branch: master
     links:
       - nats
@@ -291,7 +291,7 @@ repos:
 
   - name: mfa
     edition: enterprise
-    path: git@github.com:r3labs/mfa.git
+    path: git@github.com:ernestio/mfa.git
     branch: master
     links:
       - nats
@@ -303,20 +303,7 @@ repos:
 
   - name: policy-store
     edition: enterprise
-    path: git@github.com:r3labs/policy-store.git
-    branch: master
-    links:
-      - nats
-    depends_on:
-      - config-store
-      - postgres
-    environment:
-      NATS_URI: nats://nats:4222
-    restart: always
-
-  - name: compliance
-    edition: enterprise
-    path: git@github.com:r3labs/compliance.git
+    path: git@github.com:ernestio/policy-store.git
     branch: master
     links:
       - nats
