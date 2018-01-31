@@ -59,7 +59,7 @@ resource_groups:
           admin_password: Password1234!
           disable_password_authentication: false
           ssh_keys:
-              "/home/testadmin/.ssh/authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrtWGubLw1eEckpFnzTvz2Dwg5H8qU8A8gZVBwJBMdthvgDZXSfqTpSUZBaWLtZAGA5Hfb4/fJ+uQB8ypJ9iFbglyXmlRiQ6D1BJ+qUdkiM3QOjOBMFNAhcdNZAFxH34f8/GEEM5HLAFcGeLTscBJNf0g8MrCv7ZnRp8gwcPea8jHqXdXjyP5KEJxdRpIP7o+c43ScHXR5D/j6Lu2On64BST+L20/OCCXWsXEXQNP9HHmiuZMM6IN4eSTb0YG6M624Q9SiuWmSiYcTwKA/IpuFApq4Y7euD7Nu8BB+bAJsHC46AOrGtIq4+7EN1bxn389lOxINqqXp6i628OSvlS0T jason.reid@r3labs.io"
+              "/home/testadmin/.ssh/authorized_keys": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCrtWGubLw1eEckpFnzTvz2Dwg5H8qU8A8gZVBwJBMdthvgDZXSfqTpSUZBaWLtZAGA5Hfb4/fJ+uQB8ypJ9iFbglyXmlRiQ6D1BJ+qUdkiM3QOjOBMFNAhcdNZAFxH34f8/GEEM5HLAFcGeLTscBJNf0g8MrCv7ZnRp8gwcPea8jHqXdXjyP5KEJxdRpIP7o+c43ScHXR5D/j6Lu2On64BST+L20/OCCXWsXEXQNP9HHmiuZMM6IN4eSTb0YG6M624Q9SiuWmSiYcTwKA/IpuFApq4Y7euD7Nu8BB+bAJsHC46AOrGtIq4+7EN1bxn389lOxINqqXp6i628OSvlS0T"
         storage_os_disk:
           name: os
           managed_disk_type: Standard_LRS

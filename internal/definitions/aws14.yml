@@ -65,9 +65,9 @@ s3_buckets:
   - name: bucket-1
     bucket_location: eu-west-1
     grantees:
-      - id: foo@r3labs.io
+      - id: foo@ernest.io
         type: emailaddress
         permissions: full_control
-      - id: bar@r3labs.io
+      - id: bar@ernest.io
         type: emailaddress
         permissions: write
