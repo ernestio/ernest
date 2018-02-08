@@ -289,6 +289,18 @@ repos:
       NATS_URI: nats://nats:4222
     restart: always
 
+  - name: inspec
+    edition: enterprise
+    path: git@github.com:ernestio/inspec.git
+    branch: master
+    links:
+      - nats
+    depends_on:
+    - config-store
+    environment:
+      NATS_URI: nats://nats:4222
+    restart: always
+
   - name: mfa
     edition: enterprise
     path: git@github.com:ernestio/mfa.git
