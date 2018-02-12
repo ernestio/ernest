@@ -289,9 +289,9 @@ repos:
       NATS_URI: nats://nats:4222
     restart: always
 
-  - name: inspec
+  - name: compliance
     edition: enterprise
-    path: git@github.com:ernestio/inspec.git
+    path: git@github.com:ernestio/compliance.git
     branch: master
     links:
       - nats
