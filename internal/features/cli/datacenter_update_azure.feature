@@ -13,7 +13,7 @@ Feature: Ernest azure project update
     Given I setup ernest with target "https://ernest.local"
     And the project "tmp_project" does not exist
     And I'm logged in as "usr" / "secret123"
-    When I run ernest with "project create azure --subscription_id subid --client_id cliid --client_secret secret --region westus --tenant_id tenid --environment public tmp_project"
+    When I run ernest with "project create azure --subscription_id subid --client_id cliid --client_secret secret --tenant_id tenid --environment public tmp_project"
     And I run ernest with "project list"
     And The output should contain "tmp_project"
     When I run ernest with "project update azure --subscription_id u_subid --client_id u_cliid --client_secret secret --tenant_id u_tenid --environment u_public tmp_project"
