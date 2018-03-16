@@ -12,7 +12,6 @@ Feature: Applying an azure based environment
     And all "resource_group.create.azure-fake" messages should contain a field "_provider" with "azure-fake"
     And all "resource_group.create.azure-fake" messages should contain a field "name" with "rg2"
     And all "resource_group.create.azure-fake" messages should contain a field "location" with "eastus"
-    And all "resource_group.create.azure-fake" messages should contain an encrypted field "datacenter_region" with "westus"
     And all "resource_group.create.azure-fake" messages should contain an encrypted field "azure_client_id" with "cliid"
     And all "resource_group.create.azure-fake" messages should contain an encrypted field "azure_client_secret" with "clisec"
     And all "resource_group.create.azure-fake" messages should contain an encrypted field "azure_subscription_id" with "subid"
