@@ -25,7 +25,6 @@ Feature: Ernest project create
     Then The output should contain "Project 'tmp_project' successfully created"
     When I run ernest with "project list"
     Then The output should contain "tmp_project"
-    Then The output should contain "westus"
     Then The output should contain "azure"
 
   Scenario: Adding an already existing azure project
