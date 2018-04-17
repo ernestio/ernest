@@ -8,7 +8,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-aws-connector:3.5.0
+    image: quay.io/ernest/all-all-aws-connector:3.6.0
     links:
     - nats
     restart: always
@@ -20,7 +20,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-azure-connector:3.5.0
+    image: quay.io/ernest/all-all-azure-connector:3.6.0
     links:
     - nats
     restart: always
@@ -31,7 +31,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-fake-connector:3.5.0
+    image: quay.io/ernest/all-all-fake-connector:3.6.0
     links:
     - nats
     restart: always
@@ -42,7 +42,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-vcloud-connector:3.5.0
+    image: quay.io/ernest/all-all-vcloud-connector:3.6.0
     links:
     - nats
     restart: always
@@ -54,7 +54,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/api-gateway:3.5.0
+    image: quay.io/ernest/api-gateway:3.6.0
     links:
     - nats
     ports:
@@ -68,7 +68,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/authenticator:3.5.0
+    image: quay.io/ernest/authenticator:3.6.0
     links:
     - nats
     restart: always
@@ -80,7 +80,17 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/authorization-store:3.5.0
+    image: quay.io/ernest/authorization-store:3.6.0
+    links:
+    - nats
+    restart: always
+  compliance:
+    depends_on:
+    - config-store
+    environment:
+      ERNEST_EDITION: enterprise
+      NATS_URI: nats://nats:4222
+    image: quay.io/ernest/compliance:3.6.0
     links:
     - nats
     restart: always
@@ -90,7 +100,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/config-store:3.5.0
+    image: quay.io/ernest/config-store:3.6.0
     links:
     - nats
     restart: always
@@ -104,7 +114,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/datacenter-store:3.5.0
+    image: quay.io/ernest/datacenter-store:3.6.0
     links:
     - nats
     restart: always
@@ -115,7 +125,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/definition-mapper:3.5.0
+    image: quay.io/ernest/definition-mapper:3.6.0
     links:
     - nats
     - postgres
@@ -127,7 +137,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/federation:3.5.0
+    image: quay.io/ernest/federation:3.6.0
     links:
     - nats
     restart: always
@@ -141,7 +151,7 @@ services:
       ERNEST_LOG_FILE: /var/logs/ernest.log
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/logger:3.5.0
+    image: quay.io/ernest/logger:3.6.0
     links:
     - nats
     ports:
@@ -156,7 +166,7 @@ services:
     environment:
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/mfa:3.5.0
+    image: quay.io/ernest/mfa:3.6.0
     links:
     - nats
     restart: always
@@ -168,7 +178,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/monit:3.5.0
+    image: quay.io/ernest/monit:3.6.0
     links:
     - nats
     ports:
@@ -199,7 +209,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/notification-store:3.5.0
+    image: quay.io/ernest/notification-store:3.6.0
     links:
     - nats
     restart: always
@@ -212,7 +222,7 @@ services:
       ERNEST_EDITION: enterprise
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/papi:3.5.0
+    image: quay.io/ernest/papi:3.6.0
     links:
     - nats
     - api-gateway:api-gateway
@@ -226,7 +236,7 @@ services:
     environment:
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/policy-store:3.5.0
+    image: quay.io/ernest/policy-store:3.6.0
     links:
     - nats
     restart: always
@@ -245,7 +255,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/scheduler:3.5.0
+    image: quay.io/ernest/scheduler:3.6.0
     links:
     - nats
     - postgres
@@ -258,7 +268,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/service-store:3.5.0
+    image: quay.io/ernest/service-store:3.6.0
     links:
     - nats
     restart: always
@@ -268,7 +278,7 @@ services:
     environment:
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/supervisor:3.5.0
+    image: quay.io/ernest/supervisor:3.6.0
     links:
     - nats
     restart: always
@@ -280,7 +290,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/usage-store:3.5.0
+    image: quay.io/ernest/usage-store:3.6.0
     links:
     - nats
     restart: always
@@ -292,7 +302,7 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: enterprise
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/user-store:3.5.0
+    image: quay.io/ernest/user-store:3.6.0
     links:
     - nats
     restart: always
