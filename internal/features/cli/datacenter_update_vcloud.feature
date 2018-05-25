@@ -20,9 +20,9 @@ Feature: Ernest vcloud project update
     When I run ernest with "project update vcloud tmp_project --user me --org MY-NEW-ORG --password secret"
     Then The output should contain "Project tmp_project successfully updated"
 
-  Scenario: Updating an unexisting vcloud project
-    Given I setup ernest with target "https://ernest.local"
-    And the project "tmp_project" does not exist
-    And I'm logged in as "usr" / "secret123"
-    When I run ernest with "project update vcloud tmp_project --user me --org MY-NEW-ORG --password secret"
-    Then The output should contain "Project not found"
+#  Scenario: Updating an unexisting vcloud project
+#    Given I setup ernest with target "https://ernest.local"
+#    And the project "tmp_project" does not exist
+#    And I'm logged in as "usr" / "secret123"
+#    When I run ernest with "project update vcloud tmp_project --user me --org MY-NEW-ORG --password secret"
+#    Then The output should contain "Project not found"

@@ -20,9 +20,9 @@ Feature: Ernest aws project update
     Then The output should contain "Project tmp_project successfully updated"
     And The aws project "tmp_project" credentials should be "tmp_secret_up_to_16_chars" and "tmp_secret_access_key_up_to_16_chars"
 
-  Scenario: Updating an unexisting aws project
-    Given I setup ernest with target "https://ernest.local"
-    And the project "tmp_project" does not exist
-    And I'm logged in as "usr" / "secret123"
-    When I run ernest with "project update aws tmp_project --secret_access_key very_large_aws_token_string --access_key_id secret"
-    Then The output should contain "Project not found"
+#  Scenario: Updating an unexisting aws project
+#    Given I setup ernest with target "https://ernest.local"
+#    And the project "tmp_project" does not exist
+#    And I'm logged in as "usr" / "secret123"
+#    When I run ernest with "project update aws tmp_project --secret_access_key very_large_aws_token_string --access_key_id secret"
+#    Then The output should contain "Project not found"

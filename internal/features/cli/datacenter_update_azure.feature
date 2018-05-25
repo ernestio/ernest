@@ -20,9 +20,9 @@ Feature: Ernest azure project update
     Then The output should contain "Project tmp_project successfully updated"
     And The azure project "tmp_project" credentials should be "u_subid", "u_cliid", "secret", "u_tenid" and "u_public"
 
-  Scenario: Updating an unexisting azure project
-    Given I setup ernest with target "https://ernest.local"
-    And the project "tmp_project" does not exist
-    And I'm logged in as "usr" / "secret123"
-    When I run ernest with "project update azure --subscription_id u_subid --client_id u_cliid --client_secret secret --tenant_id u_tenid --environment u_public tmp_project"
-    Then The output should contain "Project not found"
+#  Scenario: Updating an unexisting azure project
+#    Given I setup ernest with target "https://ernest.local"
+#    And the project "tmp_project" does not exist
+#    And I'm logged in as "usr" / "secret123"
+#    When I run ernest with "project update azure --subscription_id u_subid --client_id u_cliid --client_secret secret --tenant_id u_tenid --environment u_public tmp_project"
+#    Then The output should contain "Project not found"
