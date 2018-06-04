@@ -12,7 +12,7 @@ upstream backendlogger {
 
 server {
     listen 443 ssl;
-    server_name ERNESTHOSTNAME;
+    server_name ernest.local;
     ssl_certificate /etc/nginx/conf.d/ernest.crt;
     ssl_certificate_key /etc/nginx/conf.d/ernest.key;
 
@@ -27,6 +27,8 @@ server {
         proxy_set_header Connection '';
         proxy_http_version 1.1;
         proxy_read_timeout 3600s;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
         chunked_transfer_encoding off;
         proxy_buffering off;
         proxy_cache off;
