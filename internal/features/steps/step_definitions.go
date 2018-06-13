@@ -20,7 +20,7 @@ import (
 	"github.com/dgryski/dgoogauth"
 	aes "github.com/ernestio/crypto/aes"
 	ecc "github.com/ernestio/ernest-config-client"
-	"github.com/nats-io/nats"
+	"github.com/nats-io/go-nats"
 	"github.com/tidwall/gjson"
 
 	. "github.com/gucumber/gucumber"
