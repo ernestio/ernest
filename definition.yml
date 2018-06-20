@@ -60,6 +60,21 @@ repos:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
     restart: always
 
+  - name: notify
+    edition: enterprise
+    path: git@github.com:ernestio/notify.git
+    branch: master
+    links:
+      - nats
+    ports:
+      - 22002:22002
+    depends_on:
+      - config-store
+    environment:
+      NATS_URI: 'nats://nats:4222'
+      JWT_SECRET: 'GENERATEDJWTSECRET'
+    restart: always
+
   - name: user-store
     edition: community
     path: git@github.com:ernestio/user-store.git

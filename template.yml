@@ -24,6 +24,7 @@ services:
       - api-gateway:api-gateway
       - monit:monit
       - logger:logger
+      - notify:notify
     ports:
       - 443:443
     restart: always
