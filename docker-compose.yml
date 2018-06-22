@@ -8,9 +8,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-aws-connector:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/all-all-aws-connector:3.12.0
+    networks:
+    - ernest
     restart: always
   all-all-azure-connector:
     depends_on:
@@ -20,9 +20,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-azure-connector:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/all-all-azure-connector:3.12.0
+    networks:
+    - ernest
     restart: always
   all-all-fake-connector:
     depends_on:
@@ -31,9 +31,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-fake-connector:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/all-all-fake-connector:3.12.0
+    networks:
+    - ernest
     restart: always
   all-all-vcloud-connector:
     depends_on:
@@ -42,9 +42,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/all-all-vcloud-connector:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/all-all-vcloud-connector:3.12.0
+    networks:
+    - ernest
     restart: always
   api-gateway:
     depends_on:
@@ -54,9 +54,9 @@ services:
       ERNEST_EDITION: community
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/api-gateway:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/api-gateway:3.12.0
+    networks:
+    - ernest
     ports:
     - 8080:8080
     restart: always
@@ -68,9 +68,9 @@ services:
       ERNEST_EDITION: community
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/authenticator:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/authenticator:3.12.0
+    networks:
+    - ernest
     restart: always
   authorization-store:
     depends_on:
@@ -80,19 +80,21 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/authorization-store:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/authorization-store:3.12.0
+    networks:
+    - ernest
     restart: always
   config-store:
+    depends_on:
+    - nats
     entrypoint: ./config-store -config /etc/ernest/config.json
     environment:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/config-store:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/config-store:3.12.0
+    networks:
+    - ernest
     restart: always
     volumes:
     - ./config/config-store/:/etc/ernest/
@@ -104,9 +106,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/datacenter-store:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/datacenter-store:3.12.0
+    networks:
+    - ernest
     restart: always
   definition-mapper:
     depends_on:
@@ -115,10 +117,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/definition-mapper:3.11.0
-    links:
-    - nats
-    - postgres
+    image: quay.io/ernest/definition-mapper:3.12.0
+    networks:
+    - ernest
     restart: always
   logger:
     depends_on:
@@ -130,9 +131,9 @@ services:
       ERNEST_LOG_FILE: /var/logs/ernest.log
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/logger:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/logger:3.12.0
+    networks:
+    - ernest
     ports:
     - 22001:22001
     restart: always
@@ -147,23 +148,23 @@ services:
       ERNEST_EDITION: community
       JWT_SECRET: GENERATEDJWTSECRET
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/monit:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/monit:3.12.0
+    networks:
+    - ernest
     ports:
     - 22000:22000
     restart: always
   nats:
     image: nats
+    networks:
+    - ernest
     ports:
     - 4222:4222
     restart: always
   nginx:
     image: nginx:1.13.5-alpine
-    links:
-    - api-gateway:api-gateway
-    - monit:monit
-    - logger:logger
+    networks:
+    - ernest
     ports:
     - 443:443
     restart: always
@@ -175,6 +176,8 @@ services:
     environment:
       DB_NAME: users,projects,environments,usage,authorizations,policies
     image: postgres:9.6.5-alpine
+    networks:
+    - ernest
     restart: always
     volumes:
     - ./config/postgres:/docker-entrypoint-initdb.d
@@ -186,10 +189,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/scheduler:3.11.0
-    links:
-    - nats
-    - postgres
+    image: quay.io/ernest/scheduler:3.12.0
+    networks:
+    - ernest
     restart: always
   service-store:
     depends_on:
@@ -199,9 +201,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/service-store:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/service-store:3.12.0
+    networks:
+    - ernest
     restart: always
   usage-store:
     depends_on:
@@ -211,9 +213,9 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/usage-store:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/usage-store:3.12.0
+    networks:
+    - ernest
     restart: always
   user-store:
     depends_on:
@@ -223,8 +225,10 @@ services:
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
       ERNEST_EDITION: community
       NATS_URI: nats://nats:4222
-    image: quay.io/ernest/user-store:3.11.0
-    links:
-    - nats
+    image: quay.io/ernest/user-store:3.12.0
+    networks:
+    - ernest
     restart: always
-networks: {}
+networks:
+  ernest:
+    driver: bridge
