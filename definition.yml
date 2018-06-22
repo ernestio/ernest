@@ -6,8 +6,8 @@ repos:
     branch: master
     volumes:
       - ./config/config-store/:/etc/ernest/
-    links:
-      - nats
+    networks:
+      - ernest
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
@@ -18,8 +18,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/api-gateway.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     ports:
       - 8080:8080
     depends_on:
@@ -34,8 +34,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/authenticator.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -48,8 +48,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/monit.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     ports:
       - 22000:22000
     depends_on:
@@ -64,8 +64,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/notify.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     ports:
       - 22002:22002
     depends_on:
@@ -79,8 +79,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/user-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
       - postgres
@@ -93,8 +93,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/datacenter-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
       - postgres
@@ -107,8 +107,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/service-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
       - postgres
@@ -121,8 +121,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/authorization-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
       - postgres
@@ -135,8 +135,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/usage-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
       - postgres
@@ -149,9 +149,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/scheduler.git
     branch: master
-    links:
-      - nats
-      - postgres
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -163,9 +162,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/definition-mapper.git
     branch: master
-    links:
-      - nats
-      - postgres
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -177,8 +175,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/all-all-azure-connector.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -191,8 +189,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/all-all-fake-connector.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -204,8 +202,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/all-all-vcloud-connector.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -217,8 +215,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/all-all-aws-connector.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -231,8 +229,8 @@ repos:
     edition: community
     path: git@github.com:ernestio/logger.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     ports:
       - 22001:22001
     depends_on:
@@ -252,8 +250,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/notification-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -265,8 +263,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/federation.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
     environment:
@@ -278,9 +276,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/papi.git
     branch: master
-    links:
-      - nats
-      - api-gateway:api-gateway
+    networks:
+      - ernest
     depends_on:
     - config-store
     environment:
@@ -296,8 +293,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/supervisor.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
     - config-store
     environment:
@@ -308,8 +305,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/compliance.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
     - config-store
     environment:
@@ -320,8 +317,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/mfa.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
     - config-store
     environment:
@@ -332,8 +329,8 @@ repos:
     edition: enterprise
     path: git@github.com:ernestio/policy-store.git
     branch: master
-    links:
-      - nats
+    networks:
+      - ernest
     depends_on:
       - config-store
       - postgres
