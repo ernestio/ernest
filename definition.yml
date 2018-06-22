@@ -8,6 +8,8 @@ repos:
       - ./config/config-store/:/etc/ernest/
     networks:
       - ernest
+    depends_on:
+      - nats
     environment:
       NATS_URI: 'nats://nats:4222'
       ERNEST_CRYPTO_KEY: CRYPTO_KEY_TEMPLATE
