@@ -139,6 +139,7 @@ else
 fi
 
 sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
+sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/webui/app.globals.ts && rm ./config/webui/app.globals.ts.bak
 
 # Setup a random JWT Token for api-gateway
 if [[ -z $TOKEN ]]; then
