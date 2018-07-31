@@ -13,6 +13,7 @@ Feature: Ernest user list
     And I run ernest with "user list"
     Then The output should contain "usr"
     And The output should contain "ci_admin"
+    And The output should not contain "local"
 
   Scenario: Admin user listing
     Given I setup ernest with target "https://ernest.local"
@@ -20,5 +21,6 @@ Feature: Ernest user list
     And I run ernest with "user list"
     Then The output should contain "usr"
     And The output should contain "ci_admin"
+    And The output should contain "local"
 
 
