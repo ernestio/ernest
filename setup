@@ -37,6 +37,14 @@ validate_password () {
 
 printf "\n$blue%s\n%s$nc\n\n" "Ernest Setup Tool" "-----------------"
 
+# prereqs
+printf "%s " "Checking prerequisites..."
+command_exists wget
+command_exists openssl
+command_exists docker
+command_exists docker-compose
+printf "$green%s$nc\n" "done"
+
 # input
 while [[ -z $ERNESTHOSTNAME ]]; do
 	printf "$blue%s$nc " "Hostname:"
@@ -64,15 +72,25 @@ while [[ -z $ERNESTPASSWORD ]]; do
 	validate_password
 done
 
-# prereqs
-printf "%s " "Checking prerequisites..."
-command_exists wget
-command_exists openssl
-command_exists docker
-command_exists docker-compose
-printf "$green%s$nc\n\n" "done"
+while [[ -z $ERNESTTLS ]]; do
+	printf "$blue%s$nc " "Install custom certificate (Y/N):"
+	read RESPONSE
+	if [[ $RESPONSE == "y" || $RESPONSE == "Y" ]]; then
+		while [[ -z $ERNESTTLSCERT ]]; do
+			printf "$blue%s$nc " "Certificate file:"
+			read ERNESTTLSCERT
+		done
+		while [[ -z $ERNESTTLSKEY ]]; do
+			printf "$blue%s$nc " "Certificate key file:"
+			read ERNESTTLSKEY
+		done
+		ERNESTTLS=true
+	else
+		ERNESTTLS=false
+	fi
+done
 
-# license
+# license check
 if [[ -f license.json ]]; then
 	printf "%s\n%s" "License found" "Validating... "
 
@@ -101,8 +119,14 @@ if [[ -f license.json ]]; then
 	fi
 fi
 
-printf "\n%s" "Generating Certificates... "
-openssl req \
+if [[ $ERNESTTLS == true ]]; then
+	printf "\n%s" "Installing Certificates... "
+	cp $ERNESTTLSCERT ./config/nginx/ernest.crt &> /dev/null
+	cp $ERNESTTLSKEY ./config/nginx/ernest.key &> /dev/null
+	printf "$green%s$nc\n" "done"
+else
+	printf "\n%s" "Generating Certificates... "
+	openssl req \
 		-new \
 		-newkey rsa:4096 \
 		-days 365 \
@@ -111,7 +135,8 @@ openssl req \
 		-subj "/C=UK/ST=London/L=London/O=ErnestIO/CN=$ERNESTHOSTNAME" \
 		-keyout ./config/nginx/ernest.key \
 		-out ./config/nginx/ernest.crt &> /dev/null
-printf "$green%s$nc\n" "done"
+	printf "$green%s$nc\n" "done"
+fi
 
 sed -i.bak "s/ERNESTHOSTNAME/$ERNESTHOSTNAME/g" ./config/nginx/ernest.local && rm ./config/nginx/ernest.local.bak
 
