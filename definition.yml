@@ -342,7 +342,7 @@ repos:
 
   - name: webui
     edition: enterprise
-    path: git@github.com:ernestio/ernest-webui.git
+    path: git@github.com:ernestio/webui.git
     branch: master
     networks:
       - ernest
