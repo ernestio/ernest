@@ -92,7 +92,7 @@ done
 
 # license check
 if [[ -f license.json ]]; then
-	printf "%s\n%s" "License found" "Validating... "
+	printf "\n%s\n%s" "License found" "Validating... "
 
 	wget https://s3-eu-west-1.amazonaws.com/ernest-tools/ernest-verifier-`uname` -O ernest-verifier &> /dev/null
 	chmod +x ernest-verifier

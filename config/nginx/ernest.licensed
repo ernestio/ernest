@@ -24,17 +24,23 @@ server {
     ssl_certificate /etc/nginx/conf.d/ernest.crt;
     ssl_certificate_key /etc/nginx/conf.d/ernest.key;
 
-    location /  {  
-        proxy_pass http://webui/;
+    location / {
+        proxy_pass http://webui;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $remote_addr;
-    }                                             
-                   
-    location /api/  {
-        proxy_pass http://proxy/;
-        proxy_set_header Host $host;       
+    }
+
+    location /api {
+        proxy_pass http://proxy;
+        proxy_set_header Host $host;
         proxy_set_header X-Forwarded-For $remote_addr;
-    }  
+    }
+
+    location /auth {
+        proxy_pass http://proxy;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }
 
     location /events {
         proxy_pass  http://backendmonitor;

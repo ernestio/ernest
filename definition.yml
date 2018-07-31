@@ -349,5 +349,5 @@ repos:
     ports:
       - 4200:4200
     volumes:
-      - ./config/webui/app.globals.ts:/app/src/app/app.globals.ts
+      - ./config/webui/app.globals.ts:/repo/src/app/app.globals.ts
     restart: always
