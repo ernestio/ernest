@@ -18,20 +18,23 @@ upstream proxy {
     server papi:8081       weight=5;
 }
 
-upstream webui {
-    server webui:4200      weight=5;
-}
-
 server {
     listen 443 ssl;
     server_name ERNESTHOSTNAME;
     ssl_certificate /etc/nginx/conf.d/ernest.crt;
     ssl_certificate_key /etc/nginx/conf.d/ernest.key;
 
-    location /  {
+    location /  {  
+        proxy_pass http://webui/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }                                             
+                   
+    location /api/  {
         proxy_pass http://proxy/;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    }
+        proxy_set_header Host $host;       
+        proxy_set_header X-Forwarded-For $remote_addr;
+    }  
 
     location /events {
         proxy_pass  http://backendmonitor;
@@ -72,19 +75,6 @@ server {
         error_page 504 =200 @notifysource-close-graceful;
     }
 
-    location /webui {
-        proxy_pass http://webui;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "Upgrade";
-        proxy_http_version 1.1;
-        proxy_read_timeout 3600s;
-        chunked_transfer_encoding off;
-        proxy_buffering off;
-        proxy_cache off;
-        error_page 504 =200 @webuisource-close-graceful;
-    }
-
     location @eventsource-close-graceful {
         add_header Content-Type text/event-stream;
         return 200;
@@ -96,11 +86,6 @@ server {
     }
 
     location @notifysource-close-graceful {
-        add_header Content-Type text/event-stream;
-        return 200;
-    }
-
-    location @webuisource-close-graceful {
         add_header Content-Type text/event-stream;
         return 200;
     }
