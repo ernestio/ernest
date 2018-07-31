@@ -339,3 +339,15 @@ repos:
     environment:
       NATS_URI: nats://nats:4222
     restart: always
+
+  - name: webui
+    edition: enterprise
+    path: git@github.com:ernestio/ernest-webui.git
+    branch: master
+    networks:
+      - ernest
+    ports:
+      - 4200:4200
+    volumes:
+      - ./config/webui/app.globals.ts:/app/src/app/app.globals.ts
+    restart: always
