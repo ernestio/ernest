@@ -51,4 +51,4 @@ compatibility, this project is maintained under
 Code and documentation copyright since 2015 ernest.io authors.
 
 Code released under
-[the Mozilla Public License Version 2.0](LICENSE).
+[the Mozilla Public License Version 2.0](LICENSE). 
